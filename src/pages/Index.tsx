@@ -1,372 +1,273 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import { 
-  ArrowRight, 
-  Play, 
-  Users, 
-  Target, 
-  Award, 
-  Sparkles,
-  ChevronLeft,
-  ChevronRight,
-  Calendar,
-  MapPin,
-  BookOpen,
-  Lightbulb,
-  Heart,
-  Star,
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Camera,
+  Leaf,
+  Shield,
   TrendingUp,
-  Zap
+  Users,
+  Zap,
+  Check,
+  MapPin,
+  ShoppingCart,
+  MessageSquare,
+  Bell,
+  Bot,
+  Eye,
+  Settings,
+  Facebook,
+  Twitter,
+  Instagram,
+  Mail,
+  Phone,
+  MapIcon,
+  ExternalLink,
 } from "lucide-react";
-import CountUp from "react-countup";
+import { useState } from "react";
+import heroImage from "@/assets/hero-image.jpg";
+import { useNavigate } from "react-router-dom";
 
-// hero images
-import heroImage from "@/assets/hero-career-guidance.jpg";
-import teamImage from "@/assets/team-collaboration.jpg";
-import eventImage from "@/assets/career-event.jpg";
-import eventImage2 from "@/assets/tailks.jpg";
-import abstractBg from "@/assets/abstract-bg.jpg";
-
-//partiners images
-import partner1 from "@/assets/partiners/koics-01.png";
-import partner2 from "@/assets/partiners/nembo.png";
-import partner3 from "@/assets/partiners/ibiscus.png";
-import partner4 from "@/assets/partiners/iaa.png";
-import partner5 from "@/assets/partiners/e3logo.jpg";
-
-//team
-import rahmanImg from "@/assets/team/rahman.jpeg";
-import abdulImg from "@/assets/team/02.jpg";
-import karenImg from "@/assets/team/KAREEN.jpg";
-import godfreyImg from "@/assets/team/godfrey.jpg";
 
 const Index = () => {
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const partnerLogos = [partner1, partner2, partner3, partner4, partner5];
+  const [selectedPlan, setSelectedPlan] = useState(null);
+   const navigate = useNavigate();
 
-  const testimonials = [
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
+  const features = [
     {
-      name: "Mark Kane",
-      role: "IT Specialist",
-      content:
-        "The training sessions exceeded my expectations. The instructors were knowledgeable and approachable, and the content was perfectly tailored to my needs. I now feel confident using the new tools in my daily workflow.",
-      rating: 4,
+      icon: Camera,
+      title: "AI-Powered Detection",
+      description:
+        "Advanced algorithms trained on Tanzanian crop diseases including maize lethal necrosis, coffee berry disease, and rice blast.",
     },
     {
-      name: "Sarah T.",
-      role: "University Graduate",
-      content:
-        "Attending the career talks was a game-changer for me. The speakers offered invaluable advice and shared real-world experiences that opened my eyes to new career paths. I left feeling motivated and ready to take on new challenges.",
-      rating: 5,
+      icon: Zap,
+      title: "Instant Results",
+      description:
+        "Get immediate diagnosis in English or Swahili within seconds, even with limited internet connectivity.",
     },
     {
-      name: "Jane Musonda",
-      role: "Program Manager",
-      content:
-        "The workshops were incredibly engaging and hands-on. I walked away with practical skills I could apply immediately in my projects. The collaborative atmosphere made learning enjoyable and effective.",
-      rating: 5,
+      icon: Shield,
+      title: "Local Prevention Guide",
+      description:
+        "Receive expert advice tailored to Tanzania's climate, soil conditions, and available agricultural inputs.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Yield Optimization",
+      description:
+        "Improve crop health using locally available solutions and maximize your harvest for both food security and market sales.",
     },
   ];
 
   const stats = [
-    { number: "500+", label: "Youth Empowered", icon: Users },
-    { number: "50+", label: "Workshops Conducted", icon: BookOpen },
-    { number: "25+", label: "Career Talks", icon: Sparkles },
-    { number: "100+", label: "Success Stories", icon: Award },
+    { number: "94.2%", label: "Accuracy Rate" },
+    { number: "5,200+", label: "Tanzanian Farmers" },
+    { number: "25+", label: "Local Crop Types" },
+    { number: "24/7", label: "Swahili Support" },
   ];
 
-  const objectives = [
+  const pricingPlans = [
     {
-      title: "Quality Education",
+      name: "Free",
+      price: "TZS 0",
+      period: "daima",
       description:
-        "Shaping the career of youth toward their dreams and bright future",
-      goal: 500,
-      raised: 350,
-      percentage: 70,
-      icon: BookOpen,
-      color: "from-blue-500 to-blue-600",
+        "Perfect for smallholder farmers starting their digital agriculture journey",
+      features: [
+        { icon: Camera, text: "Basic image uploads and disease analysis" },
+        { icon: MapPin, text: "Location-based tips for your region" },
+        { icon: Users, text: "24/7 community support (Swahili/English)" },
+      ],
+      buttonText: "Anza Bure",
+      popular: false,
     },
     {
-      title: "Gender Equality",
-      description: "Through personalized mentorship and awareness raising",
-      goal: 200,
-      raised: 50,
-      percentage: 30,
-      icon: Heart,
-      color: "from-pink-500 to-pink-600",
+      name: "Basic",
+      price: "TZS 35,000",
+      period: "kwa mwezi",
+      description:
+        "Enhanced features for growing agricultural operations across Tanzania",
+      features: [
+        { icon: Camera, text: "Advanced crop disease analysis" },
+        { icon: MapPin, text: "Regional weather and soil condition tips" },
+        { icon: ShoppingCart, text: "Local market price recommendations" },
+        { icon: MessageSquare, text: "Access to agricultural input dealers" },
+        { icon: Bell, text: "SMS tips and planting reminders" },
+        { icon: Users, text: "24/7 expert support (Swahili/English)" },
+      ],
+      buttonText: "Chagua Basic",
+      popular: true,
     },
     {
-      title: "Innovation",
+      name: "Pro",
+      price: "TZS 89,000",
+      period: "kwa mwezi",
       description:
-        "Clear education and training on the importance of nutrition for future generation",
-      goal: 100,
-      raised: 56,
-      percentage: 54,
-      icon: Sparkles,
-      color: "from-green-500 to-green-600",
+        "Complete solution for commercial farms and agricultural cooperatives",
+      features: [
+        { icon: Camera, text: "Everything in Basic plan" },
+        { icon: Settings, text: "IoT sensors for soil & weather monitoring" },
+        { icon: Bot, text: "AI chatbot assistant (Swahili/English)" },
+        { icon: Eye, text: "Drone integration and field monitoring" },
+        { icon: TrendingUp, text: "Advanced analytics and yield predictions" },
+        { icon: Users, text: "24/7 priority support with agronomist" },
+      ],
+      buttonText: "Jaribu Pro",
+      popular: false,
     },
   ];
-
-  const services = [
-    {
-      title: "Trainings",
-      description:
-        "Gain practical knowledge you can apply immediately in your field.",
-      icon: TrendingUp,
-      image: teamImage,
-    },
-    {
-      title: "Workshops",
-      description:
-        "Experience real-world problem-solving in a collaborative environment.",
-      icon: Users,
-      image: eventImage,
-    },
-    {
-      title: "Career Talks",
-      description:
-        "Our career talks will inspire and guide you on your journey to success.",
-      icon: Lightbulb,
-      image: eventImage2,
-    },
-    {
-      title: "Career Guidance AI",
-      description:
-        "Discover our AI-driven career guidance tool designed to help students make informed decisions.",
-      icon: Zap,
-      image: abstractBg,
-      link: "https://careerguider.vercel.app/",
-    },
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [testimonials.length]);
 
   return (
     <div className='min-h-screen'>
-      <Navigation />
-
-      {/* Hero Section */}
-      <section className='relative pt-20 lg:pt-24 pb-20 overflow-hidden'>
-        <div
-          className='absolute inset-0 bg-cover bg-center bg-no-repeat'
-          style={{ backgroundImage: `url(${heroImage})` }}>
-          <div className='absolute inset-0 bg-gradient-hero'></div>
-        </div>
-
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className='max-w-4xl mx-auto text-center text-white'>
-            <Badge className='mb-6 bg-white/20 text-white border-white/30 hover:bg-white/30'>
-              Empowering Youth Since 2023
-            </Badge>
-
-            <h1 className='text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight'>
-              Welcome to <span className='text-black'>Career Na Mimi</span>{" "}
-              Organization
-            </h1>
-
-            <p className='text-xl md:text-2xl mb-4 text-white/90 font-medium'>
-              "Your Journey, Your Success"
-            </p>
-
-            <p className='text-lg md:text-xl mb-8 text-white/80 max-w-2xl mx-auto leading-relaxed'>
-              Career Na Mimi empowers youth with skills, mentorship, and
-              opportunities to unlock their potential and achieve their dreams.
-            </p>
-
-            <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-              <Button variant='hero' size='xl' asChild>
-                <Link to='/about'>
-                  Learn More <ArrowRight className='ml-2 w-5 h-5' />
-                </Link>
-              </Button>
-
+      {/* Navigation */}
+      <nav className='bg-background/95 backdrop-blur-sm border-b sticky top-0 z-50'>
+        <div className='container mx-auto px-4 py-4'>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center gap-2'>
+              <Leaf className='w-8 h-8 text-primary' />
+              <span className='text-xl font-bold text-primary'>AgroDrone</span>
+            </div>
+            <div className='hidden md:flex items-center gap-6'>
+              <a
+                href='#features'
+                className='text-muted-foreground hover:text-primary'>
+                Features
+              </a>
+              <a
+                href='#pricing'
+                className='text-muted-foreground hover:text-primary'>
+                Pricing
+              </a>
+              <a
+                href='#about'
+                className='text-muted-foreground hover:text-primary'>
+                About
+              </a>
               <Button
                 variant='outline'
-                size='xl'
-                onClick={() => setIsVideoOpen(true)}
-                className='border-white/30 text-black hover:bg-white hover:text-foreground'>
-                <Play className='mr-2 w-5 h-5' />
-                Watch Our Story
+                onClick={() => handleNavigation("/dashboard")}>
+                Dashboard
+              </Button>
+              <Button
+                variant='hero'
+                onClick={() => handleNavigation("/upload")}>
+                Get Started
               </Button>
             </div>
           </div>
         </div>
+      </nav>
 
-        {/* Floating elements */}
-        <div className='absolute top-1/4 left-4 w-20 h-20 bg-primary/20 rounded-full animate-float'></div>
-        <div className='absolute bottom-1/4 right-8 w-16 h-16 bg-accent/20 rounded-full animate-float delay-1000'></div>
-      </section>
-
-      {/* Stats Section */}
-      <section className='py-16 bg-secondary/30'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-            {stats.map((stat, index) => (
-              <div key={index} className='text-center group'>
-                <div className='w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300'>
-                  <stat.icon className='w-8 h-8 text-primary-foreground' />
-                </div>
-                <CountUp
-                  end={parseInt(stat.number)}
-                  duration={2.5}
-                  suffix='+'
-                  className='text-3xl font-heading font-bold text-foreground mb-2'
-                />
-
-                <p className='text-muted-foreground font-medium'>
-                  {stat.label}
+      {/* Hero Section */}
+      <section className='relative overflow-hidden bg-gradient-to-br from-accent via-background to-primary/5'>
+        <div className='absolute inset-0 bg-gradient-to-r from-background/80 to-background/40' />
+        <div className='relative container mx-auto px-4 py-20'>
+          <div className='grid lg:grid-cols-2 gap-12 items-center'>
+            <div className='space-y-8'>
+              <div className='space-y-4'>
+                <h1 className='text-4xl md:text-6xl font-bold leading-tight'>
+                  <span className='text-primary'>AI-Powered</span>
+                  <br />
+                  Crop Disease
+                  <br />
+                  Detection for
+                  <br />
+                  <span className='text-primary'>SME's</span>
+                </h1>
+                <p className='text-xl text-muted-foreground leading-relaxed'>
+                  Protect your maize, coffee, rice, and cash crops with
+                  cutting-edge AI technology designed for Tanzanian farmers.
+                  Upload plant images and get instant disease diagnosis with
+                  locally-relevant treatment recommendations.
                 </p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* AI Career Guidance Section */}
-      <section className='py-20'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>
-            <div>
-              <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
-                AI-Powered Innovation
-              </Badge>
-              <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
-                AI-Powered Career Guidance
-              </h2>
-              <p className='text-lg text-muted-foreground mb-8 leading-relaxed'>
-                Designed to assist with <strong>CV building</strong>,{" "}
-                <strong>job transitions</strong>,<strong> career growth</strong>
-                , and <strong>personalized guidance</strong> to help individuals
-                succeed in their professional journey.
-              </p>
-              <Button variant='hero' size='lg' asChild>
-                <a
-                  href='https://careerguider.vercel.app/'
-                  target='_blank'
-                  rel='noopener noreferrer'>
-                  See It in Action <ArrowRight className='ml-2 w-5 h-5' />
-                </a>
-              </Button>
+              <div className='flex flex-col sm:flex-row gap-4'>
+                <Button
+                  variant='hero'
+                  size='lg'
+                  onClick={() => handleNavigation("/upload")}
+                  className='text-lg px-8'>
+                  <Camera className='mr-2' />
+                  Start Diagnosis
+                </Button>
+                <Button
+                  variant='outline'
+                  size='lg'
+                  onClick={() => handleNavigation("/dashboard")}
+                  className='text-lg px-8'>
+                  View Dashboard
+                </Button>
+              </div>
+
+              {/* Stats */}
+              <div className='grid grid-cols-2 md:grid-cols-4 gap-6 pt-8'>
+                {stats.map((stat, index) => (
+                  <div key={index} className='text-center'>
+                    <div className='text-2xl md:text-3xl font-bold text-primary'>
+                      {stat.number}
+                    </div>
+                    <div className='text-sm text-muted-foreground'>
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className='relative'>
-              <div
-                className='rounded-2xl shadow-elegant overflow-hidden'
-                style={{ backgroundImage: `url(${abstractBg})` }}>
-                <div className='bg-gradient-primary/90 p-8 h-64 flex items-center justify-center'>
-                  <div className='text-center text-white'>
-                    <Zap className='w-16 h-16 mx-auto mb-4 animate-float' />
-                    <h3 className='text-xl font-semibold'>
-                      AI Career Assistant
-                    </h3>
-                    <p className='text-white/80'>
-                      Smart. Personalized. Effective.
-                    </p>
-                  </div>
-                </div>
+              <div className='relative rounded-2xl overflow-hidden shadow-strong'>
+                <img
+                  src={heroImage}
+                  alt='Farmer using AgroDrone'
+                  className='w-full h-auto'
+                />
+                <div className='absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent' />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section className='py-20 bg-gradient-card'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+      {/* Features Section */}
+      <section id='features' className='py-20 bg-muted/30'>
+        <div className='container mx-auto px-4'>
           <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
-              About Us
-            </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
-              Empowering Dreams, One Story at a Time
+            <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+              Why Choose <span className='text-primary'>AgroDrone</span>?
             </h2>
-            <p className='text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed'>
-              Our YouTube channel is more than a platform—it's a global stage
-              where students, graduates, and young professionals share real-life
-              journeys of ambition, struggle, and success. These stories serve
-              as living proof that transformation is possible when passion meets
-              purpose.
+            <p className='text-xl text-muted-foreground max-w-2xl mx-auto'>
+              Advanced AI technology meets local agricultural expertise to
+              protect Tanzanian crops and increase harvests for food security
+              and income.
             </p>
           </div>
 
-          <div className='flex flex-col lg:flex-row gap-8 justify-center'>
-            <Button variant='hero' size='lg' asChild>
-              <Link to='/about'>Learn More</Link>
-            </Button>
-            <Button variant='outline' size='lg' asChild>
-              <Link to='/contact'>Contact Us</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Strategic Objectives */}
-      <section className='py-20'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
-              Our Strategic Objectives
-            </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
-              Building a Transformative Movement
-            </h2>
-            <p className='text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed'>
-              We are building more than an organization—we are leading a
-              transformative movement to empower youth across Africa. Each
-              objective reflects our commitment to creating inclusive,
-              sustainable, and innovation-driven development.
-            </p>
-          </div>
-
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-            {objectives.map((objective, index) => (
+          <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
+            {features.map((feature, index) => (
               <Card
                 key={index}
-                className='group hover:shadow-hover transition-all duration-300 border-0 shadow-card'>
-                <CardContent className='p-6'>
-                  <div
-                    className={`w-12 h-12 rounded-xl bg-gradient-to-r ${objective.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <objective.icon className='w-6 h-6 text-white' />
+                className='shadow-medium hover:shadow-strong transition-shadow'>
+                <CardHeader className='text-center'>
+                  <div className='w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4'>
+                    <feature.icon className='w-8 h-8 text-primary' />
                   </div>
-
-                  <h3 className='text-xl font-heading font-semibold mb-3'>
-                    {objective.title}
-                  </h3>
-                  <p className='text-muted-foreground mb-6 leading-relaxed'>
-                    {objective.description}
-                  </p>
-
-                  <div className='space-y-3'>
-                    <div className='flex justify-between text-sm'>
-                      <span className='font-medium'>Progress</span>
-                      <span className='text-muted-foreground'>
-                        {objective.raised}/{objective.goal}
-                      </span>
-                    </div>
-
-                    <div className='w-full bg-secondary rounded-full h-2'>
-                      <div
-                        className={`h-2 rounded-full bg-gradient-to-r ${objective.color} transition-all duration-1000`}
-                        style={{ width: `${objective.percentage}%` }}></div>
-                    </div>
-
-                    <div className='text-right'>
-                      <span className='text-lg font-semibold text-primary'>
-                        {objective.percentage}%
-                      </span>
-                    </div>
-                  </div>
+                  <CardTitle className='text-lg'>{feature.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className='text-center'>
+                    {feature.description}
+                  </CardDescription>
                 </CardContent>
               </Card>
             ))}
@@ -374,263 +275,368 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className='py-20 bg-secondary/30'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+      {/* Pricing Section */}
+      <section id='pricing' className='py-20'>
+        <div className='container mx-auto px-4'>
           <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
-              What We Do
-            </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
-              Learn More What We Do And Get Involved
+            <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+              Choose Your <span className='text-primary'>Plan</span>
             </h2>
-          </div>
-
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
-            {services.map((service, index) => (
-              <Card
-                key={index}
-                className='group hover:shadow-hover transition-all duration-300 border-0 shadow-card overflow-hidden'>
-                <div
-                  className='h-48 bg-cover bg-center relative'
-                  style={{ backgroundImage: `url(${service.image})` }}>
-                  <div className='absolute inset-0 bg-gradient-primary/80 flex items-center justify-center'>
-                    <service.icon className='w-12 h-12 text-white group-hover:scale-110 transition-transform duration-300' />
-                  </div>
-                </div>
-
-                <CardContent className='p-6'>
-                  <h3 className='text-xl font-heading font-semibold mb-3'>
-                    {service.title}
-                  </h3>
-                  <p className='text-muted-foreground mb-6 leading-relaxed'>
-                    {service.description}
-                  </p>
-
-                  {service.link ? (
-                    <Button variant='hero' size='sm' asChild>
-                      <a
-                        href={service.link}
-                        target='_blank'
-                        rel='noopener noreferrer'>
-                        Try Now
-                      </a>
-                    </Button>
-                  ) : (
-                    <Button variant='outline' size='sm'>
-                      Learn More
-                    </Button>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Donation CTA */}
-      <section className='py-20 relative overflow-hidden'>
-        <div
-          className='absolute inset-0 bg-cover bg-center'
-          style={{ backgroundImage: `url(${eventImage})` }}>
-          <div className='absolute inset-0 bg-gradient-hero'></div>
-        </div>
-
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className='max-w-3xl mx-auto text-center text-white'>
-            <Badge className='mb-6 bg-primary/10 text-secondary border-primary/20'>
-              Coming Soon!!
-            </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
-              Career Fair 2025 - Empower the Next Generation
-            </h2>
-            <p className='text-lg mb-8 text-white/90 leading-relaxed'>
-              Support the next generation of professionals! Your contribution
-              helps students access career guidance, skill-building workshops,
-              and networking opportunities at Career Fair 2025.
+            <p className='text-xl text-muted-foreground max-w-2xl mx-auto'>
+              Start free and upgrade as your farm grows. All plans include
+              Swahili language support and local agricultural expertise.
             </p>
-
-            <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <Button variant='hero' size='lg'>
-                Donate via PayPal
-              </Button>
-              <Button
-                variant='outline'
-                size='lg'
-                className='border-white/30 text-black hover:bg-white hover:text-foreground'>
-                Mobile Money
-              </Button>
-              <Button
-                variant='outline'
-                size='lg'
-                className='border-white/30 text-black hover:bg-white hover:text-foreground'>
-                Bank Transfer
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Preview */}
-      <section className='py-20'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
-              Team Members
-            </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
-              The Faces Behind the Mission
-            </h2>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
-            {[
-              { name: "Rahman Mbahe", role: "Founder", image: rahmanImg },
-              {
-                name: "Abdul Swammad",
-                role: "Director of Operation",
-                image: abdulImg,
-              },
-              { name: "Karen Kamene", role: "Tresure ", image: karenImg },
-              {
-                name: "Godfrey Gozberty",
-                role: "ICT officer",
-                image: godfreyImg,
-              },
-            ].map((member, index) => (
+          <div className='grid md:grid-cols-3 gap-8 max-w-6xl mx-auto'>
+            {pricingPlans.map((plan, index) => (
               <Card
                 key={index}
-                className='group hover:shadow-hover transition-all duration-300 border-0 shadow-card'>
-                <CardContent className='p-6 text-center'>
-                  <div className='w-20 h-20 mx-auto mb-4 bg-gradient-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden'>
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className='w-full h-full object-cover rounded-full'
-                    />
+                className={`relative shadow-medium hover:shadow-strong transition-all ${
+                  plan.popular
+                    ? "border-primary ring-2 ring-primary/20 scale-105"
+                    : ""
+                }`}>
+                {plan.popular && (
+                  <div className='absolute -top-4 left-1/2 transform -translate-x-1/2'>
+                    <span className='bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium'>
+                      Most Popular
+                    </span>
                   </div>
-                  <h3 className='text-lg font-heading font-semibold mb-2'>
-                    {member.name}
-                  </h3>
-                  <p className='text-muted-foreground'>{member.role}</p>
+                )}
+
+                <CardHeader className='text-center pb-8'>
+                  <CardTitle className='text-2xl font-bold'>
+                    {plan.name}
+                  </CardTitle>
+                  <div className='mt-4'>
+                    <span className='text-4xl font-bold text-primary'>
+                      {plan.price}
+                    </span>
+                    <span className='text-muted-foreground ml-2'>
+                      /{plan.period}
+                    </span>
+                  </div>
+                  <CardDescription className='mt-4 text-base'>
+                    {plan.description}
+                  </CardDescription>
+                </CardHeader>
+
+                <CardContent className='space-y-6'>
+                  <ul className='space-y-4'>
+                    {plan.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className='flex items-start gap-3'>
+                        <div className='w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5'>
+                          <feature.icon className='w-3 h-3 text-primary' />
+                        </div>
+                        <span className='text-sm text-muted-foreground'>
+                          {feature.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button
+                    className={`w-full ${
+                      plan.popular ? "bg-primary hover:bg-primary/90" : ""
+                    }`}
+                    variant={plan.popular ? "default" : "outline"}
+                    size='lg'
+                    onClick={() => {
+                      setSelectedPlan(plan.name);
+                      handleNavigation("/upload");
+                    }}>
+                    {plan.buttonText}
+                  </Button>
                 </CardContent>
               </Card>
             ))}
           </div>
 
           <div className='text-center mt-12'>
-            <Button variant='hero' size='lg' asChild>
-              <Link to='/team'>Meet Our Full Team</Link>
+            <p className='text-muted-foreground'>
+              All plans support Tanzanian crops including maize, rice, coffee,
+              cotton, cashew nuts, and vegetables. Payment available via M-Pesa,
+              Tigo Pesa, and bank transfer.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className='py-20 bg-gradient-to-r from-primary to-primary-glow'>
+        <div className='container mx-auto px-4 text-center'>
+          <div className='max-w-3xl mx-auto space-y-8'>
+            <h2 className='text-3xl md:text-4xl font-bold text-primary-foreground'>
+              Uko Tayari Kulinda Mazao Yako?
+            </h2>
+            <p className='text-xl text-primary-foreground/90'>
+              Join thousands of Tanzanian farmers who trust AgroDrone for early
+              disease detection and improved harvests across all regions.
+            </p>
+            <Button
+              variant='secondary'
+              size='lg'
+              onClick={() => handleNavigation("/upload")}
+              className='text-lg px-8'>
+              <Camera className='mr-2' />
+              Pakia Picha ya Kwanza
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className='py-20 bg-gradient-card'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
-              Testimonials
-            </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
-              Empowering Communities with Trust
-            </h2>
+      {/* Footer */}
+      <footer className='bg-foreground text-background py-16'>
+        <div className='container mx-auto px-4'>
+          <div className='grid md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12'>
+            {/* Company Info */}
+            <div className='lg:col-span-2 space-y-4'>
+              <div className='flex items-center gap-2 mb-4'>
+                <Leaf className='w-8 h-8 text-primary' />
+                <span className='text-2xl font-bold text-primary'>
+                  AgroDrone
+                </span>
+              </div>
+              <p className='text-background/70 text-sm leading-relaxed'>
+                Empowering Tanzanian farmers with AI-driven crop disease
+                detection and local agricultural solutions. Supporting food
+                security and sustainable farming across all regions of Tanzania.
+              </p>
+              <div className='space-y-2 text-sm'>
+                <div className='flex items-center gap-2 text-background/70'>
+                  <MapIcon className='w-4 h-4' />
+                  <span>Arusha, Tanzania</span>
+                </div>
+                <div className='flex items-center gap-2 text-background/70'>
+                  <Phone className='w-4 h-4' />
+                  <span>+255 123 456 789</span>
+                </div>
+                <div className='flex items-center gap-2 text-background/70'>
+                  <Mail className='w-4 h-4' />
+                  <span>info@AgroDrone.co.tz</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Services */}
+            <div className='space-y-4'>
+              <h4 className='font-semibold text-background'>Services</h4>
+              <ul className='space-y-2 text-sm text-background/70'>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Crop Disease Detection
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    IoT Monitoring
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Market Analytics
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Weather Forecasting
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Agronomist Consultation
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Training Programs
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Support */}
+            <div className='space-y-4'>
+              <h4 className='font-semibold text-background'>Support</h4>
+              <ul className='space-y-2 text-sm text-background/70'>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Help Center
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    User Guide
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    FAQ
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Contact Support
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Report Issues
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Feature Requests
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div className='space-y-4'>
+              <h4 className='font-semibold text-background'>Company</h4>
+              <ul className='space-y-2 text-sm text-background/70'>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    About Us
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Our Mission
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Careers
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Press Kit
+                  </a>
+                </li>
+                <li>
+                  <a href='#' className='hover:text-primary transition-colors'>
+                    Privacy Policy
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div className='max-w-4xl mx-auto'>
-            <Card className='border-0 shadow-elegant'>
-              <CardContent className='p-8 text-center'>
-                <div className='flex justify-center mb-6'>
-                  {[...Array(testimonials[currentTestimonial].rating)].map(
-                    (_, i) => (
-                      <Star
-                        key={i}
-                        className='w-6 h-6 text-yellow-400 fill-current'
-                      />
-                    )
-                  )}
+          {/* Partners Section */}
+          <div className='border-t border-background/20 pt-8 mb-8'>
+            <h4 className='font-semibold text-background mb-4 text-center'>
+              Our Partners
+            </h4>
+            <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 items-center opacity-60'>
+              <div className='text-center'>
+                <div className='bg-background/10 rounded-lg p-3 mb-2'>
+                  <span className='text-xs text-background/70'>USAID</span>
                 </div>
-
-                <blockquote className='text-lg md:text-xl italic mb-6 leading-relaxed text-muted-foreground'>
-                  "{testimonials[currentTestimonial].content}"
-                </blockquote>
-
-                <div className='flex items-center justify-center space-x-4'>
-                  <div className='w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center'>
-                    <Users className='w-6 h-6 text-primary-foreground' />
-                  </div>
-                  <div className='text-left'>
-                    <h4 className='font-semibold'>
-                      {testimonials[currentTestimonial].name}
-                    </h4>
-                    <p className='text-muted-foreground'>
-                      {testimonials[currentTestimonial].role}
-                    </p>
-                  </div>
+              </div>
+              <div className='text-center'>
+                <div className='bg-background/10 rounded-lg p-3 mb-2'>
+                  <span className='text-xs text-background/70'>World Bank</span>
                 </div>
-
-                <div className='flex justify-center mt-8 space-x-2'>
-                  {testimonials.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentTestimonial(index)}
-                      className={`w-3 h-3 rounded-full transition-colors ${
-                        index === currentTestimonial ? "bg-primary" : "bg-muted"
-                      }`}
-                    />
-                  ))}
+              </div>
+              <div className='text-center'>
+                <div className='bg-background/10 rounded-lg p-3 mb-2'>
+                  <span className='text-xs text-background/70'>CGIAR</span>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+              <div className='text-center'>
+                <div className='bg-background/10 rounded-lg p-3 mb-2'>
+                  <span className='text-xs text-background/70'>IITA</span>
+                </div>
+              </div>
+              <div className='text-center'>
+                <div className='bg-background/10 rounded-lg p-3 mb-2'>
+                  <span className='text-xs text-background/70'>IFAD</span>
+                </div>
+              </div>
+              <div className='text-center'>
+                <div className='bg-background/10 rounded-lg p-3 mb-2'>
+                  <span className='text-xs text-background/70'>FAO</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
 
-      {isVideoOpen && (
-        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/80'>
-          <div className='relative w-full max-w-4xl aspect-video bg-black rounded-lg overflow-hidden'>
-            <button
-              onClick={() => setIsVideoOpen(false)}
-              className='absolute top-3 right-3 text-white text-2xl font-bold z-10'
-              aria-label='Close'>
-              &times;
-            </button>
-            <iframe
-              className='w-full h-full'
-              src='https://www.youtube.com/embed/Tsm1vKgZg_g?autoplay=1'
-              title='CAREER TALK SEASON 1 EPISODE 1'
-              frameBorder='0'
-              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-              allowFullScreen></iframe>
+          {/* Donation Section */}
+          <div className='bg-background/5 rounded-lg p-6 mb-8'>
+            <div className='text-center space-y-4'>
+              <h4 className='font-semibold text-background'>
+                Support Our Mission
+              </h4>
+              <p className='text-background/70 text-sm'>
+                Help us reach more smallholder farmers across Tanzania and
+                improve food security through technology.
+              </p>
+              <div className='flex flex-col sm:flex-row gap-3 justify-center'>
+                <Button
+                  variant='outline'
+                  className='bg-transparent border-background/30 text-background hover:bg-background/10'
+                  onClick={() => handleNavigation("/donate")}>
+                  Donate Now
+                </Button>
+                <Button
+                  variant='outline'
+                  className='bg-transparent border-background/30 text-background hover:bg-background/10'
+                  onClick={() => handleNavigation("/volunteer")}>
+                  Become a Volunteer
+                </Button>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
 
-      {/* Partners Section */}
+          {/* Social Media & Copyright */}
+          <div className='border-t border-background/20 pt-8'>
+            <div className='flex flex-col md:flex-row justify-between items-center gap-4'>
+              <div className='text-sm text-background/70'>
+                <span>© 2024 AgroDrone Tanzania</span>
+                <span className='mx-2'>•</span>
+                <span>Kwa wakulima, na wakulima</span>
+              </div>
 
-      <section className='py-16 bg-white'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 text-center'>
-          <h2 className='text-2xl md:text-3xl font-heading font-bold mb-8'>
-            Our Partners
-          </h2>
-
-          <div className='overflow-hidden relative'>
-            <div className='flex animate-scroll-horizontal whitespace-nowrap'>
-              {[...partnerLogos, ...partnerLogos].map((logo, index) => (
-                <img
-                  key={index}
-                  src={logo}
-                  alt={`Partner ${index + 1}`}
-                  className='h-20 mx-8 object-contain grayscale hover:grayscale-0 transition duration-300 inline-block'
-                />
-              ))}
+              <div className='flex items-center gap-4'>
+                <span className='text-sm text-background/70 mr-2'>
+                  Follow us:
+                </span>
+                <div className='flex gap-3'>
+                  <a
+                    href='#'
+                    className='w-8 h-8 bg-background/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors'>
+                    <Facebook className='w-4 h-4 text-background hover:text-background' />
+                  </a>
+                  <a
+                    href='#'
+                    className='w-8 h-8 bg-background/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors'>
+                    <Twitter className='w-4 h-4 text-background hover:text-background' />
+                  </a>
+                  <a
+                    href='#'
+                    className='w-8 h-8 bg-background/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors'>
+                    <Instagram className='w-4 h-4 text-background hover:text-background' />
+                  </a>
+                  <a
+                    href='#'
+                    className='w-8 h-8 bg-background/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors'>
+                    <Mail className='w-4 h-4 text-background hover:text-background' />
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </section>
-
-      <Footer />
+      </footer>
     </div>
   );
 };
