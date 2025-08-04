@@ -135,7 +135,7 @@ const Index = () => {
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-2'>
               <Leaf className='w-8 h-8 text-primary' />
-              <span className='text-xl font-bold text-primary'>AgroDrone</span>
+              <span className='text-xl font-bold text-primary'>AgriCareAI</span>
             </div>
             <div className='hidden md:flex items-center gap-6'>
               <a
@@ -160,7 +160,7 @@ const Index = () => {
               </Button>
               <Button
                 variant='hero'
-                onClick={() => handleNavigation("/upload")}>
+                onClick={() => handleNavigation("/auth")}>
                 Get Started
               </Button>
             </div>
@@ -196,7 +196,7 @@ const Index = () => {
                 <Button
                   variant='hero'
                   size='lg'
-                  onClick={() => handleNavigation("/upload")}
+                  onClick={() => handleNavigation("/auth")}
                   className='text-lg px-8'>
                   <Camera className='mr-2' />
                   Start Diagnosis
@@ -229,7 +229,7 @@ const Index = () => {
               <div className='relative rounded-2xl overflow-hidden shadow-strong'>
                 <img
                   src={heroImage}
-                  alt='Farmer using AgroDrone'
+                  alt='Farmer using AgriCareAI'
                   className='w-full h-auto'
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent' />
@@ -244,7 +244,7 @@ const Index = () => {
         <div className='container mx-auto px-4'>
           <div className='text-center mb-16'>
             <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-              Why Choose <span className='text-primary'>AgroDrone</span>?
+              Why Choose <span className='text-primary'>AgriCareAI</span>?
             </h2>
             <p className='text-xl text-muted-foreground max-w-2xl mx-auto'>
               Advanced AI technology meets local agricultural expertise to
@@ -344,7 +344,7 @@ const Index = () => {
                     size='lg'
                     onClick={() => {
                       setSelectedPlan(plan.name);
-                      handleNavigation("/upload");
+                      handleNavigation("/auth");
                     }}>
                     {plan.buttonText}
                   </Button>
@@ -371,13 +371,13 @@ const Index = () => {
               Uko Tayari Kulinda Mazao Yako?
             </h2>
             <p className='text-xl text-primary-foreground/90'>
-              Join thousands of Tanzanian farmers who trust AgroDrone for early
+              Join thousands of Tanzanian farmers who trust AgriCareAI for early
               disease detection and improved harvests across all regions.
             </p>
             <Button
               variant='secondary'
               size='lg'
-              onClick={() => handleNavigation("/upload")}
+              onClick={() => handleNavigation("/auth")}
               className='text-lg px-8'>
               <Camera className='mr-2' />
               Pakia Picha ya Kwanza
@@ -395,7 +395,7 @@ const Index = () => {
               <div className='flex items-center gap-2 mb-4'>
                 <Leaf className='w-8 h-8 text-primary' />
                 <span className='text-2xl font-bold text-primary'>
-                  AgroDrone
+                  AgriCareAI
                 </span>
               </div>
               <p className='text-background/70 text-sm leading-relaxed'>
@@ -414,7 +414,7 @@ const Index = () => {
                 </div>
                 <div className='flex items-center gap-2 text-background/70'>
                   <Mail className='w-4 h-4' />
-                  <span>info@AgroDrone.co.tz</span>
+                  <span>info@agricareai.co.tz</span>
                 </div>
               </div>
             </div>
@@ -601,7 +601,7 @@ const Index = () => {
           <div className='border-t border-background/20 pt-8'>
             <div className='flex flex-col md:flex-row justify-between items-center gap-4'>
               <div className='text-sm text-background/70'>
-                <span>© 2024 AgroDrone Tanzania</span>
+                <span>© 2024 AgriCareAI Tanzania</span>
                 <span className='mx-2'>•</span>
                 <span>Kwa wakulima, na wakulima</span>
               </div>
