@@ -141,7 +141,7 @@ const Index = () => {
         "Discover our AI-driven career guidance tool designed to help students make informed decisions.",
       icon: Zap,
       image: abstractBg,
-      link: "https://careerguider.vercel.app/",
+      link: "https://careerguidance.careernamimi.org/",
     },
   ];
 
@@ -252,7 +252,7 @@ const Index = () => {
               </p>
               <Button variant='hero' size='lg' asChild>
                 <a
-                  href='https://careerguider.vercel.app/'
+                  href='https://careerguidance.careernamimi.org/'
                   target='_blank'
                   rel='noopener noreferrer'>
                   See It in Action <ArrowRight className='ml-2 w-5 h-5' />
@@ -292,11 +292,11 @@ const Index = () => {
               Empowering Dreams, One Story at a Time
             </h2>
             <p className='text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed'>
-              Our YouTube channel is more than a platform—it's a global stage
-              where students, graduates, and young professionals share real-life
-              journeys of ambition, struggle, and success. These stories serve
-              as living proof that transformation is possible when passion meets
-              purpose.
+              Career Na Mimi is a youth empowerment organization based in
+              Tanzania, dedicated to bridging the gap between young people and
+              the opportunities they need to thrive. We empower youth through
+              quality education, mentorship, and skill development programs,
+              preparing them for successful careers and sustainable livelihoods.
             </p>
           </div>
 

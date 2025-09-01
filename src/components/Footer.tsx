@@ -166,7 +166,7 @@ const Footer = () => {
                 className='border-background/30 text-black hover:bg-background hover:text-foreground'
                 asChild>
                 <a
-                  href='https://careerguider.vercel.app/'
+                  href='https://careerguidance.careernamimi.org/'
                   target='_blank'
                   rel='noopener noreferrer'>
                   Try AI Career Guide
