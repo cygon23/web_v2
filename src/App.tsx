@@ -1,5 +1,4 @@
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -17,6 +16,7 @@ import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
 import LoadingScreen from "@/components/Loading";
 import ProjectsPage from "./pages/ProjectsPage";
+import AIServicesPage from "./pages/AIServicesPage";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +34,6 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Sonner />
         <BrowserRouter>
           {/* Cookie consent shown on all pages */}
           <CookieConsent />
@@ -48,8 +47,8 @@ const App = () => {
             <Route path='/contact' element={<Contact />} />
             <Route path='/privacy-policy' element={<PrivacyPolicy />} />
 
-            {/* 👇 NEW projects route */}
             <Route path='/projects' element={<ProjectsPage />} />
+            <Route path='/services' element={<AIServicesPage />} />
 
             {/* Catch-all 404 route */}
             <Route path='*' element={<NotFound />} />
