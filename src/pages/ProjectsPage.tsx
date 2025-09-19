@@ -219,7 +219,8 @@ const ProjectsPage = () => {
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-pink-50 via-white to-pink-300 mb-0'>
-      <Navigation />s{/* Header Section */}
+      <Navigation />
+      {/* Header Section */}
       <div className='relative overflow-hidden bg-gradient-to-r from-pink-600 to-pink-400 text-white'>
         <div className='absolute inset-0 bg-black opacity-10'></div>
         <div className='container mx-auto px-4 py-20 relative z-10'>
