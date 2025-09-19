@@ -660,7 +660,10 @@ const ServicesPage = () => {
               <div className='text-center'>
                 <Phone className='w-8 h-8 mx-auto mb-3' />
                 <div className='font-semibold'>Call Us</div>
-                <div className='text-pink-100'>+1 (555) 123-4567</div>
+                <div className='text-pink-100'>
+                  {" "}
+                  +255 628 055 646/673 045 414
+                </div>
               </div>
               <div className='text-center'>
                 <Calendar className='w-8 h-8 mx-auto mb-3' />

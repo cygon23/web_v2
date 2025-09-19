@@ -131,7 +131,7 @@ const Footer = () => {
                   <a
                     href='tel:+1234567890'
                     className='text-sm hover:text-primary-light transition-colors'>
-                    +255 628 055 646
+                    +255 628 055 646/673 045 414
                   </a>
                 </div>
               </li>
