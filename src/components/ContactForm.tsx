@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import emailjs from "@emailjs/browser";
 import ReCAPTCHA from "react-google-recaptcha";
 
 interface ContactFormData {
@@ -58,6 +57,10 @@ const ContactForm = ({ className }: ContactFormProps) => {
   const { toast } = useToast();
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
+  const getRecaptchaSiteKey = () => {
+    return import.meta.env?.VITE_RECAPTCHA_SITE_KEY;
+  };
+
   const handleInputChange = (field: keyof ContactFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
@@ -66,42 +69,57 @@ const ContactForm = ({ className }: ContactFormProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validate form
     const validationErrors = validateForm(formData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
+    // Check reCAPTCHA
     if (!recaptchaToken) {
       toast({
         title: "reCAPTCHA required",
         description: "Please confirm you're not a robot.",
         variant: "destructive",
       });
+
       return;
     }
 
     setIsSubmitting(true);
 
-    const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
     try {
-      const response = await emailjs.send(
-        serviceID,
-        templateID,
-        {
+      const apiUrl =
+        "https://lklswfbrfdmbcpwdgwcz.supabase.co/functions/v1/contact-Public";
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${
+            import.meta.env.VITE_SUPABASE_ANON_KEY || ""
+          }`,
+        },
+        body: JSON.stringify({
           name: formData.name,
           email: formData.email,
           subject: formData.subject,
-          message: formData.message,
-          "g-recaptcha-response": recaptchaToken,
-        },
-        publicKey
-      );
+          message: `Subject: ${formData.subject}\n\n${formData.message}`,
+          recaptchaToken,
+        }),
+      });
 
-      if (response.status === 200) {
+      let result;
+      try {
+        const responseText = await response.text();
+
+        result = responseText ? JSON.parse(responseText) : {};
+      } catch (parseError) {
+        console.error("Failed to parse response:", parseError);
+        throw new Error("Invalid response from server");
+      }
+
+      if (response.ok && result.success) {
         setSubmitSuccess(true);
         setFormData({ name: "", email: "", subject: "", message: "" });
         setErrors({});
@@ -115,17 +133,31 @@ const ContactForm = ({ className }: ContactFormProps) => {
 
         setTimeout(() => setSubmitSuccess(false), 3000);
       } else {
-        throw new Error("Failed to send email");
+        throw new Error(result.error || `Server error: ${response.status}`);
       }
-    } catch {
+    } catch (err: any) {
       toast({
         title: "Failed to send message",
-        description: "Please try again later or contact us directly.",
+        description:
+          err.message ||
+          "Please try again later. Check your internet connection.",
         variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleRecaptchaChange = (token: string | null) => {
+    setRecaptchaToken(token);
+  };
+
+  const handleRecaptchaError = () => {
+    toast({
+      title: "reCAPTCHA Error",
+      description: "Please try refreshing the page and try again.",
+      variant: "destructive",
+    });
   };
 
   return (
@@ -155,6 +187,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
                   placeholder='John Doe'
+                  disabled={isSubmitting}
                   className={cn(
                     "h-12 bg-white/50 backdrop-blur border-white/30 focus:border-primary/50 focus:ring-primary/20",
                     errors.name && "border-destructive"
@@ -162,8 +195,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
                 />
                 {errors.name && (
                   <p className='text-sm text-destructive flex items-center gap-1'>
-                    <AlertCircle className='w-4 h-4' />
-                    {errors.name}
+                    <AlertCircle className='w-4 h-4' /> {errors.name}
                   </p>
                 )}
               </div>
@@ -177,6 +209,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
                   placeholder='john@example.com'
+                  disabled={isSubmitting}
                   className={cn(
                     "h-12 bg-white/50 backdrop-blur border-white/30 focus:border-primary/50 focus:ring-primary/20",
                     errors.email && "border-destructive"
@@ -184,8 +217,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
                 />
                 {errors.email && (
                   <p className='text-sm text-destructive flex items-center gap-1'>
-                    <AlertCircle className='w-4 h-4' />
-                    {errors.email}
+                    <AlertCircle className='w-4 h-4' /> {errors.email}
                   </p>
                 )}
               </div>
@@ -200,6 +232,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
                 value={formData.subject}
                 onChange={(e) => handleInputChange("subject", e.target.value)}
                 placeholder="What's this about?"
+                disabled={isSubmitting}
                 className={cn(
                   "h-12 bg-white/50 backdrop-blur border-white/30 focus:border-primary/50 focus:ring-primary/20",
                   errors.subject && "border-destructive"
@@ -207,8 +240,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
               />
               {errors.subject && (
                 <p className='text-sm text-destructive flex items-center gap-1'>
-                  <AlertCircle className='w-4 h-4' />
-                  {errors.subject}
+                  <AlertCircle className='w-4 h-4' /> {errors.subject}
                 </p>
               )}
             </div>
@@ -223,6 +255,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
                 onChange={(e) => handleInputChange("message", e.target.value)}
                 placeholder='Tell us more about your inquiry...'
                 rows={5}
+                disabled={isSubmitting}
                 className={cn(
                   "bg-white/50 backdrop-blur border-white/30 focus:border-primary/50 focus:ring-primary/20 resize-none",
                   errors.message && "border-destructive"
@@ -230,38 +263,42 @@ const ContactForm = ({ className }: ContactFormProps) => {
               />
               {errors.message && (
                 <p className='text-sm text-destructive flex items-center gap-1'>
-                  <AlertCircle className='w-4 h-4' />
-                  {errors.message}
+                  <AlertCircle className='w-4 h-4' /> {errors.message}
                 </p>
               )}
             </div>
 
             {/* reCAPTCHA */}
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-              onChange={(token) => setRecaptchaToken(token)}
-              className='mt-4'
-            />
+            <div className='flex justify-center'>
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={getRecaptchaSiteKey()}
+                onChange={handleRecaptchaChange}
+                onError={handleRecaptchaError}
+                onExpired={() => setRecaptchaToken(null)}
+              />
+            </div>
 
             {/* Submit */}
             <Button
               type='submit'
-              disabled={isSubmitting || submitSuccess}
+              disabled={isSubmitting || submitSuccess || !recaptchaToken}
               className={cn(
                 "w-full h-12 bg-gradient-primary hover:shadow-elegant transition-all duration-300 group",
-                submitSuccess && "bg-green-500 hover:bg-green-500"
+                submitSuccess && "bg-green-500 hover:bg-green-500",
+                !recaptchaToken &&
+                  !isSubmitting &&
+                  "opacity-50 cursor-not-allowed"
               )}>
               {isSubmitting ? (
                 <Loader2 className='w-5 h-5 animate-spin' />
               ) : submitSuccess ? (
                 <>
-                  <CheckCircle className='w-5 h-5 mr-2' />
-                  Message Sent!
+                  <CheckCircle className='w-5 h-5 mr-2' /> Message Sent!
                 </>
               ) : (
                 <>
-                  <Send className='w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform' />
+                  <Send className='w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform' />{" "}
                   Send Message
                 </>
               )}
