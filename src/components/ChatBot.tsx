@@ -68,9 +68,7 @@ const ChatBot = () => {
       Previous conversation context:
       ${conversationHistory}
 
-      User: ${userMessage.text}
-
-      Please provide a helpful, well-formatted professional response with emojis and clear structure focused on career guidance.`;
+      User: ${userMessage.text}`;
 
       const apiUrl = `https://CreepyTech-creepy-ai.hf.space/ai/logic?q=${encodeURIComponent(
         prompt
@@ -86,10 +84,9 @@ const ChatBot = () => {
       const data = await response.json();
 
       if (data && data.result) {
-        // Strip markdown but keep line breaks
         const cleanText = removeMd(data.result, { useImgAltText: false })
-          .replace(/(\r\n|\r|\n){2,}/g, "\n\n") // preserve double line breaks
-          .replace(/^\s+|\s+$/g, ""); // trim
+          .replace(/(\r\n|\r|\n){2,}/g, "\n\n")
+          .trim();
 
         const botMessage = {
           id: (Date.now() + 1).toString(),
@@ -105,7 +102,7 @@ const ChatBot = () => {
       console.error("Chat error:", error);
       const errorMessage = {
         id: (Date.now() + 1).toString(),
-        text: "I'm sorry, I'm having trouble connecting right now. Please try again later or contact our support team.",
+        text: "Sorry, I couldn’t connect right now. Please try again later.",
         isBot: true,
         timestamp: new Date(),
       };
@@ -138,53 +135,42 @@ const ChatBot = () => {
           className='bg-pink-600 hover:bg-pink-700 text-white rounded-full p-4 shadow-lg transition-all duration-200 hover:scale-105 group'
           aria-label='Open chat'>
           <MessageCircle size={24} />
-          <div className='absolute -top-2 -left-2 w-3 h-3 bg-black-400 rounded-full animate-pulse'></div>
         </button>
-
-        {/* Welcome tooltip */}
-        <div className='absolute bottom-full right-0 mb-2 w-64 bg-white rounded-lg shadow-lg p-3 border opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
-          <div className='text-sm text-gray-700'>
-            <strong>Hi! I'm your CareerNamimi assistant</strong>
-            <p className='text-xs mt-1'>
-              Ask me about careers, job search tips, or professional
-              development!
-            </p>
-          </div>
-          <div className='absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white'></div>
-        </div>
       </div>
     );
   }
 
   return (
-    <div className='fixed bottom-6 right-6 z-50'>
+    <div className='fixed inset-x-0 bottom-0 sm:bottom-6 sm:right-6 z-50 flex justify-center sm:justify-end'>
       <div
-        className={`bg-white rounded-lg shadow-2xl border transition-all duration-300 ${
-          isMinimized ? "w-80 h-16" : "w-96 h-[500px]"
+        className={`bg-white rounded-lg shadow-2xl border transition-all duration-300 flex flex-col ${
+          isMinimized ? "w-72 h-14" : "w-full h-[80vh] sm:w-96 sm:h-[500px]"
         }`}>
         {/* Header */}
-        <div className='bg-gradient-to-r from-pink-600 to-pink-700 text-white p-4 rounded-t-lg flex items-center justify-between'>
-          <div className='flex items-center gap-3'>
-            <div className='w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center'>
+        <div className='bg-gradient-to-r from-pink-600 to-pink-700 text-white p-3 sm:p-4 rounded-t-lg flex items-center justify-between'>
+          <div className='flex items-center gap-2 sm:gap-3'>
+            <div className='w-7 h-7 sm:w-8 sm:h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center'>
               <Bot size={16} />
             </div>
             <div>
-              <h3 className='font-semibold text-sm'>CareerNamimi Assistant</h3>
-              <p className='text-xs text-blue-100'>Online • Ready to help</p>
+              <h3 className='font-semibold text-xs sm:text-sm'>
+                CareerNamimi Assistant
+              </h3>
+              <p className='text-[10px] sm:text-xs text-blue-100'>
+                Online • Ready to help
+              </p>
             </div>
           </div>
-          <div className='flex items-center gap-2'>
+          <div className='flex items-center gap-1 sm:gap-2'>
             <button
               onClick={() => setIsMinimized(!isMinimized)}
-              className='text-white hover:bg-white hover:bg-opacity-20 p-1.5 rounded transition-colors'
-              aria-label={isMinimized ? "Maximize chat" : "Minimize chat"}>
-              {isMinimized ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
+              className='text-white hover:bg-white hover:bg-opacity-20 p-1 rounded transition-colors'>
+              {isMinimized ? <Maximize2 size={14} /> : <Minimize2 size={14} />}
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className='text-white hover:bg-white hover:bg-opacity-20 p-1.5 rounded transition-colors'
-              aria-label='Close chat'>
-              <X size={16} />
+              className='text-white hover:bg-white hover:bg-opacity-20 p-1 rounded transition-colors'>
+              <X size={14} />
             </button>
           </div>
         </div>
@@ -192,53 +178,49 @@ const ChatBot = () => {
         {/* Chat body */}
         {!isMinimized && (
           <>
-            <div className='h-80 overflow-y-auto p-4 space-y-4 bg-gray-50'>
+            <div className='flex-1 overflow-y-auto p-3 sm:p-4 space-y-4 bg-gray-50'>
               {messages.map((message) => (
                 <div
                   key={message.id}
-                  className={`flex gap-3 ${
+                  className={`flex gap-2 sm:gap-3 ${
                     message.isBot ? "justify-start" : "justify-end"
                   }`}>
                   {message.isBot && (
-                    <div className='w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1'>
+                    <div className='w-7 h-7 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1'>
                       <Bot size={14} className='text-pink-600' />
                     </div>
                   )}
-
                   <div
-                    className={`max-w-xs lg:max-w-sm ${
+                    className={`max-w-[75%] sm:max-w-xs ${
                       message.isBot ? "order-2" : "order-1"
                     }`}>
                     <div
-                      className={`rounded-2xl px-4 py-2 ${
+                      className={`rounded-2xl px-3 py-2 sm:px-4 sm:py-2 ${
                         message.isBot
                           ? "bg-white text-gray-800 border"
                           : "bg-pink-600 text-white"
                       }`}>
-                      <p className='text-sm leading-relaxed whitespace-pre-wrap'>
+                      <p className='text-xs sm:text-sm leading-relaxed whitespace-pre-wrap'>
                         {message.text}
                       </p>
                     </div>
-                    <p className='text-xs text-gray-500 mt-1 px-2'>
+                    <p className='text-[10px] sm:text-xs text-gray-500 mt-1 px-1'>
                       {formatTime(message.timestamp)}
                     </p>
                   </div>
-
                   {!message.isBot && (
-                    <div className='w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0 mt-1 order-3'>
+                    <div className='w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0 mt-1 order-3'>
                       <User size={14} className='text-gray-600' />
                     </div>
                   )}
                 </div>
               ))}
-
-              {/* Typing indicator */}
               {isTyping && (
-                <div className='flex gap-3 justify-start'>
-                  <div className='w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0'>
+                <div className='flex gap-2 sm:gap-3 justify-start'>
+                  <div className='w-7 h-7 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0'>
                     <Bot size={14} className='text-pink-600' />
                   </div>
-                  <div className='bg-white border rounded-2xl px-4 py-3'>
+                  <div className='bg-white border rounded-2xl px-3 py-2'>
                     <div className='flex gap-1'>
                       <div className='w-2 h-2 bg-gray-400 rounded-full animate-bounce'></div>
                       <div
@@ -251,12 +233,11 @@ const ChatBot = () => {
                   </div>
                 </div>
               )}
-
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input area */}
-            <div className='p-4 border-t bg-white rounded-b-lg'>
+            {/* Input */}
+            <div className='p-3 sm:p-4 border-t bg-white rounded-b-lg'>
               <div className='flex gap-2'>
                 <textarea
                   ref={inputRef}
@@ -264,21 +245,20 @@ const ChatBot = () => {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder='Ask me about careers, job search, or professional development...'
-                  className='flex-1 resize-none border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent max-h-20'
+                  className='flex-1 resize-none border rounded-xl px-3 sm:px-4 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent max-h-20'
                   rows='1'
                   disabled={isTyping}
                 />
                 <button
                   onClick={sendMessage}
                   disabled={!inputValue.trim() || isTyping}
-                  className='bg-pink-600 hover:bg-pink-700 disabled:bg-gray-300 text-white rounded-xl p-2 transition-colors flex-shrink-0'
-                  aria-label='Send message'>
+                  className='bg-pink-600 hover:bg-pink-700 disabled:bg-gray-300 text-white rounded-xl p-2 transition-colors flex-shrink-0'>
                   <Send size={16} />
                 </button>
               </div>
 
               {/* Quick actions */}
-              <div className='flex gap-2 mt-3 flex-wrap'>
+              <div className='flex gap-2 mt-2 flex-wrap'>
                 {[
                   "Resume tips",
                   "Interview prep",
@@ -288,7 +268,7 @@ const ChatBot = () => {
                   <button
                     key={suggestion}
                     onClick={() => setInputValue(suggestion)}
-                    className='text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full transition-colors'>
+                    className='text-[11px] sm:text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-2 sm:px-3 py-1 rounded-full transition-colors'>
                     {suggestion}
                   </button>
                 ))}
