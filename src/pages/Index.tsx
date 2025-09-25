@@ -44,6 +44,7 @@ import rahmanImg from "@/assets/team/rahman.jpeg";
 import abdulImg from "@/assets/team/02.jpg";
 import karenImg from "@/assets/team/KAREEN.jpg";
 import godfreyImg from "@/assets/team/godfrey.jpg";
+import ChatBot from "@/components/ChatBot";
 
 const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -629,7 +630,7 @@ const Index = () => {
           </div>
         </div>
       </section>
-
+      <ChatBot />
       <Footer />
     </div>
   );
