@@ -76,10 +76,10 @@ const Navigation = () => {
           <div className='hidden lg:flex items-center space-x-4'>
             <Button variant='outline' size='sm' asChild>
               <a
-                href='https://careerguider.vercel.app/'
+                href='https://morden-blog-site.vercel.app/'
                 target='_blank'
                 rel='noopener noreferrer'>
-                AI Career Guide
+                Career Guide
               </a>
             </Button>
             <Button variant='hero' size='sm' asChild>
