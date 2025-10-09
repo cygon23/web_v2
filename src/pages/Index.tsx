@@ -254,7 +254,7 @@ const Index = () => {
               <Button variant='hero' size='lg' asChild>
                 <a
                   href='https://caeerhub-platform.vercel.app/'
-                  target='_blank's
+                  target='_blank'
                   rel='noopener noreferrer'>
                   See It in Action <ArrowRight className='ml-2 w-5 h-5' />
                 </a>
