@@ -45,16 +45,6 @@ const CareerPathConnector = () => {
     const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
-    // Set canvas size
-    const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-      initializeNodes();
-    };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
     // Initialize nodes representing career milestones
     const initializeNodes = () => {
       const nodeCount = 8;
@@ -107,6 +97,16 @@ const CareerPathConnector = () => {
 
       setLoaded(true);
     };
+
+    // Set canvas size
+    const resizeCanvas = () => {
+      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      initializeNodes();
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
     // Mouse interaction
     const handleMouseMove = (e: MouseEvent) => {
