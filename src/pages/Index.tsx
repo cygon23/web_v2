@@ -220,25 +220,25 @@ const Index = () => {
                     number: '500+',
                     label: 'Youth Empowered',
                     value: 500,
-                    color: 'rgba(236, 72, 153, 1)' // Pink
+                    color: 'hsl(327, 73%, 56%)' // Primary brand color
                   },
                   {
                     number: '50+',
                     label: 'Workshops Conducted',
                     value: 50,
-                    color: 'rgba(168, 85, 247, 1)' // Purple
+                    color: 'hsl(327, 73%, 65%)' // Lighter variant
                   },
                   {
                     number: '25+',
                     label: 'Career Talks',
                     value: 25,
-                    color: 'rgba(59, 130, 246, 1)' // Blue
+                    color: 'hsl(327, 73%, 70%)' // Even lighter
                   },
                   {
                     number: '100+',
                     label: 'Success Stories',
                     value: 100,
-                    color: 'rgba(14, 165, 233, 1)' // Sky
+                    color: 'hsl(327, 73%, 48%)' // Darker variant
                   },
                 ]}
               />
