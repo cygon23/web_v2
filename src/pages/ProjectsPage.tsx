@@ -16,9 +16,17 @@ import {
   Lightbulb,
   Target,
   Globe,
+  Sparkles,
+  Rocket,
+  Code,
+  Database,
+  Zap,
+  Cpu,
+  Settings,
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const ProjectsPage = () => {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -30,6 +38,11 @@ const ProjectsPage = () => {
     type: "feedback",
   });
 
+  // Scroll animation hooks
+  const projectsGridSection = useScrollAnimation({ threshold: 0.1 });
+  const ctaSection = useScrollAnimation({ threshold: 0.1 });
+  const footerCtaSection = useScrollAnimation({ threshold: 0.1 });
+
   const projects = [
     {
       id: 1,
@@ -40,8 +53,8 @@ const ProjectsPage = () => {
         "A revolutionary career development platform that connects students, professionals, and employers. Features include job matching, skill assessments, career path recommendations, and mentorship programs.",
       icon: Briefcase,
       link: "https://caeerhub-platform.vercel.app/",
-      color: "bg-green-50 text-green-600",
-      gradient: "from-green-500 to-emerald-600",
+      color: "bg-primary/10 text-primary",
+      gradient: "from-primary via-primary/90 to-primary",
       category: "Career Development",
       impact: {
         users: "150+",
@@ -72,8 +85,8 @@ const ProjectsPage = () => {
         "Advanced data visualization platform providing interactive dashboards, real-time analytics, and business intelligence tools for data-driven decision making.",
       icon: BarChart3,
       link: "https://data-visualization-sooty.vercel.app/",
-      color: "bg-purple-50 text-purple-600",
-      gradient: "from-purple-500 to-indigo-600",
+      color: "bg-primary/10 text-primary",
+      gradient: "from-primary via-primary/90 to-primary",
       category: "Analytics & Insights",
       impact: {
         users: "8K+",
@@ -105,8 +118,8 @@ const ProjectsPage = () => {
         "A vibrant community platform where professionals share experiences, collaborate on projects, and build meaningful connections across different industries.",
       icon: Users,
       link: "#",
-      color: "bg-blue-50 text-blue-600",
-      gradient: "from-blue-500 to-cyan-600",
+      color: "bg-primary/10 text-primary",
+      gradient: "from-primary via-primary/90 to-primary",
       category: "Community & Networking",
       impact: {
         users: "Coming Soon",
@@ -138,8 +151,8 @@ const ProjectsPage = () => {
         "AI-powered HR platform that streamlines recruitment processes, matches candidates with opportunities, and provides comprehensive talent management solutions.",
       icon: FileText,
       link: "https://hr-a-ipowerd.vercel.app/",
-      color: "bg-orange-50 text-orange-600",
-      gradient: "from-orange-500 to-red-600",
+      color: "bg-primary/10 text-primary",
+      gradient: "from-primary via-primary/90 to-primary",
       category: "Human Resources",
       impact: {
         users: "100+",
@@ -171,8 +184,8 @@ const ProjectsPage = () => {
         "Tanzania Biz is designed to highlight, promote, and connect local businesses across different industries. The platform will serve as a digital hub where entrepreneurs, startups, and SMEs can showcase their work, attract partners, and reach customers nationwide and globally.",
       icon: BarChart3,
       link: "https://tanzania-biz.vercel.app/",
-      color: "bg-blue-50 text-blue-600",
-      gradient: "from-blue-500 to-indigo-600",
+      color: "bg-primary/10 text-primary",
+      gradient: "from-primary via-primary/90 to-primary",
       category: "Business & Entrepreneurship",
       comingSoon: true,
       impact: {
@@ -218,21 +231,79 @@ const ProjectsPage = () => {
   };
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-pink-50 via-white to-pink-300 mb-0'>
+    <div className='min-h-screen bg-gradient-to-br from-secondary/20 via-white to-secondary/30 mb-0'>
       <Navigation />
       {/* Header Section */}
-      <div className='relative overflow-hidden bg-gradient-to-r from-pink-600 to-pink-400 text-white'>
+      <div className='relative overflow-hidden bg-gradient-to-r from-primary via-primary/90 to-primary text-white'>
         <div className='absolute inset-0 bg-black opacity-10'></div>
+
+        {/* Scattered Decorative Particles with Project-themed Icons */}
+        <div className='absolute inset-0 pointer-events-none z-[5]'>
+          {/* Top Left Area - Innovation */}
+          <div className='absolute top-[15%] left-[8%] animate-float opacity-40'>
+            <Rocket className='w-9 h-9 text-blue-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(147, 197, 253, 0.5))' }} />
+          </div>
+
+          {/* Top Right Area - Development */}
+          <div className='absolute top-[18%] right-[10%] animate-float opacity-50' style={{ animationDelay: '1.5s' }}>
+            <Code className='w-10 h-10 text-emerald-300/70' style={{ filter: 'drop-shadow(0 0 10px rgba(110, 231, 183, 0.5))' }} />
+          </div>
+
+          {/* Middle Left - Data */}
+          <div className='absolute top-[40%] left-[5%] animate-float opacity-45' style={{ animationDelay: '1.2s' }}>
+            <Database className='w-9 h-9 text-purple-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(216, 180, 254, 0.4))' }} />
+          </div>
+
+          {/* Middle Right - Speed */}
+          <div className='absolute top-[45%] right-[7%] animate-float opacity-40' style={{ animationDelay: '0.6s' }}>
+            <Zap className='w-8 h-8 text-yellow-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(253, 224, 71, 0.5))' }} />
+          </div>
+
+          {/* Center Right - Technology */}
+          <div className='absolute top-[35%] right-[15%] animate-float opacity-35' style={{ animationDelay: '2s' }}>
+            <Cpu className='w-7 h-7 text-cyan-300/70' style={{ filter: 'drop-shadow(0 0 6px rgba(165, 243, 252, 0.4))' }} />
+          </div>
+
+          {/* Bottom Left - Building */}
+          <div className='absolute bottom-[25%] left-[12%] animate-float opacity-40' style={{ animationDelay: '0.9s' }}>
+            <Building className='w-9 h-9 text-indigo-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(165, 180, 252, 0.5))' }} />
+          </div>
+
+          {/* Bottom Right - Settings */}
+          <div className='absolute bottom-[30%] right-[12%] animate-float opacity-45' style={{ animationDelay: '1.8s' }}>
+            <Settings className='w-8 h-8 text-pink-300/70' style={{ filter: 'drop-shadow(0 0 7px rgba(244, 114, 182, 0.4))' }} />
+          </div>
+
+          {/* Top Center - Ideas */}
+          <div className='absolute top-[25%] left-[45%] animate-float opacity-35' style={{ animationDelay: '2.5s' }}>
+            <Lightbulb className='w-7 h-7 text-yellow-200/70' style={{ filter: 'drop-shadow(0 0 6px rgba(254, 240, 138, 0.4))' }} />
+          </div>
+
+          {/* Middle Center - Target */}
+          <div className='absolute top-[50%] left-[20%] animate-float opacity-30' style={{ animationDelay: '1.6s' }}>
+            <Target className='w-7 h-7 text-rose-300/70' style={{ filter: 'drop-shadow(0 0 6px rgba(253, 164, 175, 0.4))' }} />
+          </div>
+
+          {/* Accent Stars */}
+          <div className='absolute top-[30%] right-[25%] animate-float opacity-30' style={{ animationDelay: '2.2s' }}>
+            <Star className='w-6 h-6 text-yellow-200/60' style={{ filter: 'drop-shadow(0 0 5px rgba(254, 240, 138, 0.3))' }} />
+          </div>
+
+          <div className='absolute bottom-[35%] left-[25%] animate-float opacity-35' style={{ animationDelay: '1.4s' }}>
+            <Sparkles className='w-7 h-7 text-pink-200/60' style={{ filter: 'drop-shadow(0 0 6px rgba(251, 207, 232, 0.3))' }} />
+          </div>
+        </div>
+
         <div className='container mx-auto px-4 py-20 relative z-10'>
-          <div className='text-center max-w-4xl mx-auto'>
+          <div className='text-center max-w-4xl mx-auto cinematic-fade-in'>
             <div className='inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6'>
               <Lightbulb className='w-5 h-5' />
               <span className='text-sm font-medium'>Innovative Solutions</span>
             </div>
-            <h1 className='text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-pink-200 bg-clip-text text-transparent'>
+            <h1 className='text-4xl md:text-6xl font-bold mb-6'>
               Our Project Portfolio
             </h1>
-            <p className='text-xl text-pink-100 mb-8 leading-relaxed'>
+            <p className='text-xl text-white/90 mb-8 leading-relaxed'>
               Discover the innovative platforms and solutions we've built to
               empower careers, enhance skills, and create opportunities for the
               next generation of professionals.
@@ -252,25 +323,27 @@ const ProjectsPage = () => {
         </div>
 
         {/* Animated background elements */}
-        <div className='absolute top-20 left-10 w-32 h-32 bg-pink-400/20 rounded-full blur-xl animate-pulse'></div>
+        <div className='absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse'></div>
         <div
-          className='absolute bottom-20 right-10 w-40 h-40 bg-purple-400/20 rounded-full blur-xl animate-pulse'
+          className='absolute bottom-20 right-10 w-40 h-40 bg-white/10 rounded-full blur-xl animate-pulse'
           style={{ animationDelay: "1s" }}></div>
       </div>
       {/* Projects Grid */}
-      <div className='container mx-auto px-4 py-16'>
+      <div ref={projectsGridSection.ref} className='container mx-auto px-4 py-16'>
         <div className='grid lg:grid-cols-2 gap-8'>
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className='group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer border border-gray-100 hover:border-pink-200'
+              className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer border border-gray-100 hover:border-primary/30 scroll-scale ${
+                projectsGridSection.isVisible ? 'visible' : ''
+              }`}
               onClick={() => handleProjectClick(project)}
               style={{
-                animationDelay: `${index * 0.1}s`,
+                transitionDelay: `${index * 100}ms`,
               }}>
               {project.comingSoon && (
                 <div className='absolute top-4 right-4 z-10'>
-                  <span className='bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg'>
+                  <span className='bg-gradient-to-r from-primary via-primary/90 to-primary text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg'>
                     Coming Soon
                   </span>
                 </div>
@@ -313,9 +386,9 @@ const ProjectsPage = () => {
                   {/* Impact Stats */}
                   <div className='grid grid-cols-3 gap-4'>
                     {project.stats.map((stat, idx) => (
-                      <div key={idx} className='text-center'>
-                        <div className='w-10 h-10 mx-auto mb-2 bg-gray-100 rounded-lg flex items-center justify-center'>
-                          <stat.icon className='w-5 h-5 text-gray-600' />
+                      <div key={idx} className='text-center group/stat'>
+                        <div className='w-10 h-10 mx-auto mb-2 bg-primary/10 rounded-lg flex items-center justify-center group-hover/stat:bg-primary/20 transition-colors duration-300'>
+                          <stat.icon className='w-5 h-5 text-primary' />
                         </div>
                         <div className='text-lg font-bold text-gray-900'>
                           {stat.value}
@@ -335,7 +408,7 @@ const ProjectsPage = () => {
                     <div className='grid grid-cols-2 gap-2'>
                       {project.features.map((feature, idx) => (
                         <div key={idx} className='flex items-center space-x-2'>
-                          <div className='w-1.5 h-1.5 bg-pink-500 rounded-full'></div>
+                          <div className='w-1.5 h-1.5 bg-primary rounded-full'></div>
                           <span className='text-sm text-gray-600'>
                             {feature}
                           </span>
@@ -351,13 +424,13 @@ const ProjectsPage = () => {
                         href={project.link}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium text-center transition-colors flex items-center justify-center space-x-2'
+                        className='flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium text-center transition-all hover:scale-105 flex items-center justify-center space-x-2'
                         onClick={(e) => e.stopPropagation()}>
                         <ExternalLink className='w-4 h-4' />
                         <span>Visit Platform</span>
                       </a>
                     )}
-                    <button className='flex-1 bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium text-center transition-all hover:from-pink-600 hover:to-purple-700 flex items-center justify-center space-x-2'>
+                    <button className='flex-1 bg-gradient-to-r from-primary via-primary/90 to-primary text-white px-4 py-2 rounded-lg text-sm font-medium text-center transition-all hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2'>
                       <MessageSquare className='w-4 h-4' />
                       <span>Learn More</span>
                     </button>
@@ -369,22 +442,24 @@ const ProjectsPage = () => {
         </div>
       </div>
       {/* Call to Action */}
-      <div className='bg-gradient-to-r from-pink-600 to-pink-400 text-white py-16'>
-        <div className='container mx-auto px-4 text-center'>
-          <h2 className='text-3xl font-bold mb-4'>Have a Project Idea?</h2>
-          <p className='text-pink-100 mb-8 text-lg max-w-2xl mx-auto'>
-            We're always looking to collaborate and build innovative solutions.
-            Share your ideas, suggestions, or partnership opportunities with us.
-          </p>
-          <button
-            onClick={() => {
-              setSelectedProject(null);
-              setIsModalOpen(true);
-            }}
-            className='bg-white text-pink-600 px-8 py-3 rounded-lg font-semibold hover:bg-pink-50 transition-colors inline-flex items-center space-x-2'>
-            <Send className='w-5 h-5' />
-            <span>Get In Touch</span>
-          </button>
+      <div ref={ctaSection.ref} className='bg-gradient-to-r from-primary via-primary/90 to-primary text-white py-16 relative overflow-hidden'>
+        <div className='container mx-auto px-4 text-center relative z-10'>
+          <div className={`scroll-fade-up ${ctaSection.isVisible ? 'visible' : ''}`}>
+            <h2 className='text-3xl font-bold mb-4'>Have a Project Idea?</h2>
+            <p className='text-white/90 mb-8 text-lg max-w-2xl mx-auto'>
+              We're always looking to collaborate and build innovative solutions.
+              Share your ideas, suggestions, or partnership opportunities with us.
+            </p>
+            <button
+              onClick={() => {
+                setSelectedProject(null);
+                setIsModalOpen(true);
+              }}
+              className='bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 hover:scale-105 transition-all duration-300 inline-flex items-center space-x-2'>
+              <Send className='w-5 h-5' />
+              <span>Get In Touch</span>
+            </button>
+          </div>
         </div>
       </div>
       {/* Modal */}
@@ -490,7 +565,7 @@ const ProjectsPage = () => {
                         href={selectedProject.link}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='bg-gradient-to-r from-pink-500 to-pink-600 text-white px-6 py-2 rounded-lg font-medium hover:from-pink-600 hover:to-purple-700 transition-all flex items-center space-x-2'>
+                        className='bg-gradient-to-r from-primary via-primary/90 to-primary text-white px-6 py-2 rounded-lg font-medium hover:scale-105 transition-all flex items-center space-x-2'>
                         <ExternalLink className='w-4 h-4' />
                         <span>Visit Platform</span>
                       </a>
@@ -500,7 +575,7 @@ const ProjectsPage = () => {
                         setSelectedProject(null);
                         setFeedback({ ...feedback, type: "project-inquiry" });
                       }}
-                      className='bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2'>
+                      className='bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-medium transition-all hover:scale-105 flex items-center space-x-2'>
                       <MessageSquare className='w-4 h-4' />
                       <span>Ask Question</span>
                     </button>
@@ -520,7 +595,7 @@ const ProjectsPage = () => {
                         value={feedback.name}
                         onChange={handleInputChange}
                         required
-                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent'
+                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent'
                         placeholder='Your full name'
                       />
                     </div>
@@ -534,7 +609,7 @@ const ProjectsPage = () => {
                         value={feedback.email}
                         onChange={handleInputChange}
                         required
-                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent'
+                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent'
                         placeholder='your.email@example.com'
                       />
                     </div>
@@ -548,7 +623,7 @@ const ProjectsPage = () => {
                       name='type'
                       value={feedback.type}
                       onChange={handleInputChange}
-                      className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent'>
+                      className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent'>
                       <option value='feedback'>General Feedback</option>
                       <option value='suggestion'>Suggestion</option>
                       <option value='partnership'>
@@ -569,7 +644,7 @@ const ProjectsPage = () => {
                       onChange={handleInputChange}
                       required
                       rows={5}
-                      className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent'
+                      className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent'
                       placeholder='Tell us about your idea, feedback, or inquiry...'></textarea>
                   </div>
 
@@ -582,7 +657,7 @@ const ProjectsPage = () => {
                     </button>
                     <button
                       type='submit'
-                      className='bg-gradient-to-r from-pink-500 to-pink-600 text-white px-6 py-2 rounded-lg font-medium hover:from-pink-600 hover:to-pink-700 transition-all flex items-center space-x-2'>
+                      className='bg-gradient-to-r from-primary via-primary/90 to-primary text-white px-6 py-2 rounded-lg font-medium hover:scale-105 transition-all flex items-center space-x-2'>
                       <Send className='w-4 h-4' />
                       <span>Send Message</span>
                     </button>
@@ -594,9 +669,9 @@ const ProjectsPage = () => {
         </div>
       )}
       {/* Footer CTA */}
-      <div className='bg-white py-12 border-t border-gray-200'>
+      <div ref={footerCtaSection.ref} className='bg-white py-12 border-t border-gray-200'>
         <div className='container mx-auto px-4 text-center'>
-          <div className='max-w-3xl mx-auto'>
+          <div className={`max-w-3xl mx-auto scroll-fade-up ${footerCtaSection.isVisible ? 'visible' : ''}`}>
             <h3 className='text-2xl font-bold text-gray-900 mb-4'>
               Empowering Careers Through Innovation
             </h3>
@@ -608,16 +683,16 @@ const ProjectsPage = () => {
               with our platforms.
             </p>
             <div className='flex flex-wrap justify-center gap-4'>
-              <div className='bg-pink-50 px-6 py-3 rounded-full'>
-                <span className='text-pink-600 font-semibold'>50,000+</span>
+              <div className='bg-primary/10 px-6 py-3 rounded-full hover:bg-primary/20 transition-colors duration-300'>
+                <span className='text-primary font-semibold'>50,000+</span>
                 <span className='text-gray-600 ml-2'>Lives Impacted</span>
               </div>
-              <div className='bg-purple-50 px-6 py-3 rounded-full'>
-                <span className='text-pink-600 font-semibold'>95%</span>
+              <div className='bg-primary/10 px-6 py-3 rounded-full hover:bg-primary/20 transition-colors duration-300'>
+                <span className='text-primary font-semibold'>95%</span>
                 <span className='text-gray-600 ml-2'>Success Rate</span>
               </div>
-              <div className='bg-blue-50 px-6 py-3 rounded-full'>
-                <span className='text-blue-600 font-semibold'>24/7</span>
+              <div className='bg-primary/10 px-6 py-3 rounded-full hover:bg-primary/20 transition-colors duration-300'>
+                <span className='text-primary font-semibold'>24/7</span>
                 <span className='text-gray-600 ml-2'>Support</span>
               </div>
             </div>
