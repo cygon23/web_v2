@@ -4,6 +4,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CircularStat from "@/components/CircularStat";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { Link } from "react-router-dom";
 import {
   BookOpen,
   Heart,
@@ -30,6 +33,12 @@ import innovationImage from "@/assets/activities/innovation.jpg";
 
 const Activities = () => {
   const [selectedActivity, setSelectedActivity] = useState(null);
+
+  // Scroll animations for each section
+  const activitiesSection = useScrollAnimation();
+  const skillsSection = useScrollAnimation();
+  const statsSection = useScrollAnimation();
+  const ctaSection = useScrollAnimation();
 
   const activities = [
     {
@@ -144,55 +153,72 @@ const Activities = () => {
     if (!activity) return null;
 
     return (
-      <div className='fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4'>
-        <div className='bg-white rounded-2xl shadow-elegant max-w-4xl w-full max-h-[90vh] overflow-y-auto'>
-          <div className='sticky top-0 bg-white border-b border-secondary/20 p-6 flex justify-between items-center rounded-t-2xl'>
-            <h2 className='text-2xl font-heading font-bold'>
-              {activity.detailContent.title}
-            </h2>
+      <div
+        className='fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm'
+        onClick={onClose}>
+        <div
+          className='bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden cinematic-scale-in'
+          onClick={(e) => e.stopPropagation()}>
+          {/* Header */}
+          <div className='relative h-56 bg-cover bg-center' style={{ backgroundImage: `url(${activity.image})` }}>
+            <div className='absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 flex items-center justify-center'>
+              <div className='text-center text-white'>
+                <div className={`w-20 h-20 mx-auto mb-4 bg-gradient-to-r ${activity.color} rounded-2xl flex items-center justify-center shadow-xl`}>
+                  <activity.icon className='w-10 h-10 text-white' />
+                </div>
+                <h2 className='text-3xl font-heading font-bold'>
+                  {activity.detailContent.title}
+                </h2>
+              </div>
+            </div>
             <button
               onClick={onClose}
-              className='w-10 h-10 bg-secondary/10 hover:bg-secondary/20 rounded-full flex items-center justify-center transition-colors'>
-              <X className='w-5 h-5' />
+              className='absolute top-4 right-4 w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center transition-all group'>
+              <X className='w-6 h-6 text-white group-hover:rotate-90 transition-transform' />
             </button>
           </div>
 
-          <div className='p-6'>
-            <div
-              className='h-64 bg-cover bg-center rounded-xl mb-6'
-              style={{ backgroundImage: `url(${activity.image})` }}>
-              <div className='h-full bg-gradient-primary/80 rounded-xl flex items-center justify-center'>
-                <activity.icon className='w-16 h-16 text-white' />
-              </div>
-            </div>
-
-            <div className='space-y-4'>
+          {/* Content */}
+          <div className='p-8 max-h-[calc(90vh-14rem)] overflow-y-auto'>
+            <div className='space-y-6 mb-8'>
               {activity.detailContent.content.map((paragraph, index) => (
                 <p
                   key={index}
-                  className='text-muted-foreground leading-relaxed'>
+                  className='text-muted-foreground leading-relaxed text-lg'>
                   {paragraph}
                 </p>
               ))}
             </div>
 
-            <div className='mt-8 pt-6 border-t border-secondary/20'>
+            {/* Progress Section */}
+            <div className='bg-gradient-to-br from-secondary/40 to-transparent p-6 rounded-2xl border-2 border-secondary/20'>
               <div className='flex justify-between items-center mb-4'>
-                <span className='font-semibold'>Progress Tracking</span>
-                <span className='text-muted-foreground'>
+                <span className='font-bold text-lg text-foreground'>Progress Tracking</span>
+                <span className='text-muted-foreground font-semibold'>
                   {activity.raised}/{activity.goal}
                 </span>
               </div>
-              <div className='w-full bg-secondary/20 rounded-full h-3 mb-2'>
+              <div className='w-full bg-secondary/30 rounded-full h-4 mb-3 overflow-hidden shadow-inner'>
                 <div
-                  className={`h-3 rounded-full bg-gradient-to-r ${activity.color} transition-all duration-1000`}
-                  style={{ width: `${activity.percentage}%` }}></div>
+                  className={`h-4 rounded-full bg-gradient-to-r ${activity.color} relative overflow-hidden transition-all duration-1000`}
+                  style={{ width: `${activity.percentage}%` }}>
+                  <div className='absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer'></div>
+                </div>
               </div>
               <div className='text-right'>
-                <span className='text-lg font-semibold text-primary'>
+                <span className='text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent'>
                   {activity.percentage}%
                 </span>
               </div>
+            </div>
+
+            {/* CTA */}
+            <div className='mt-8 text-center'>
+              <Button variant='hero' size='lg' asChild className='shadow-lg hover:shadow-xl transition-all'>
+                <Link to='/contact'>
+                  Get Involved <ArrowRight className='ml-2 w-5 h-5' />
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -204,50 +230,83 @@ const Activities = () => {
     <div className='min-h-screen'>
       <Navigation />
 
-      {/* Hero Section */}
-      <section className='relative pt-20 lg:pt-24 pb-20 overflow-hidden'>
-        <div
-          className='absolute inset-0 bg-cover bg-center bg-no-repeat'
-          style={{ backgroundImage: `url(${activitiesHero})` }}>
-          <div className='absolute inset-0 bg-gradient-hero'></div>
+      {/* Hero Section - Enhanced */}
+      <section className='relative min-h-[85vh] flex items-center justify-center overflow-hidden'>
+        {/* Background with parallax effect */}
+        <div className='absolute inset-0'>
+          <div
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat scale-105'
+            style={{ backgroundImage: `url(${activitiesHero})` }}>
+          </div>
+          {/* Gradient overlays */}
+          <div className='absolute inset-0' style={{
+            background: 'linear-gradient(135deg, hsla(327, 73%, 20%, 0.7) 0%, hsla(327, 73%, 30%, 0.6) 50%, hsla(327, 73%, 25%, 0.7) 100%)'
+          }} />
+          <div className='absolute inset-0 bg-slate-900/40' />
+          {/* Animated gradient accent */}
+          <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-primary/10 to-transparent gradient-shift opacity-60' />
         </div>
 
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className='max-w-4xl mx-auto text-center text-white'>
-            <Badge className='mb-6 bg-white/20 text-white border-white/30 hover:bg-white/30'>
-              What We Do
-            </Badge>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20'>
+          <div className='max-w-5xl mx-auto text-center text-white'>
+            {/* Animated Badge */}
+            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.2s' }}>
+              <Badge className='mb-8 bg-white/15 text-white border-white/30 hover:bg-white/25 backdrop-blur-md px-6 py-2.5 text-base font-semibold shadow-lg'>
+                What We Do
+              </Badge>
+            </div>
 
-            <h1 className='text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight'>
-              Our <span className='text-black'>Activities</span>
-            </h1>
+            {/* Main Heading with staggered animation */}
+            <div className='cinematic-scale-in opacity-0' style={{ animationDelay: '0.4s' }}>
+              <h1 className='text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-8 leading-tight'>
+                Our <span className='block mt-2' style={{
+                  color: 'hsl(327, 73%, 65%)',
+                  textShadow: '0 0 40px hsla(327, 73%, 60%, 0.7), 0 0 20px hsla(327, 73%, 60%, 0.9), 0 4px 12px rgba(0,0,0,0.4)'
+                }}>Activities</span>
+              </h1>
+            </div>
 
-            <p className='text-lg md:text-xl mb-8 text-white/80 max-w-3xl mx-auto leading-relaxed'>
-              Aligned with the National Youth Development Policy, our
-              comprehensive programs empower young people through education,
-              innovation, and sustainable development initiatives.
-            </p>
+            {/* Description */}
+            <div className='cinematic-fade-in opacity-0 mb-10' style={{ animationDelay: '0.6s' }}>
+              <p className='text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed font-medium'>
+                Aligned with the National Youth Development Policy, our
+                comprehensive programs empower young people through education,
+                innovation, and sustainable development initiatives.
+              </p>
+            </div>
 
             {/* Breadcrumb */}
-            <nav className='flex justify-center items-center space-x-2 text-white/70'>
-              <span>Home</span>
-              <ArrowRight className='w-4 h-4' />
-              <span>Pages</span>
-              <ArrowRight className='w-4 h-4' />
-              <span className='text-primary-light'>Activities</span>
-            </nav>
+            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.8s' }}>
+              <nav className='flex justify-center items-center space-x-2 text-white/80 font-medium'>
+                <Link to='/' className='hover:text-white transition-colors'>Home</Link>
+                <ArrowRight className='w-4 h-4' />
+                <span>Pages</span>
+                <ArrowRight className='w-4 h-4' />
+                <span className='text-white'>Activities</span>
+              </nav>
+            </div>
+
+            {/* Decorative floating elements */}
+            <div className='absolute top-1/4 left-10 w-20 h-20 bg-white/5 rounded-full blur-2xl animate-float'></div>
+            <div className='absolute bottom-1/4 right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-float' style={{ animationDelay: '1s' }}></div>
           </div>
         </div>
+
+        {/* Bottom gradient fade */}
+        <div className='absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[8]' />
       </section>
 
-      {/* Main Activities Section */}
-      <section className='py-20 bg-secondary/30'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
+      {/* Main Activities Section - Enhanced */}
+      <section ref={activitiesSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
+        <div className='absolute inset-0 opacity-5' style={{
+          backgroundImage: 'radial-gradient(circle at 50% 50%, hsl(327, 73%, 56%) 0%, transparent 50%)'
+        }}></div>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
+          <div className={`text-center mb-16 scroll-fade-up ${activitiesSection.isVisible ? 'visible' : ''}`}>
+            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors px-5 py-2'>
               Our Core Programs
             </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
+            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
               Align with National Youth Development Policy
             </h2>
             <p className='text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed'>
@@ -257,81 +316,86 @@ const Activities = () => {
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-8 mb-12'>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
             {activities.map((activity, index) => (
-              <Card
+              <div
                 key={activity.id}
-                className='group hover:shadow-hover transition-all duration-300 border-0 shadow-card overflow-hidden'>
-                <div className='relative'>
-                  <div
-                    className='h-64 bg-cover bg-center'
-                    style={{ backgroundImage: `url(${activity.image})` }}>
-                    <div className='absolute inset-0 bg-gradient-primary/80 flex items-center justify-center'>
-                      <div className='text-center text-white'>
-                        <div
-                          className={`w-16 h-16 mx-auto mb-3 bg-gradient-to-r ${activity.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                          <activity.icon className='w-8 h-8 text-white' />
+                className={`scroll-scale ${activitiesSection.isVisible ? 'visible' : ''}`}
+                style={{ transitionDelay: `${index * 150}ms` }}>
+                <Card className='modern-card h-full overflow-hidden border-2 border-transparent hover:border-primary/20 group'>
+                  <div className='relative'>
+                    <div
+                      className='h-72 bg-cover bg-center transition-transform duration-700 group-hover:scale-110'
+                      style={{ backgroundImage: `url(${activity.image})` }}>
+                      <div className='absolute inset-0 bg-gradient-to-br from-primary/85 to-primary/70 flex items-center justify-center transition-all duration-500'>
+                        <div className='text-center text-white'>
+                          <div
+                            className={`w-20 h-20 mx-auto mb-4 bg-gradient-to-r ${activity.color} rounded-2xl flex items-center justify-center shadow-xl transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500`}>
+                            <activity.icon className='w-10 h-10 text-white' />
+                          </div>
+                          <Badge className='bg-white/20 text-white border-white/30 backdrop-blur-sm px-4 py-1.5 font-semibold'>
+                            {activity.category}
+                          </Badge>
                         </div>
-                        <Badge className='bg-white/20 text-white border-white/30'>
-                          {activity.category}
-                        </Badge>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <CardContent className='p-6'>
-                  <h3 className='text-xl font-heading font-semibold mb-3'>
-                    {activity.title}
-                  </h3>
-                  <p className='text-muted-foreground mb-6 leading-relaxed'>
-                    {activity.description}
-                  </p>
+                  <CardContent className='p-8'>
+                    <h3 className='text-2xl font-heading font-bold mb-4 text-foreground group-hover:text-primary transition-colors'>
+                      {activity.title}
+                    </h3>
+                    <p className='text-muted-foreground mb-6 leading-relaxed'>
+                      {activity.description}
+                    </p>
 
-                  {/* Progress Section */}
-                  <div className='space-y-3 mb-6'>
-                    <div className='flex justify-between text-sm'>
-                      <span className='font-medium'>Goal: {activity.goal}</span>
-                      <span className='text-muted-foreground'>
-                        Achieved: {activity.raised}
-                      </span>
+                    {/* Progress Section */}
+                    <div className='space-y-3 mb-6'>
+                      <div className='flex justify-between text-sm font-semibold'>
+                        <span>Goal: {activity.goal}</span>
+                        <span className='text-muted-foreground'>
+                          Achieved: {activity.raised}
+                        </span>
+                      </div>
+
+                      <div className='w-full bg-secondary/30 rounded-full h-3 overflow-hidden shadow-inner'>
+                        <div
+                          className={`h-3 rounded-full bg-gradient-to-r ${activity.color} relative overflow-hidden transition-all duration-1000`}
+                          style={{ width: `${activity.percentage}%` }}>
+                          <div className='absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer'></div>
+                        </div>
+                      </div>
+
+                      <div className='text-right'>
+                        <span className='text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent'>
+                          {activity.percentage}%
+                        </span>
+                      </div>
                     </div>
 
-                    <div className='w-full bg-secondary/20 rounded-full h-2'>
-                      <div
-                        className={`h-2 rounded-full bg-gradient-to-r ${activity.color} transition-all duration-1000`}
-                        style={{ width: `${activity.percentage}%` }}></div>
-                    </div>
-
-                    <div className='text-right'>
-                      <span className='text-lg font-semibold text-primary'>
-                        {activity.percentage}%
-                      </span>
-                    </div>
-                  </div>
-
-                  <Button
-                    variant='hero'
-                    size='sm'
-                    onClick={() => setSelectedActivity(activity)}
-                    className='w-full'>
-                    Learn More <ArrowRight className='ml-2 w-4 h-4' />
-                  </Button>
-                </CardContent>
-              </Card>
+                    <Button
+                      variant='hero'
+                      size='sm'
+                      onClick={() => setSelectedActivity(activity)}
+                      className='w-full shadow-lg hover:shadow-xl transition-all'>
+                      Learn More <ArrowRight className='ml-2 w-4 h-4' />
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Skills Development Areas */}
-      <section className='py-20'>
+      {/* Skills Development Areas - Enhanced */}
+      <section ref={skillsSection.ref} className='py-24'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
+          <div className={`text-center mb-16 scroll-fade-up ${skillsSection.isVisible ? 'visible' : ''}`}>
+            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors px-5 py-2'>
               Skill Development
             </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
+            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
               Key Areas of Focus
             </h2>
             <p className='text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed'>
@@ -342,114 +406,110 @@ const Activities = () => {
 
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
             {skillAreas.map((skill, index) => (
-              <Card
+              <div
                 key={index}
-                className='group hover:shadow-hover transition-all duration-300 border-0 shadow-card text-center'>
-                <CardContent className='p-6'>
-                  <div className='w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300'>
-                    <skill.icon className='w-8 h-8 text-primary-foreground' />
-                  </div>
-                  <h3 className='text-lg font-heading font-semibold mb-3'>
-                    {skill.title}
-                  </h3>
-                  <p className='text-muted-foreground text-sm leading-relaxed'>
-                    {skill.description}
-                  </p>
-                </CardContent>
-              </Card>
+                className={`scroll-scale ${skillsSection.isVisible ? 'visible' : ''}`}
+                style={{ transitionDelay: `${index * 100}ms` }}>
+                <Card className='modern-card h-full text-center border-2 border-transparent hover:border-primary/20 group'>
+                  <CardContent className='p-8'>
+                    <div className='w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-primary to-primary/70 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300'>
+                      <skill.icon className='w-10 h-10 text-white' />
+                    </div>
+                    <h3 className='text-xl font-heading font-bold mb-4 text-foreground group-hover:text-primary transition-colors'>
+                      {skill.title}
+                    </h3>
+                    <p className='text-muted-foreground leading-relaxed'>
+                      {skill.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Impact Statistics */}
-      <section className='py-20 bg-gradient-card'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
+      {/* Impact Statistics - Circular Progress Rings */}
+      <section ref={statsSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
+        <div className='absolute inset-0 opacity-5' style={{
+          backgroundImage: 'radial-gradient(circle at 30% 70%, hsl(327, 73%, 56%) 0%, transparent 50%)'
+        }}></div>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
+          <div className={`text-center mb-16 scroll-fade-up ${statsSection.isVisible ? 'visible' : ''}`}>
+            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors px-5 py-2'>
               Our Impact
             </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
+            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
               Measuring Success Through Numbers
             </h2>
           </div>
 
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-            <div className='text-center'>
-              <div className='w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-2xl flex items-center justify-center'>
-                <Users className='w-8 h-8 text-primary-foreground' />
+          <div className='grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8'>
+            {[
+              { number: '2010+', label: 'Youth Empowered', icon: Users, maxValue: 2500 },
+              { number: '50+', label: 'Workshops', icon: BookOpen, maxValue: 100 },
+              { number: '1200+', label: 'Career Connections', icon: Briefcase, maxValue: 1500 },
+              { number: '25+', label: 'Awards & Recognition', icon: Award, maxValue: 50 }
+            ].map((stat, index) => (
+              <div
+                key={index}
+                className={`scroll-scale ${statsSection.isVisible ? 'visible' : ''}`}
+                style={{ transitionDelay: `${index * 150}ms` }}>
+                <CircularStat
+                  number={stat.number}
+                  label={stat.label}
+                  icon={stat.icon}
+                  maxValue={stat.maxValue}
+                  isVisible={statsSection.isVisible}
+                  delay={index * 200}
+                />
               </div>
-              <h3 className='text-3xl font-heading font-bold text-foreground mb-2'>
-                2010+
-              </h3>
-              <p className='text-muted-foreground'>Youth Empowered</p>
-            </div>
-
-            <div className='text-center'>
-              <div className='w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-2xl flex items-center justify-center'>
-                <BookOpen className='w-8 h-8 text-primary-foreground' />
-              </div>
-              <h3 className='text-3xl font-heading font-bold text-foreground mb-2'>
-                50+
-              </h3>
-              <p className='text-muted-foreground'>Workshops</p>
-            </div>
-
-            <div className='text-center'>
-              <div className='w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-2xl flex items-center justify-center'>
-                <Briefcase className='w-8 h-8 text-primary-foreground' />
-              </div>
-              <h3 className='text-3xl font-heading font-bold text-foreground mb-2'>
-                1200+
-              </h3>
-              <p className='text-muted-foreground'>Career Connections</p>
-            </div>
-
-            <div className='text-center'>
-              <div className='w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-2xl flex items-center justify-center'>
-                <Award className='w-8 h-8 text-primary-foreground' />
-              </div>
-              <h3 className='text-3xl font-heading font-bold text-foreground mb-2'>
-                25+
-              </h3>
-              <p className='text-muted-foreground'>Awards & Recognition</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className='py-20 relative overflow-hidden'>
+      {/* Call to Action - Enhanced */}
+      <section ref={ctaSection.ref} className='py-28 relative overflow-hidden'>
         <div
-          className='absolute inset-0 bg-cover bg-center'
+          className='absolute inset-0 bg-cover bg-center scale-105'
           style={{ backgroundImage: `url(${activitiesHero})` }}>
-          <div className='absolute inset-0 bg-gradient-hero'></div>
+          <div className='absolute inset-0 bg-gradient-to-br from-primary/95 to-primary/85'></div>
         </div>
 
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className='max-w-3xl mx-auto text-center text-white'>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
+          <div className={`max-w-4xl mx-auto text-center text-white scroll-scale ${ctaSection.isVisible ? 'visible' : ''}`}>
+            <h2 className='text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-8 leading-tight'>
               Ready to Join Our Mission?
             </h2>
-            <p className='text-lg mb-8 text-white/90 leading-relaxed'>
+            <p className='text-xl mb-12 text-white/95 leading-relaxed max-w-2xl mx-auto'>
               Be part of Tanzania's youth empowerment movement. Whether you want
               to participate, volunteer, or support our cause, there's a place
               for you in our community.
             </p>
 
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <Button variant='hero' size='lg'>
-                Get Involved <ArrowRight className='ml-2 w-5 h-5' />
+              <Button variant='hero' size='lg' asChild className='bg-white text-primary hover:bg-white/90 shadow-xl hover:scale-105 transition-all'>
+                <Link to='/contact'>
+                  Get Involved <ArrowRight className='ml-2 w-5 h-5' />
+                </Link>
               </Button>
               <Button
                 variant='outline'
                 size='lg'
-                className='border-white/30 text-black hover:bg-white hover:text-foreground'>
-                Learn More
+                asChild
+                className='border-white border-2 text-white bg-white/10 hover:bg-white hover:text-primary backdrop-blur-sm hover:scale-105 transition-all shadow-lg'>
+                <Link to='/about'>
+                  Learn More
+                </Link>
               </Button>
             </div>
           </div>
         </div>
+
+        {/* Decorative floating elements */}
+        <div className='absolute top-20 left-10 w-24 h-24 bg-white/10 rounded-full blur-2xl animate-float'></div>
+        <div className='absolute bottom-20 right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-float' style={{ animationDelay: '1s' }}></div>
       </section>
 
       {/* Modal */}
