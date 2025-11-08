@@ -5,7 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import ParticleNetwork from "@/components/ParticleNetwork";
+import CareerPathConnector from "@/components/CareerPathConnector";
+import FloatingElements3D from "@/components/FloatingElements3D";
 import { 
   ArrowRight, 
   Play, 
@@ -158,67 +159,127 @@ const Index = () => {
     <div className='min-h-screen'>
       <Navigation />
 
-      {/* Hero Section */}
-      <section className='relative pt-20 lg:pt-24 pb-20 overflow-hidden'>
-        <div
-          className='absolute inset-0 bg-cover bg-center bg-no-repeat'
-          style={{ backgroundImage: `url(${heroImage})` }}>
-          <div className='absolute inset-0 bg-gradient-hero'></div>
-        </div>
-
-        {/* Particle Network with 3D Depth */}
-        <div className='absolute inset-0 z-[5]'>
-          <ParticleNetwork
-            particleCount={80}
-            connectionDistance={150}
-            particleColor='rgba(255, 255, 255, 0.8)'
-            lineColor='rgba(255, 255, 255, 0.3)'
-            particleSpeed={0.3}
+      {/* Hero Section - Cinematic */}
+      <section className='relative min-h-screen flex items-center justify-center overflow-hidden perspective-3d'>
+        {/* Dynamic Background Layers */}
+        <div className='absolute inset-0'>
+          {/* Base gradient with image overlay */}
+          <div
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20'
+            style={{ backgroundImage: `url(${heroImage})` }}
           />
+
+          {/* Animated gradient overlay */}
+          <div className='absolute inset-0 bg-gradient-to-br from-purple-900/30 via-pink-900/40 to-blue-900/30 gradient-shift' />
+
+          {/* Dark vignette for depth */}
+          <div className='absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/60' />
         </div>
 
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className='max-w-4xl mx-auto text-center text-white'>
-            <Badge className='mb-6 bg-white/20 text-white border-white/30 hover:bg-white/30'>
-              Empowering Youth Since 2023
-            </Badge>
+        {/* Career Path Connector - Main Visual */}
+        <div className='absolute inset-0 z-[5]'>
+          <CareerPathConnector />
+        </div>
 
-            <h1 className='text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight'>
-              Welcome to <span className='text-black'>Career Na Mimi</span>{" "}
-              Organization
-            </h1>
+        {/* Floating 3D Elements */}
+        <div className='absolute inset-0 z-[6]'>
+          <FloatingElements3D />
+        </div>
 
-            <p className='text-xl md:text-2xl mb-4 text-white/90 font-medium'>
-              "Your Journey, Your Success"
-            </p>
+        {/* Light Rays Effect */}
+        <div className='absolute inset-0 z-[7] pointer-events-none'>
+          <div className='absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-to-b from-white/10 via-transparent to-transparent blur-3xl opacity-30' />
+        </div>
 
-            <p className='text-lg md:text-xl mb-8 text-white/80 max-w-2xl mx-auto leading-relaxed'>
-              Career Na Mimi empowers youth with skills, mentorship, and
-              opportunities to unlock their potential and achieve their dreams.
-            </p>
+        {/* Content */}
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-32'>
+          <div className='max-w-5xl mx-auto text-center'>
+            {/* Badge with glow */}
+            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.2s' }}>
+              <Badge className='mb-8 glassmorphic text-white border-white/30 hover:bg-white/20 glow-pulse px-6 py-2 text-sm'>
+                ✨ Empowering Youth Since 2023
+              </Badge>
+            </div>
 
-            <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-              <Button variant='hero' size='xl' asChild>
-                <Link to='/about'>
-                  Learn More <ArrowRight className='ml-2 w-5 h-5' />
-                </Link>
-              </Button>
+            {/* Main Heading with shimmer */}
+            <div className='cinematic-scale-in opacity-0' style={{ animationDelay: '0.4s' }}>
+              <h1 className='text-5xl md:text-7xl lg:text-8xl font-heading font-black mb-8 leading-tight'>
+                <span className='block text-white drop-shadow-2xl'>
+                  Welcome to
+                </span>
+                <span className='block mt-2 bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent animate-gradient-x text-shimmer drop-shadow-2xl'>
+                  Career Na Mimi
+                </span>
+              </h1>
+            </div>
 
-              <Button
-                variant='outline'
-                size='xl'
-                onClick={() => setIsVideoOpen(true)}
-                className='border-white/30 text-black hover:bg-white hover:text-foreground'>
-                <Play className='mr-2 w-5 h-5' />
-                Watch Our Story
-              </Button>
+            {/* Tagline */}
+            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.6s' }}>
+              <div className='relative inline-block mb-6'>
+                <p className='text-2xl md:text-4xl font-bold text-white/95 relative z-10'>
+                  "Your Journey, Your Success"
+                </p>
+                <div className='absolute -inset-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 blur-xl' />
+              </div>
+            </div>
+
+            {/* Description with glassmorphism */}
+            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.8s' }}>
+              <div className='max-w-3xl mx-auto mb-12'>
+                <div className='glassmorphic rounded-2xl p-6 backdrop-blur-xl'>
+                  <p className='text-lg md:text-xl text-white/90 leading-relaxed'>
+                    Career Na Mimi empowers youth with{' '}
+                    <span className='font-semibold text-pink-300'>skills</span>,{' '}
+                    <span className='font-semibold text-purple-300'>mentorship</span>, and{' '}
+                    <span className='font-semibold text-blue-300'>opportunities</span>{' '}
+                    to unlock their potential and achieve their dreams.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA Buttons with 3D effect */}
+            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '1s' }}>
+              <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
+                <Button
+                  variant='hero'
+                  size='xl'
+                  asChild
+                  className='group relative overflow-hidden transform hover:scale-105 transition-all duration-300'
+                >
+                  <Link to='/about' className='relative z-10'>
+                    <span className='relative z-10'>Discover More</span>
+                    <ArrowRight className='ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform' />
+                    <div className='absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity' />
+                  </Link>
+                </Button>
+
+                <Button
+                  variant='outline'
+                  size='xl'
+                  onClick={() => setIsVideoOpen(true)}
+                  className='glassmorphic border-white/40 text-white hover:bg-white/20 hover:border-white/60 transform hover:scale-105 transition-all duration-300 group'
+                >
+                  <Play className='mr-2 w-5 h-5 group-hover:scale-110 transition-transform' />
+                  Watch Our Story
+                </Button>
+              </div>
+            </div>
+
+            {/* Scroll Indicator */}
+            <div className='cinematic-fade-in opacity-0 mt-20' style={{ animationDelay: '1.2s' }}>
+              <div className='flex flex-col items-center gap-2 text-white/60'>
+                <span className='text-sm uppercase tracking-wider'>Scroll to explore</span>
+                <div className='w-6 h-10 border-2 border-white/40 rounded-full p-1'>
+                  <div className='w-1.5 h-3 bg-white/60 rounded-full mx-auto animate-bounce' />
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Floating elements */}
-        <div className='absolute top-1/4 left-4 w-20 h-20 bg-primary/20 rounded-full animate-float'></div>
-        <div className='absolute bottom-1/4 right-8 w-16 h-16 bg-accent/20 rounded-full animate-float delay-1000'></div>
+        {/* Bottom gradient fade */}
+        <div className='absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-[8]' />
       </section>
 
       {/* Stats Section */}
