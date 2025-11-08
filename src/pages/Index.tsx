@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -51,6 +52,16 @@ const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const partnerLogos = [partner1, partner2, partner3, partner4, partner5];
+
+  // Scroll animations for each section
+  const aiSection = useScrollAnimation();
+  const aboutSection = useScrollAnimation();
+  const objectivesSection = useScrollAnimation();
+  const servicesSection = useScrollAnimation();
+  const donationSection = useScrollAnimation();
+  const teamSection = useScrollAnimation();
+  const testimonialsSection = useScrollAnimation();
+  const partnersSection = useScrollAnimation();
 
   const testimonials = [
     {
@@ -275,43 +286,48 @@ const Index = () => {
       </section>
 
       {/* AI Career Guidance Section */}
-      <section className='py-20'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>
-            <div>
-              <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
+      <section ref={aiSection.ref} className='py-24 relative overflow-hidden'>
+        <div className='absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent'></div>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-16 items-center'>
+            <div className={`scroll-fade-left ${aiSection.isVisible ? 'visible' : ''}`}>
+              <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
                 AI-Powered Innovation
               </Badge>
-              <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
+              <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
                 AI-Powered Career Guidance
               </h2>
               <p className='text-lg text-muted-foreground mb-8 leading-relaxed'>
-                Designed to assist with <strong>CV building</strong>,{" "}
-                <strong>job transitions</strong>,<strong> career growth</strong>
-                , and <strong>personalized guidance</strong> to help individuals
+                Designed to assist with <strong className='text-primary'>CV building</strong>,{" "}
+                <strong className='text-primary'>job transitions</strong>,{" "}
+                <strong className='text-primary'>career growth</strong>, and{" "}
+                <strong className='text-primary'>personalized guidance</strong> to help individuals
                 succeed in their professional journey.
               </p>
-              <Button variant='hero' size='lg' asChild>
+              <Button variant='hero' size='lg' asChild className='shadow-lg hover:shadow-primary/30 transition-all duration-300'>
                 <a
                   href='https://caeerhub-platform.vercel.app/'
                   target='_blank'
                   rel='noopener noreferrer'>
-                  See It in Action <ArrowRight className='ml-2 w-5 h-5' />
+                  See It in Action <ArrowRight className='ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform' />
                 </a>
               </Button>
             </div>
 
-            <div className='relative'>
+            <div className={`relative scroll-fade-right ${aiSection.isVisible ? 'visible' : ''}`}>
+              <div className='absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-3xl blur-2xl opacity-50'></div>
               <div
-                className='rounded-2xl shadow-elegant overflow-hidden'
+                className='relative rounded-3xl shadow-2xl overflow-hidden border border-primary/20 modern-card'
                 style={{ backgroundImage: `url(${abstractBg})` }}>
-                <div className='bg-gradient-primary/90 p-8 h-64 flex items-center justify-center'>
+                <div className='bg-gradient-to-br from-primary/95 to-primary/80 p-10 h-80 flex items-center justify-center backdrop-blur-sm'>
                   <div className='text-center text-white'>
-                    <Zap className='w-16 h-16 mx-auto mb-4 animate-float' />
-                    <h3 className='text-xl font-semibold'>
+                    <div className='w-20 h-20 mx-auto mb-6 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm animate-float'>
+                      <Zap className='w-12 h-12 text-white' />
+                    </div>
+                    <h3 className='text-2xl font-bold mb-2'>
                       AI Career Assistant
                     </h3>
-                    <p className='text-white/80'>
+                    <p className='text-white/90 text-lg'>
                       Smart. Personalized. Effective.
                     </p>
                   </div>
@@ -323,16 +339,17 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className='py-20 bg-gradient-card'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
+      <section ref={aboutSection.ref} className='py-24 bg-gradient-to-br from-secondary/30 to-transparent relative'>
+        <div className='absolute inset-0 opacity-5' style={{ backgroundImage: `url(${teamImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
+          <div className={`text-center mb-16 scroll-fade-up ${aboutSection.isVisible ? 'visible' : ''}`}>
+            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
               About Us
             </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
+            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-8 leading-tight'>
               Empowering Dreams, One Story at a Time
             </h2>
-            <p className='text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed'>
+            <p className='text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed'>
               Career Na Mimi is a youth empowerment organization based in
               Tanzania, dedicated to bridging the gap between young people and
               the opportunities they need to thrive. We empower youth through
@@ -341,11 +358,13 @@ const Index = () => {
             </p>
           </div>
 
-          <div className='flex flex-col lg:flex-row gap-8 justify-center'>
-            <Button variant='hero' size='lg' asChild>
-              <Link to='/about'>Learn More</Link>
+          <div className={`flex flex-col sm:flex-row gap-6 justify-center scroll-scale ${aboutSection.isVisible ? 'visible' : ''}`}>
+            <Button variant='hero' size='lg' asChild className='shadow-xl hover:shadow-primary/30 hover:scale-105 transition-all duration-300'>
+              <Link to='/about'>
+                Learn More <ArrowRight className='ml-2 w-5 h-5' />
+              </Link>
             </Button>
-            <Button variant='outline' size='lg' asChild>
+            <Button variant='outline' size='lg' asChild className='hover:scale-105 transition-all duration-300 border-2'>
               <Link to='/contact'>Contact Us</Link>
             </Button>
           </div>
@@ -353,16 +372,16 @@ const Index = () => {
       </section>
 
       {/* Strategic Objectives */}
-      <section className='py-20'>
+      <section ref={objectivesSection.ref} className='py-24'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
+          <div className={`text-center mb-16 scroll-fade-up ${objectivesSection.isVisible ? 'visible' : ''}`}>
+            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
               Our Strategic Objectives
             </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
+            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-8 leading-tight'>
               Building a Transformative Movement
             </h2>
-            <p className='text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed'>
+            <p className='text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed'>
               We are building more than an organization—we are leading a
               transformative movement to empower youth across Africa. Each
               objective reflects our commitment to creating inclusive,
@@ -372,159 +391,174 @@ const Index = () => {
 
           <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
             {objectives.map((objective, index) => (
-              <Card
+              <div
                 key={index}
-                className='group hover:shadow-hover transition-all duration-300 border-0 shadow-card'>
-                <CardContent className='p-6'>
-                  <div
-                    className={`w-12 h-12 rounded-xl bg-gradient-to-r ${objective.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <objective.icon className='w-6 h-6 text-white' />
-                  </div>
-
-                  <h3 className='text-xl font-heading font-semibold mb-3'>
-                    {objective.title}
-                  </h3>
-                  <p className='text-muted-foreground mb-6 leading-relaxed'>
-                    {objective.description}
-                  </p>
-
-                  <div className='space-y-3'>
-                    <div className='flex justify-between text-sm'>
-                      <span className='font-medium'>Progress</span>
-                      <span className='text-muted-foreground'>
-                        {objective.raised}/{objective.goal}
-                      </span>
+                className={`scroll-scale ${objectivesSection.isVisible ? 'visible' : ''}`}
+                style={{ transitionDelay: `${index * 100}ms` }}>
+                <Card className='modern-card h-full border-2 border-transparent hover:border-primary/20'>
+                  <CardContent className='p-8'>
+                    <div
+                      className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${objective.color} flex items-center justify-center mb-6 shadow-lg transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                      <objective.icon className='w-8 h-8 text-white' />
                     </div>
 
-                    <div className='w-full bg-secondary rounded-full h-2'>
-                      <div
-                        className={`h-2 rounded-full bg-gradient-to-r ${objective.color} transition-all duration-1000`}
-                        style={{ width: `${objective.percentage}%` }}></div>
-                    </div>
+                    <h3 className='text-2xl font-heading font-bold mb-4'>
+                      {objective.title}
+                    </h3>
+                    <p className='text-muted-foreground mb-8 leading-relaxed text-base'>
+                      {objective.description}
+                    </p>
 
-                    <div className='text-right'>
-                      <span className='text-lg font-semibold text-primary'>
-                        {objective.percentage}%
-                      </span>
+                    <div className='space-y-4'>
+                      <div className='flex justify-between text-sm font-medium'>
+                        <span>Progress</span>
+                        <span className='text-primary'>
+                          {objective.raised}/{objective.goal}
+                        </span>
+                      </div>
+
+                      <div className='relative w-full bg-secondary/50 rounded-full h-3 overflow-hidden'>
+                        <div
+                          className={`h-3 rounded-full bg-gradient-to-r ${objective.color} transition-all duration-1000 relative overflow-hidden`}
+                          style={{ width: `${objective.percentage}%` }}>
+                          <div className='absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer'></div>
+                        </div>
+                      </div>
+
+                      <div className='text-right'>
+                        <span className='text-2xl font-bold text-primary'>
+                          {objective.percentage}%
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section className='py-20 bg-secondary/30'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
+      <section ref={servicesSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
+        <div className='absolute inset-0 opacity-5' style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, hsl(327, 73%, 56%) 0%, transparent 50%)' }}></div>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
+          <div className={`text-center mb-16 scroll-fade-up ${servicesSection.isVisible ? 'visible' : ''}`}>
+            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
               What We Do
             </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
+            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
               Learn More What We Do And Get Involved
             </h2>
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
             {services.map((service, index) => (
-              <Card
+              <div
                 key={index}
-                className='group hover:shadow-hover transition-all duration-300 border-0 shadow-card overflow-hidden'>
-                <div
-                  className='h-48 bg-cover bg-center relative'
-                  style={{ backgroundImage: `url(${service.image})` }}>
-                  <div className='absolute inset-0 bg-gradient-primary/80 flex items-center justify-center'>
-                    <service.icon className='w-12 h-12 text-white group-hover:scale-110 transition-transform duration-300' />
+                className={`scroll-fade-up ${servicesSection.isVisible ? 'visible' : ''}`}
+                style={{ transitionDelay: `${index * 100}ms` }}>
+                <Card className='modern-card h-full overflow-hidden group'>
+                  <div
+                    className='h-56 bg-cover bg-center relative overflow-hidden'
+                    style={{ backgroundImage: `url(${service.image})` }}>
+                    <div className='absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 flex items-center justify-center transition-all duration-300 group-hover:scale-110'>
+                      <div className='transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300'>
+                        <service.icon className='w-16 h-16 text-white drop-shadow-lg' />
+                      </div>
+                    </div>
                   </div>
-                </div>
 
-                <CardContent className='p-6'>
-                  <h3 className='text-xl font-heading font-semibold mb-3'>
-                    {service.title}
-                  </h3>
-                  <p className='text-muted-foreground mb-6 leading-relaxed'>
-                    {service.description}
-                  </p>
+                  <CardContent className='p-6'>
+                    <h3 className='text-xl font-heading font-bold mb-3 group-hover:text-primary transition-colors'>
+                      {service.title}
+                    </h3>
+                    <p className='text-muted-foreground mb-6 leading-relaxed'>
+                      {service.description}
+                    </p>
 
-                  {service.link ? (
-                    <Button variant='hero' size='sm' asChild>
-                      <a
-                        href={service.link}
-                        target='_blank'
-                        rel='noopener noreferrer'>
-                        Try Now
-                      </a>
-                    </Button>
-                  ) : (
-                    <Button variant='outline' size='sm'>
-                      Learn More
-                    </Button>
-                  )}
-                </CardContent>
-              </Card>
+                    {service.link ? (
+                      <Button variant='hero' size='sm' asChild className='w-full shadow-md hover:shadow-lg transition-all'>
+                        <a
+                          href={service.link}
+                          target='_blank'
+                          rel='noopener noreferrer'>
+                          Try Now <ArrowRight className='ml-2 w-4 h-4' />
+                        </a>
+                      </Button>
+                    ) : (
+                      <Button variant='outline' size='sm' className='w-full hover:bg-primary/5'>
+                        Learn More
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Donation CTA */}
-      <section className='py-20 relative overflow-hidden'>
+      <section ref={donationSection.ref} className='py-28 relative overflow-hidden'>
         <div
-          className='absolute inset-0 bg-cover bg-center'
+          className='absolute inset-0 bg-cover bg-center scale-105'
           style={{ backgroundImage: `url(${eventImage})` }}>
-          <div className='absolute inset-0 bg-gradient-hero'></div>
+          <div className='absolute inset-0 bg-gradient-to-br from-primary/95 to-primary/85'></div>
         </div>
 
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className='max-w-3xl mx-auto text-center text-white'>
-            <Badge className='mb-6 bg-primary/10 text-secondary border-primary/20'>
+          <div className={`max-w-4xl mx-auto text-center text-white scroll-scale ${donationSection.isVisible ? 'visible' : ''}`}>
+            <Badge className='mb-8 bg-white/20 text-white border-white/30 backdrop-blur-sm px-6 py-2 text-sm font-semibold'>
               Coming Soon!!
             </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
+            <h2 className='text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-8 leading-tight'>
               Career Fair 2025 - Empower the Next Generation
             </h2>
-            <p className='text-lg mb-8 text-white/90 leading-relaxed'>
+            <p className='text-xl mb-12 text-white/95 leading-relaxed max-w-2xl mx-auto'>
               Support the next generation of professionals! Your contribution
               helps students access career guidance, skill-building workshops,
               and networking opportunities at Career Fair 2025.
             </p>
 
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <Button variant='hero' size='lg'>
+              <Button variant='hero' size='lg' className='bg-white text-primary hover:bg-white/90 shadow-xl hover:scale-105 transition-all'>
                 Donate via PayPal
               </Button>
               <Button
                 variant='outline'
                 size='lg'
-                className='border-white/30 text-black hover:bg-white hover:text-foreground'>
+                className='border-white/50 text-white hover:bg-white hover:text-primary backdrop-blur-sm hover:scale-105 transition-all'>
                 Mobile Money
               </Button>
               <Button
                 variant='outline'
                 size='lg'
-                className='border-white/30 text-black hover:bg-white hover:text-foreground'>
+                className='border-white/50 text-white hover:bg-white hover:text-primary backdrop-blur-sm hover:scale-105 transition-all'>
                 Bank Transfer
               </Button>
             </div>
           </div>
         </div>
+
+        {/* Decorative elements */}
+        <div className='absolute top-20 left-10 w-24 h-24 bg-white/10 rounded-full blur-2xl animate-float'></div>
+        <div className='absolute bottom-20 right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-float' style={{ animationDelay: '1s' }}></div>
       </section>
 
       {/* Team Preview */}
-      <section className='py-20'>
+      <section ref={teamSection.ref} className='py-24'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
+          <div className={`text-center mb-16 scroll-fade-up ${teamSection.isVisible ? 'visible' : ''}`}>
+            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
               Team Members
             </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
+            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
               The Faces Behind the Mission
             </h2>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12'>
             {[
               { name: "Rahman Mbahe", role: "Founder", image: rahmanImg },
               {
@@ -539,91 +573,105 @@ const Index = () => {
                 image: godfreyImg,
               },
             ].map((member, index) => (
-              <Card
+              <div
                 key={index}
-                className='group hover:shadow-hover transition-all duration-300 border-0 shadow-card'>
-                <CardContent className='p-6 text-center'>
-                  <div className='w-20 h-20 mx-auto mb-4 bg-gradient-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden'>
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className='w-full h-full object-cover rounded-full'
-                    />
-                  </div>
-                  <h3 className='text-lg font-heading font-semibold mb-2'>
-                    {member.name}
-                  </h3>
-                  <p className='text-muted-foreground'>{member.role}</p>
-                </CardContent>
-              </Card>
+                className={`scroll-scale ${teamSection.isVisible ? 'visible' : ''}`}
+                style={{ transitionDelay: `${index * 100}ms` }}>
+                <Card className='modern-card h-full group'>
+                  <CardContent className='p-8 text-center'>
+                    <div className='relative w-32 h-32 mx-auto mb-6'>
+                      <div className='absolute inset-0 bg-gradient-to-br from-primary to-primary/60 rounded-full blur-md opacity-50 group-hover:opacity-70 transition-opacity'></div>
+                      <div className='relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-xl transform group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300'>
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          className='w-full h-full object-cover'
+                        />
+                      </div>
+                    </div>
+                    <h3 className='text-xl font-heading font-bold mb-2 group-hover:text-primary transition-colors'>
+                      {member.name}
+                    </h3>
+                    <p className='text-muted-foreground font-medium'>{member.role}</p>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
 
-          <div className='text-center mt-12'>
-            <Button variant='hero' size='lg' asChild>
-              <Link to='/team'>Meet Our Full Team</Link>
+          <div className={`text-center scroll-fade-up ${teamSection.isVisible ? 'visible' : ''}`}>
+            <Button variant='hero' size='lg' asChild className='shadow-lg hover:shadow-primary/30 hover:scale-105 transition-all'>
+              <Link to='/team'>
+                Meet Our Full Team <ArrowRight className='ml-2 w-5 h-5' />
+              </Link>
             </Button>
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className='py-20 bg-gradient-card'>
+      <section ref={testimonialsSection.ref} className='py-24 bg-gradient-to-br from-secondary/30 to-transparent'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
+          <div className={`text-center mb-16 scroll-fade-up ${testimonialsSection.isVisible ? 'visible' : ''}`}>
+            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
               Testimonials
             </Badge>
-            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6'>
+            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
               Empowering Communities with Trust
             </h2>
           </div>
 
-          <div className='max-w-4xl mx-auto'>
-            <Card className='border-0 shadow-elegant'>
-              <CardContent className='p-8 text-center'>
-                <div className='flex justify-center mb-6'>
-                  {[...Array(testimonials[currentTestimonial].rating)].map(
-                    (_, i) => (
-                      <Star
-                        key={i}
-                        className='w-6 h-6 text-yellow-400 fill-current'
+          <div className={`max-w-5xl mx-auto scroll-scale ${testimonialsSection.isVisible ? 'visible' : ''}`}>
+            <div className='relative'>
+              <div className='absolute -inset-6 bg-gradient-to-r from-primary/20 to-accent/20 rounded-3xl blur-2xl opacity-30'></div>
+              <Card className='modern-card border-2 border-primary/10 relative'>
+                <CardContent className='p-10 md:p-12 text-center'>
+                  <div className='flex justify-center mb-8'>
+                    {[...Array(testimonials[currentTestimonial].rating)].map(
+                      (_, i) => (
+                        <Star
+                          key={i}
+                          className='w-7 h-7 text-yellow-400 fill-current mx-1 drop-shadow-md'
+                        />
+                      )
+                    )}
+                  </div>
+
+                  <blockquote className='text-xl md:text-2xl italic mb-10 leading-relaxed text-foreground font-medium'>
+                    "{testimonials[currentTestimonial].content}"
+                  </blockquote>
+
+                  <div className='flex items-center justify-center space-x-5'>
+                    <div className='w-16 h-16 bg-gradient-to-br from-primary to-primary/60 rounded-full flex items-center justify-center shadow-lg'>
+                      <Users className='w-8 h-8 text-white' />
+                    </div>
+                    <div className='text-left'>
+                      <h4 className='text-lg font-bold text-foreground'>
+                        {testimonials[currentTestimonial].name}
+                      </h4>
+                      <p className='text-muted-foreground font-medium'>
+                        {testimonials[currentTestimonial].role}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='flex justify-center mt-10 space-x-3'>
+                    {testimonials.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentTestimonial(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                          index === currentTestimonial
+                            ? "bg-primary w-8 shadow-lg"
+                            : "bg-muted hover:bg-muted-foreground"
+                        }`}
+                        aria-label={`Go to testimonial ${index + 1}`}
                       />
-                    )
-                  )}
-                </div>
-
-                <blockquote className='text-lg md:text-xl italic mb-6 leading-relaxed text-muted-foreground'>
-                  "{testimonials[currentTestimonial].content}"
-                </blockquote>
-
-                <div className='flex items-center justify-center space-x-4'>
-                  <div className='w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center'>
-                    <Users className='w-6 h-6 text-primary-foreground' />
+                    ))}
                   </div>
-                  <div className='text-left'>
-                    <h4 className='font-semibold'>
-                      {testimonials[currentTestimonial].name}
-                    </h4>
-                    <p className='text-muted-foreground'>
-                      {testimonials[currentTestimonial].role}
-                    </p>
-                  </div>
-                </div>
-
-                <div className='flex justify-center mt-8 space-x-2'>
-                  {testimonials.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentTestimonial(index)}
-                      className={`w-3 h-3 rounded-full transition-colors ${
-                        index === currentTestimonial ? "bg-primary" : "bg-muted"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
@@ -649,22 +697,35 @@ const Index = () => {
       )}
 
       {/* Partners Section */}
+      <section ref={partnersSection.ref} className='py-20 bg-gradient-to-b from-transparent to-secondary/20'>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+          <div className={`text-center mb-12 scroll-fade-up ${partnersSection.isVisible ? 'visible' : ''}`}>
+            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
+              Trusted Partnerships
+            </Badge>
+            <h2 className='text-3xl md:text-4xl font-heading font-bold mb-4'>
+              Our Partners
+            </h2>
+            <p className='text-muted-foreground max-w-2xl mx-auto'>
+              Working together with amazing organizations to empower youth across Tanzania
+            </p>
+          </div>
 
-      <section className='py-16 bg-white'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 text-center'>
-          <h2 className='text-2xl md:text-3xl font-heading font-bold mb-8'>
-            Our Partners
-          </h2>
-
-          <div className='overflow-hidden relative'>
+          <div className={`overflow-hidden relative py-8 scroll-scale ${partnersSection.isVisible ? 'visible' : ''}`}>
+            <div className='absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10'></div>
+            <div className='absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10'></div>
             <div className='flex animate-scroll-horizontal whitespace-nowrap'>
-              {[...partnerLogos, ...partnerLogos].map((logo, index) => (
-                <img
-                  key={index}
-                  src={logo}
-                  alt={`Partner ${index + 1}`}
-                  className='h-20 mx-8 object-contain grayscale hover:grayscale-0 transition duration-300 inline-block'
-                />
+              {[...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, index) => (
+                <div key={index} className='inline-flex items-center justify-center mx-12 group'>
+                  <div className='relative'>
+                    <div className='absolute inset-0 bg-primary/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
+                    <img
+                      src={logo}
+                      alt={`Partner ${(index % partnerLogos.length) + 1}`}
+                      className='h-20 md:h-24 object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 transform group-hover:scale-110 relative'
+                    />
+                  </div>
+                </div>
               ))}
             </div>
           </div>
