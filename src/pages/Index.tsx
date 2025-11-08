@@ -168,11 +168,14 @@ const Index = () => {
             style={{ backgroundImage: `url(${heroImage})` }}
           />
 
-          {/* Professional gradient overlay */}
-          <div className='absolute inset-0 bg-gradient-to-br from-slate-900/95 via-purple-900/90 to-pink-900/85' />
+          {/* Professional gradient overlay using primary brand color */}
+          <div className='absolute inset-0' style={{ background: 'linear-gradient(135deg, hsl(327, 73%, 20%) 0%, hsl(327, 73%, 30%) 50%, hsl(327, 73%, 25%) 100%)' }} />
+
+          {/* Dark overlay for better text readability */}
+          <div className='absolute inset-0 bg-slate-900/60' />
 
           {/* Subtle animated gradient accent */}
-          <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-pink-500/10 to-transparent gradient-shift opacity-50' />
+          <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-primary/10 to-transparent gradient-shift opacity-50' />
         </div>
 
         {/* Content */}
@@ -191,7 +194,7 @@ const Index = () => {
                 <span className='block text-white'>
                   Welcome to
                 </span>
-                <span className='block mt-2 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent'>
+                <span className='block mt-2 text-primary drop-shadow-lg'>
                   Career Na Mimi
                 </span>
               </h1>
