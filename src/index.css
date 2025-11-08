@@ -361,16 +361,18 @@
 
   /* Continuous horizontal scrolling animation for partners */
   @keyframes scroll-horizontal {
-    from {
+    0% {
       transform: translateX(0);
     }
-    to {
-      transform: translateX(-33.333%);
+    100% {
+      transform: translateX(-50%);
     }
   }
 
   .animate-scroll-horizontal {
-    animation: scroll-horizontal 30s linear infinite;
+    animation: scroll-horizontal 20s linear infinite;
+    display: flex;
+    width: fit-content;
   }
 
   .animate-scroll-horizontal:hover {
