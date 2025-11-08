@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CircularStat from "@/components/CircularStat";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import {
   ArrowLeft,
   Users,
@@ -19,6 +21,12 @@ import {
   Target,
   Heart,
   Sparkles,
+  Shield,
+  TrendingUp,
+  Lightbulb,
+  Handshake,
+  Briefcase,
+  Trophy,
 } from "lucide-react";
 
 //team
@@ -31,6 +39,13 @@ import jofreyImg from "@/assets/team/02.jpg";
 
 const Team = () => {
   const [isVisible, setIsVisible] = useState({});
+
+  // Scroll animation hooks
+  const statsSection = useScrollAnimation({ threshold: 0.1 });
+  const teamIntroSection = useScrollAnimation({ threshold: 0.1 });
+  const teamGridSection = useScrollAnimation({ threshold: 0.1 });
+  const ctaSection = useScrollAnimation({ threshold: 0.1 });
+  const contactSection = useScrollAnimation({ threshold: 0.1 });
 
   // Team members data based on your HTML
   const teamMembers = [
@@ -131,10 +146,10 @@ const Team = () => {
   ];
 
   const stats = [
-    { number: "6+", label: "Team Members", icon: Users },
-    { number: "3+", label: "Years Experience", icon: Award },
-    { number: "2010+", label: "Youth Impacted", icon: Target },
-    { number: "100%", label: "Dedication", icon: Heart },
+    { number: "6+", label: "Team Members", icon: Users, maxValue: 10 },
+    { number: "3+", label: "Years Experience", icon: Award, maxValue: 5 },
+    { number: "2010+", label: "Youth Impacted", icon: Target, maxValue: 2500 },
+    { number: "100%", label: "Dedication", icon: Heart, maxValue: 100 },
   ];
 
   useEffect(() => {
@@ -174,8 +189,65 @@ const Team = () => {
         <div className='absolute bottom-20 right-10 w-16 h-16 bg-white/5 rounded-full animate-bounce delay-1000'></div>
         <div className='absolute top-1/2 left-1/4 w-12 h-12 bg-white/5 rounded-full animate-bounce delay-500'></div>
 
+        {/* Scattered Decorative Particles with Team-themed Icons */}
+        <div className='absolute inset-0 pointer-events-none z-[5]'>
+          {/* Top Left Area - Leadership */}
+          <div className='absolute top-[15%] left-[8%] animate-float opacity-40'>
+            <Shield className='w-9 h-9 text-blue-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(147, 197, 253, 0.5))' }} />
+          </div>
+
+          {/* Top Right Area - Growth */}
+          <div className='absolute top-[18%] right-[10%] animate-float opacity-50' style={{ animationDelay: '1.5s' }}>
+            <TrendingUp className='w-10 h-10 text-emerald-300/70' style={{ filter: 'drop-shadow(0 0 10px rgba(110, 231, 183, 0.5))' }} />
+          </div>
+
+          {/* Middle Left - Innovation */}
+          <div className='absolute top-[40%] left-[5%] animate-float opacity-45' style={{ animationDelay: '1.2s' }}>
+            <Lightbulb className='w-9 h-9 text-yellow-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(253, 224, 71, 0.4))' }} />
+          </div>
+
+          {/* Middle Right - Collaboration */}
+          <div className='absolute top-[45%] right-[7%] animate-float opacity-40' style={{ animationDelay: '0.6s' }}>
+            <Handshake className='w-8 h-8 text-pink-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(244, 114, 182, 0.5))' }} />
+          </div>
+
+          {/* Center Right - Excellence */}
+          <div className='absolute top-[35%] right-[15%] animate-float opacity-35' style={{ animationDelay: '2s' }}>
+            <Trophy className='w-7 h-7 text-amber-300/70' style={{ filter: 'drop-shadow(0 0 6px rgba(252, 211, 77, 0.4))' }} />
+          </div>
+
+          {/* Bottom Left - Team Spirit */}
+          <div className='absolute bottom-[25%] left-[12%] animate-float opacity-40' style={{ animationDelay: '0.9s' }}>
+            <Users className='w-9 h-9 text-indigo-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(165, 180, 252, 0.5))' }} />
+          </div>
+
+          {/* Bottom Right - Goals */}
+          <div className='absolute bottom-[30%] right-[12%] animate-float opacity-45' style={{ animationDelay: '1.8s' }}>
+            <Target className='w-8 h-8 text-rose-300/70' style={{ filter: 'drop-shadow(0 0 7px rgba(253, 164, 175, 0.4))' }} />
+          </div>
+
+          {/* Top Center - Professionalism */}
+          <div className='absolute top-[25%] left-[45%] animate-float opacity-35' style={{ animationDelay: '2.5s' }}>
+            <Briefcase className='w-7 h-7 text-cyan-300/70' style={{ filter: 'drop-shadow(0 0 6px rgba(165, 243, 252, 0.4))' }} />
+          </div>
+
+          {/* Middle Center - Excellence */}
+          <div className='absolute top-[50%] left-[20%] animate-float opacity-30' style={{ animationDelay: '1.6s' }}>
+            <Award className='w-7 h-7 text-purple-300/70' style={{ filter: 'drop-shadow(0 0 6px rgba(216, 180, 254, 0.4))' }} />
+          </div>
+
+          {/* Accent Stars */}
+          <div className='absolute top-[30%] right-[25%] animate-float opacity-30' style={{ animationDelay: '2.2s' }}>
+            <Star className='w-6 h-6 text-yellow-200/60' style={{ filter: 'drop-shadow(0 0 5px rgba(254, 240, 138, 0.3))' }} />
+          </div>
+
+          <div className='absolute bottom-[35%] left-[25%] animate-float opacity-35' style={{ animationDelay: '1.4s' }}>
+            <Sparkles className='w-7 h-7 text-pink-200/60' style={{ filter: 'drop-shadow(0 0 6px rgba(251, 207, 232, 0.3))' }} />
+          </div>
+        </div>
+
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className='max-w-4xl mx-auto text-center text-white'>
+          <div className='max-w-4xl mx-auto text-center text-white cinematic-fade-in'>
             <Badge className='mb-6 bg-white/20 text-white border-white/30 hover:bg-white/30'>
               Meet Our Team
             </Badge>
@@ -193,19 +265,23 @@ const Team = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className='py-16 bg-white'>
+      {/* Stats Section - Circular Progress Rings */}
+      <section ref={statsSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
+          <div className='grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8'>
             {stats.map((stat, index) => (
-              <div key={index} className='text-center group'>
-                <div className='w-16 h-16 mx-auto mb-4 bg-prmary rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300'>
-                  <stat.icon className='w-8 h-8 text-white' />
-                </div>
-                <h3 className='text-3xl font-bold text-gray-800 mb-2'>
-                  {stat.number}
-                </h3>
-                <p className='text-gray-600 font-medium'>{stat.label}</p>
+              <div
+                key={index}
+                className={`scroll-scale ${statsSection.isVisible ? 'visible' : ''}`}
+                style={{ transitionDelay: `${index * 100}ms` }}>
+                <CircularStat
+                  number={stat.number}
+                  label={stat.label}
+                  icon={stat.icon}
+                  maxValue={stat.maxValue}
+                  isVisible={statsSection.isVisible}
+                  delay={index * 200}
+                />
               </div>
             ))}
           </div>
@@ -213,9 +289,9 @@ const Team = () => {
       </section>
 
       {/* Team Introduction */}
-      <section className='py-20 bg-gray-50'>
+      <section ref={teamIntroSection.ref} className='py-20 bg-gray-50'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16' data-animate id='team-intro'>
+          <div className={`text-center mb-16 scroll-fade-up ${teamIntroSection.isVisible ? 'visible' : ''}`}>
             <Badge className='mb-6 bg-primary/10 text-primary border-primary/20'>
               Our Leadership
             </Badge>
@@ -233,19 +309,16 @@ const Team = () => {
       </section>
 
       {/* Team Members Grid */}
-      <section className='py-20 bg-white'>
+      <section ref={teamGridSection.ref} className='py-20 bg-white'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>
             {teamMembers.map((member, index) => (
               <Card
                 key={member.id}
-                className={`group hover:shadow-2xl transition-all duration-500 border-0 shadow-lg overflow-hidden bg-white ${
-                  isVisible[`member-${member.id}`]
-                    ? "animate-fade-in"
-                    : "opacity-0"
+                className={`group hover:shadow-2xl transition-all duration-500 border-0 shadow-lg overflow-hidden bg-white scroll-scale ${
+                  teamGridSection.isVisible ? 'visible' : ''
                 }`}
-                data-animate
-                id={`member-${member.id}`}>
+                style={{ transitionDelay: `${index * 100}ms` }}>
                 <div className='relative overflow-hidden h-64'>
                   <img
                     src={member.image}
@@ -319,9 +392,9 @@ const Team = () => {
       </section>
 
       {/* Call to Action */}
-      <section className='py-20 bg-primary'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='max-w-4xl mx-auto text-center text-white'>
+      <section ref={ctaSection.ref} className='py-20 bg-primary relative overflow-hidden'>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+          <div className={`max-w-4xl mx-auto text-center text-white scroll-fade-up ${ctaSection.isVisible ? 'visible' : ''}`}>
             <Sparkles className='w-16 h-16 mx-auto mb-6 text-white' />
             <h2 className='text-3xl md:text-4xl font-bold mb-6'>
               Want to Join Our Mission?
@@ -336,14 +409,14 @@ const Team = () => {
               <Button
                 variant='secondary'
                 size='lg'
-                className='bg-white text-primary hover:bg-gray-100'>
+                className='bg-white text-primary hover:bg-gray-100 hover:scale-105 transition-transform duration-300'>
                 <Mail className='mr-2 w-5 h-5' />
                 Send Application
               </Button>
               <Button
                 variant='outline'
                 size='lg'
-                className='border-white/30 text-black hover:bg-white hover:text-primary'>
+                className='border-white/30 text-black hover:bg-white hover:text-primary hover:scale-105 transition-all duration-300'>
                 <Phone className='mr-2 w-5 h-5' />
                 Get in Touch
               </Button>
@@ -353,11 +426,11 @@ const Team = () => {
       </section>
 
       {/* Contact Information */}
-      <section className='py-16 bg-gray-50'>
+      <section ref={contactSection.ref} className='py-16 bg-gray-50'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-            <div className='text-center'>
-              <div className='w-16 h-16 mx-auto mb-4 bg-primary rounded-2xl flex items-center justify-center'>
+            <div className={`text-center scroll-fade-up ${contactSection.isVisible ? 'visible' : ''}`} style={{ transitionDelay: '0ms' }}>
+              <div className='w-16 h-16 mx-auto mb-4 bg-primary rounded-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300'>
                 <MapPin className='w-8 h-8 text-white' />
               </div>
               <h3 className='text-xl font-semibold mb-2 text-gray-800'>
@@ -366,8 +439,8 @@ const Team = () => {
               <p className='text-gray-600'>Njiro Arusha, TANZANIA</p>
             </div>
 
-            <div className='text-center'>
-              <div className='w-16 h-16 mx-auto mb-4 bg-primary rounded-2xl flex items-center justify-center'>
+            <div className={`text-center scroll-fade-up ${contactSection.isVisible ? 'visible' : ''}`} style={{ transitionDelay: '100ms' }}>
+              <div className='w-16 h-16 mx-auto mb-4 bg-primary rounded-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300'>
                 <Phone className='w-8 h-8 text-white' />
               </div>
               <h3 className='text-xl font-semibold mb-2 text-gray-800'>
@@ -377,8 +450,8 @@ const Team = () => {
               <p className='text-gray-600'>+255 750 550 60</p>
             </div>
 
-            <div className='text-center'>
-              <div className='w-16 h-16 mx-auto mb-4 bg-primary rounded-2xl flex items-center justify-center'>
+            <div className={`text-center scroll-fade-up ${contactSection.isVisible ? 'visible' : ''}`} style={{ transitionDelay: '200ms' }}>
+              <div className='w-16 h-16 mx-auto mb-4 bg-primary rounded-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300'>
                 <Mail className='w-8 h-8 text-white' />
               </div>
               <h3 className='text-xl font-semibold mb-2 text-gray-800'>
