@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CircularStat from "@/components/CircularStat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import {
   Calendar,
@@ -99,38 +100,10 @@ const Events = () => {
   ];
 
   const impactStats = [
-    {
-      icon: Users,
-      number: "2,010+",
-      title: "Youth Empowered",
-      description:
-        "Directly impacted youth through empowerment programs and outreach across Tanzania.",
-      color: "from-blue-500 to-blue-600",
-    },
-    {
-      icon: Briefcase,
-      number: "50+",
-      title: "Jobs & Internships",
-      description:
-        "Connected youth with employment and internship opportunities through our platform and partners.",
-      color: "from-green-500 to-green-600",
-    },
-    {
-      icon: Laptop,
-      number: "2,010+",
-      title: "Skills Training",
-      description:
-        "Delivered training in digital, business, and leadership skills to youth across the region.",
-      color: "from-purple-500 to-purple-600",
-    },
-    {
-      icon: UserCheck,
-      number: "1005+",
-      title: "Women & Marginalized Youth",
-      description:
-        "Empowered women and underrepresented youth through mentorship and targeted programs.",
-      color: "from-pink-500 to-pink-600",
-    },
+    { number: "2010+", label: "Youth Empowered", icon: Users },
+    { number: "50+", label: "Jobs & Internships", icon: Briefcase },
+    { number: "2010+", label: "Skills Training", icon: Laptop },
+    { number: "1005+", label: "Women & Marginalized Youth", icon: UserCheck },
   ];
 
   const EventCard = ({ event, isUpcoming = false }) => (
@@ -466,7 +439,7 @@ const Events = () => {
         </div>
       </section>
 
-      {/* Impact Statistics - Enhanced */}
+      {/* Impact Statistics - Circular Progress Rings */}
       <section ref={impactSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
         <div className='absolute inset-0 opacity-5' style={{
           backgroundImage: 'radial-gradient(circle at 50% 50%, hsl(327, 73%, 56%) 0%, transparent 50%)'
@@ -485,27 +458,20 @@ const Events = () => {
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+          <div className='grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8'>
             {impactStats.map((stat, index) => (
               <div
                 key={index}
                 className={`scroll-scale ${impactSection.isVisible ? 'visible' : ''}`}
                 style={{ transitionDelay: `${index * 100}ms` }}>
-                <Card className='modern-card group hover:shadow-2xl transition-all duration-500 border-0 shadow-card text-center h-full'>
-                  <CardContent className='p-8'>
-                    <div
-                      className={`w-20 h-20 mx-auto mb-6 bg-gradient-to-r ${stat.color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}>
-                      <stat.icon className='w-10 h-10 text-white' />
-                    </div>
-                    <h3 className='text-4xl font-heading font-bold mb-2' style={{ color: 'hsl(327, 73%, 56%)' }}>
-                      {stat.number}
-                    </h3>
-                    <h4 className='text-lg font-semibold mb-4'>{stat.title}</h4>
-                    <p className='text-muted-foreground text-sm leading-relaxed'>
-                      {stat.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                <CircularStat
+                  number={stat.number}
+                  label={stat.label}
+                  icon={stat.icon}
+                  maxValue={2500}
+                  isVisible={impactSection.isVisible}
+                  delay={index * 200}
+                />
               </div>
             ))}
           </div>
