@@ -5,8 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import CareerPathConnector from "@/components/CareerPathConnector";
-import FloatingElements3D from "@/components/FloatingElements3D";
+import AnimatedStatsGraph from "@/components/AnimatedStatsGraph";
 import { 
   ArrowRight, 
   Play, 
@@ -159,152 +158,111 @@ const Index = () => {
     <div className='min-h-screen'>
       <Navigation />
 
-      {/* Hero Section - Cinematic */}
-      <section className='relative min-h-screen flex items-center justify-center overflow-hidden perspective-3d'>
-        {/* Dynamic Background Layers */}
+      {/* Hero Section - Professional & Clean */}
+      <section className='relative min-h-screen flex items-center justify-center overflow-hidden'>
+        {/* Background Layers */}
         <div className='absolute inset-0'>
-          {/* Base gradient with image overlay */}
+          {/* Base image with subtle overlay */}
           <div
-            className='absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20'
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat'
             style={{ backgroundImage: `url(${heroImage})` }}
           />
 
-          {/* Animated gradient overlay */}
-          <div className='absolute inset-0 bg-gradient-to-br from-purple-900/30 via-pink-900/40 to-blue-900/30 gradient-shift' />
+          {/* Professional gradient overlay */}
+          <div className='absolute inset-0 bg-gradient-to-br from-slate-900/95 via-purple-900/90 to-pink-900/85' />
 
-          {/* Dark vignette for depth */}
-          <div className='absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/60' />
-        </div>
-
-        {/* Career Path Connector - Main Visual */}
-        <div className='absolute inset-0 z-[5]'>
-          <CareerPathConnector />
-        </div>
-
-        {/* Floating 3D Elements */}
-        <div className='absolute inset-0 z-[6]'>
-          <FloatingElements3D />
-        </div>
-
-        {/* Light Rays Effect */}
-        <div className='absolute inset-0 z-[7] pointer-events-none'>
-          <div className='absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-to-b from-white/10 via-transparent to-transparent blur-3xl opacity-30' />
+          {/* Subtle animated gradient accent */}
+          <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-pink-500/10 to-transparent gradient-shift opacity-50' />
         </div>
 
         {/* Content */}
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-32'>
-          <div className='max-w-5xl mx-auto text-center'>
-            {/* Badge with glow */}
-            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.2s' }}>
-              <Badge className='mb-8 glassmorphic text-white border-white/30 hover:bg-white/20 glow-pulse px-6 py-2 text-sm'>
-                ✨ Empowering Youth Since 2023
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20'>
+          <div className='max-w-6xl mx-auto'>
+            {/* Badge */}
+            <div className='text-center cinematic-fade-in opacity-0' style={{ animationDelay: '0.2s' }}>
+              <Badge className='mb-8 bg-white/10 text-white border-white/20 hover:bg-white/15 px-6 py-2 text-sm backdrop-blur-sm'>
+                Empowering Youth Since 2023
               </Badge>
             </div>
 
-            {/* Main Heading with shimmer */}
-            <div className='cinematic-scale-in opacity-0' style={{ animationDelay: '0.4s' }}>
-              <h1 className='text-5xl md:text-7xl lg:text-8xl font-heading font-black mb-8 leading-tight'>
-                <span className='block text-white drop-shadow-2xl'>
+            {/* Main Heading */}
+            <div className='text-center cinematic-scale-in opacity-0' style={{ animationDelay: '0.4s' }}>
+              <h1 className='text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight'>
+                <span className='block text-white'>
                   Welcome to
                 </span>
-                <span className='block mt-2 bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent animate-gradient-x text-shimmer drop-shadow-2xl'>
+                <span className='block mt-2 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent'>
                   Career Na Mimi
                 </span>
               </h1>
             </div>
 
             {/* Tagline */}
-            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.6s' }}>
-              <div className='relative inline-block mb-6'>
-                <p className='text-2xl md:text-4xl font-bold text-white/95 relative z-10'>
-                  "Your Journey, Your Success"
-                </p>
-                <div className='absolute -inset-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 blur-xl' />
-              </div>
+            <div className='text-center cinematic-fade-in opacity-0 mb-8' style={{ animationDelay: '0.6s' }}>
+              <p className='text-xl md:text-2xl text-white/90 font-medium'>
+                "Your Journey, Your Success"
+              </p>
             </div>
 
-            {/* Description with glassmorphism */}
-            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.8s' }}>
-              <div className='max-w-3xl mx-auto mb-12'>
-                <div className='glassmorphic rounded-2xl p-6 backdrop-blur-xl'>
-                  <p className='text-lg md:text-xl text-white/90 leading-relaxed'>
-                    Career Na Mimi empowers youth with{' '}
-                    <span className='font-semibold text-pink-300'>skills</span>,{' '}
-                    <span className='font-semibold text-purple-300'>mentorship</span>, and{' '}
-                    <span className='font-semibold text-blue-300'>opportunities</span>{' '}
-                    to unlock their potential and achieve their dreams.
-                  </p>
-                </div>
-              </div>
+            {/* Description */}
+            <div className='text-center cinematic-fade-in opacity-0 mb-12' style={{ animationDelay: '0.8s' }}>
+              <p className='text-base md:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed'>
+                Career Na Mimi empowers youth with skills, mentorship, and opportunities
+                to unlock their potential and achieve their dreams.
+              </p>
             </div>
 
-            {/* CTA Buttons with 3D effect */}
-            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '1s' }}>
-              <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
-                <Button
-                  variant='hero'
-                  size='xl'
-                  asChild
-                  className='group relative overflow-hidden transform hover:scale-105 transition-all duration-300'
-                >
-                  <Link to='/about' className='relative z-10'>
-                    <span className='relative z-10'>Discover More</span>
-                    <ArrowRight className='ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform' />
-                    <div className='absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity' />
-                  </Link>
-                </Button>
-
-                <Button
-                  variant='outline'
-                  size='xl'
-                  onClick={() => setIsVideoOpen(true)}
-                  className='glassmorphic border-white/40 text-white hover:bg-white/20 hover:border-white/60 transform hover:scale-105 transition-all duration-300 group'
-                >
-                  <Play className='mr-2 w-5 h-5 group-hover:scale-110 transition-transform' />
-                  Watch Our Story
-                </Button>
-              </div>
+            {/* Animated Stats Graph */}
+            <div className='cinematic-fade-in opacity-0 mb-12' style={{ animationDelay: '1s' }}>
+              <AnimatedStatsGraph
+                stats={[
+                  {
+                    number: '500+',
+                    label: 'Youth Empowered',
+                    value: 500,
+                    color: 'rgba(236, 72, 153, 1)' // Pink
+                  },
+                  {
+                    number: '50+',
+                    label: 'Workshops Conducted',
+                    value: 50,
+                    color: 'rgba(168, 85, 247, 1)' // Purple
+                  },
+                  {
+                    number: '25+',
+                    label: 'Career Talks',
+                    value: 25,
+                    color: 'rgba(59, 130, 246, 1)' // Blue
+                  },
+                  {
+                    number: '100+',
+                    label: 'Success Stories',
+                    value: 100,
+                    color: 'rgba(14, 165, 233, 1)' // Sky
+                  },
+                ]}
+              />
             </div>
 
-            {/* Scroll Indicator */}
-            <div className='cinematic-fade-in opacity-0 mt-20' style={{ animationDelay: '1.2s' }}>
-              <div className='flex flex-col items-center gap-2 text-white/60'>
-                <span className='text-sm uppercase tracking-wider'>Scroll to explore</span>
-                <div className='w-6 h-10 border-2 border-white/40 rounded-full p-1'>
-                  <div className='w-1.5 h-3 bg-white/60 rounded-full mx-auto animate-bounce' />
-                </div>
-              </div>
+            {/* CTA Button */}
+            <div className='text-center cinematic-fade-in opacity-0' style={{ animationDelay: '1.2s' }}>
+              <Button
+                variant='hero'
+                size='lg'
+                asChild
+                className='group relative overflow-hidden shadow-2xl hover:shadow-pink-500/50 transition-all duration-300'
+              >
+                <Link to='/about'>
+                  <span className='relative z-10'>Discover More</span>
+                  <ArrowRight className='ml-2 w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform' />
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
 
         {/* Bottom gradient fade */}
-        <div className='absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-[8]' />
-      </section>
-
-      {/* Stats Section */}
-      <section className='py-16 bg-secondary/30'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-            {stats.map((stat, index) => (
-              <div key={index} className='text-center group'>
-                <div className='w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300'>
-                  <stat.icon className='w-8 h-8 text-primary-foreground' />
-                </div>
-                <CountUp
-                  end={parseInt(stat.number)}
-                  duration={2.5}
-                  suffix='+'
-                  className='text-3xl font-heading font-bold text-foreground mb-2'
-                />
-
-                <p className='text-muted-foreground font-medium'>
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <div className='absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[8]' />
       </section>
 
       {/* AI Career Guidance Section */}
