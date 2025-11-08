@@ -168,14 +168,14 @@ const Index = () => {
             style={{ backgroundImage: `url(${heroImage})` }}
           />
 
-          {/* Professional gradient overlay using primary brand color */}
-          <div className='absolute inset-0' style={{ background: 'linear-gradient(135deg, hsl(327, 73%, 20%) 0%, hsl(327, 73%, 30%) 50%, hsl(327, 73%, 25%) 100%)' }} />
+          {/* Professional gradient overlay using primary brand color - REDUCED OPACITY */}
+          <div className='absolute inset-0' style={{ background: 'linear-gradient(135deg, hsla(327, 73%, 20%, 0.6) 0%, hsla(327, 73%, 30%, 0.5) 50%, hsla(327, 73%, 25%, 0.6) 100%)' }} />
 
-          {/* Dark overlay for better text readability */}
-          <div className='absolute inset-0 bg-slate-900/60' />
+          {/* Dark overlay for better text readability - REDUCED OPACITY */}
+          <div className='absolute inset-0 bg-slate-900/30' />
 
           {/* Subtle animated gradient accent */}
-          <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-primary/10 to-transparent gradient-shift opacity-50' />
+          <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-primary/5 to-transparent gradient-shift opacity-50' />
         </div>
 
         {/* Content */}
