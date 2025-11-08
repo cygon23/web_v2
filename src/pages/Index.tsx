@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ParticleNetwork from "@/components/ParticleNetwork";
 import { 
   ArrowRight, 
   Play, 
@@ -163,6 +164,17 @@ const Index = () => {
           className='absolute inset-0 bg-cover bg-center bg-no-repeat'
           style={{ backgroundImage: `url(${heroImage})` }}>
           <div className='absolute inset-0 bg-gradient-hero'></div>
+        </div>
+
+        {/* Particle Network with 3D Depth */}
+        <div className='absolute inset-0 z-[5]'>
+          <ParticleNetwork
+            particleCount={80}
+            connectionDistance={150}
+            particleColor='rgba(255, 255, 255, 0.8)'
+            lineColor='rgba(255, 255, 255, 0.3)'
+            particleSpeed={0.3}
+          />
         </div>
 
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
