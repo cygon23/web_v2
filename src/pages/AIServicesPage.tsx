@@ -418,18 +418,12 @@ const ServicesPage = () => {
               complete technology partner.
             </p>
 
-            <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <button
-                onClick={() => setIsContactOpen(true)}
-                className='bg-white text-primary px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center space-x-2'>
-                <Send className='w-5 h-5' />
-                <span>Start Your Project</span>
-              </button>
-              <button className='border-2 border-white/30 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 backdrop-blur-sm transition-all duration-300 flex items-center justify-center space-x-2'>
-                <Play className='w-5 h-5' />
-                <span>Watch Our Work</span>
-              </button>
-            </div>
+            <button
+              onClick={() => setIsContactOpen(true)}
+              className='bg-white text-primary px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center space-x-2 mx-auto'>
+              <Send className='w-5 h-5' />
+              <span>Start Your Project</span>
+            </button>
           </div>
         </div>
       </div>
@@ -625,27 +619,19 @@ const ServicesPage = () => {
           </div>
 
           {/* Endless Scrolling Testimonials */}
-          <div className='relative'>
-            <div className='flex animate-scroll-left'>
+          <div className='relative overflow-hidden'>
+            <div className='flex gap-8 animate-scroll-left'>
               {/* First set of testimonials */}
               {testimonials.map((testimonial, index) => (
                 <div
                   key={`first-${index}`}
-                  className='flex-shrink-0 w-96 mx-4'>
+                  className='flex-shrink-0 w-[400px]'>
                   <div className='bg-gradient-to-br from-secondary/10 to-primary/10 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full'>
-                    <div className='flex items-center mb-4'>
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className='w-5 h-5 text-yellow-400 fill-current'
-                        />
-                      ))}
-                    </div>
-                    <blockquote className='text-gray-700 mb-6 leading-relaxed'>
+                    <blockquote className='text-gray-700 mb-6 leading-relaxed text-lg italic'>
                       "{testimonial.content}"
                     </blockquote>
                     <div className='flex items-center'>
-                      <div className='w-12 h-12 bg-gradient-to-r from-primary via-primary/90 to-primary text-white rounded-full flex items-center justify-center font-bold mr-4'>
+                      <div className='w-14 h-14 bg-gradient-to-r from-primary via-primary/90 to-primary text-white rounded-full flex items-center justify-center font-bold text-lg mr-4'>
                         {testimonial.avatar}
                       </div>
                       <div>
@@ -664,21 +650,13 @@ const ServicesPage = () => {
               {testimonials.map((testimonial, index) => (
                 <div
                   key={`second-${index}`}
-                  className='flex-shrink-0 w-96 mx-4'>
+                  className='flex-shrink-0 w-[400px]'>
                   <div className='bg-gradient-to-br from-secondary/10 to-primary/10 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full'>
-                    <div className='flex items-center mb-4'>
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className='w-5 h-5 text-yellow-400 fill-current'
-                        />
-                      ))}
-                    </div>
-                    <blockquote className='text-gray-700 mb-6 leading-relaxed'>
+                    <blockquote className='text-gray-700 mb-6 leading-relaxed text-lg italic'>
                       "{testimonial.content}"
                     </blockquote>
                     <div className='flex items-center'>
-                      <div className='w-12 h-12 bg-gradient-to-r from-primary via-primary/90 to-primary text-white rounded-full flex items-center justify-center font-bold mr-4'>
+                      <div className='w-14 h-14 bg-gradient-to-r from-primary via-primary/90 to-primary text-white rounded-full flex items-center justify-center font-bold text-lg mr-4'>
                         {testimonial.avatar}
                       </div>
                       <div>
