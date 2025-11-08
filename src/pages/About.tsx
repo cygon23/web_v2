@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CircularStat from "@/components/CircularStat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import {
@@ -181,33 +182,26 @@ const About = () => {
         <div className='absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[8]' />
       </section>
 
-      {/* Impact Stats - Enhanced */}
-      <section ref={statsSection.ref} className='py-20 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
+      {/* Impact Stats - Circular Progress Rings */}
+      <section ref={statsSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
         <div className='absolute inset-0 opacity-5' style={{
           backgroundImage: 'radial-gradient(circle at 50% 50%, hsl(327, 73%, 56%) 0%, transparent 50%)'
         }}></div>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
+          <div className='grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8'>
             {impactStats.map((stat, index) => (
               <div
                 key={index}
-                className={`text-center scroll-scale ${statsSection.isVisible ? 'visible' : ''}`}
+                className={`scroll-scale ${statsSection.isVisible ? 'visible' : ''}`}
                 style={{ transitionDelay: `${index * 100}ms` }}>
-                <Card className='modern-card p-6 h-full border-2 border-transparent hover:border-primary/20'>
-                  <div className='w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-primary to-primary/70 rounded-2xl flex items-center justify-center shadow-lg transform hover:scale-110 hover:rotate-6 transition-all duration-300'>
-                    <stat.icon className='w-8 h-8 text-white' />
-                  </div>
-                  <div className='text-4xl font-heading font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent'>
-                    <CountUp
-                      end={parseInt(stat.number)}
-                      duration={2.5}
-                      suffix='+'
-                    />
-                  </div>
-                  <p className='text-muted-foreground font-semibold text-sm'>
-                    {stat.label}
-                  </p>
-                </Card>
+                <CircularStat
+                  number={stat.number}
+                  label={stat.label}
+                  icon={stat.icon}
+                  maxValue={2500}
+                  isVisible={statsSection.isVisible}
+                  delay={index * 200}
+                />
               </div>
             ))}
           </div>
