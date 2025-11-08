@@ -20,10 +20,17 @@ import {
   Phone,
   Mail,
   Calendar,
+  Rocket,
+  Database,
+  Cpu,
+  Lightbulb,
+  Target,
+  Settings,
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { toast } from "@/components/ui/use-toast";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const ServicesPage = () => {
   const [activeService, setActiveService] = useState(0);
@@ -41,11 +48,12 @@ const ServicesPage = () => {
     message: "",
     budget: "",
   });
-  const [animatedStats, setAnimatedStats] = useState({
-    projects: 0,
-    clients: 0,
-    satisfaction: 0,
-  });
+
+  // Scroll animation hooks
+  const servicesSection = useScrollAnimation({ threshold: 0.1 });
+  const processSection = useScrollAnimation({ threshold: 0.1 });
+  const testimonialsSection = useScrollAnimation({ threshold: 0.1 });
+  const ctaSection = useScrollAnimation({ threshold: 0.1 });
 
   const services = [
     {
@@ -55,7 +63,7 @@ const ServicesPage = () => {
       description:
         "We craft cutting-edge web and mobile applications powered by advanced AI technologies including RAG, NLP, and intelligent automation to create solutions that don't just meet user needs—they anticipate them.",
       icon: Brain,
-      gradient: "from-pink-500 via-purple-600 to-pink-600",
+      gradient: "from-primary via-primary/90 to-primary",
       features: [
         "RAG-powered intelligent search and content generation",
         "Natural Language Processing for human-like interactions",
@@ -91,7 +99,7 @@ const ServicesPage = () => {
       description:
         "Our creative team transforms your ideas into compelling brand identities and user experiences. Using industry-leading tools like Figma, Adobe Creative Suite, and Canva Pro, we craft designs that captivate and convert.",
       icon: Palette,
-      gradient: "from-pink-600 via-rose-500 to-orange-500",
+      gradient: "from-primary via-primary/90 to-primary",
       features: [
         "Complete brand identity development",
         "Modern UI/UX design for web & mobile",
@@ -126,7 +134,7 @@ const ServicesPage = () => {
       description:
         "Our cybersecurity experts provide comprehensive security audits, privacy assessments, and implementation strategies to protect your digital infrastructure from evolving threats in today's complex landscape.",
       icon: Shield,
-      gradient: "from-emerald-500 via-teal-600 to-cyan-600",
+      gradient: "from-primary via-primary/90 to-primary",
       features: [
         "Comprehensive security audits and assessments",
         "Privacy compliance (GDPR, CCPA, etc.)",
@@ -161,7 +169,7 @@ const ServicesPage = () => {
       description:
         "Our system analysts evaluate your current technology stack, identify optimization opportunities, and design scalable architectures that grow with your business while maintaining peak performance.",
       icon: Network,
-      gradient: "from-violet-500 via-purple-600 to-pink-600",
+      gradient: "from-primary via-primary/90 to-primary",
       features: [
         "Comprehensive system analysis and auditing",
         "Architecture design and optimization",
@@ -191,12 +199,7 @@ const ServicesPage = () => {
     },
   ];
 
-  const stats = [
-    { label: "Projects Delivered", value: 150, prefix: "", suffix: "+" },
-    { label: "Happy Clients", value: 95, prefix: "", suffix: "%" },
-    { label: "Client Satisfaction", value: 98, prefix: "", suffix: "%" },
-  ];
-
+  // Duplicate testimonials for endless scrolling effect
   const testimonials = [
     {
       name: "Sarah Johnson",
@@ -221,6 +224,22 @@ const ServicesPage = () => {
         "Outstanding cybersecurity consultation. They identified vulnerabilities we didn't know existed and provided clear, actionable solutions.",
       rating: 5,
       avatar: "ER",
+    },
+    {
+      name: "David Williams",
+      position: "CEO, InnovateTech",
+      content:
+        "Exceptional system architecture design. Their recommendations improved our scalability by 300% and reduced operational costs significantly.",
+      rating: 5,
+      avatar: "DW",
+    },
+    {
+      name: "Lisa Martinez",
+      position: "Product Manager, StartupCo",
+      content:
+        "The mobile app they built exceeded all expectations. The AI features are incredibly intuitive and our users absolutely love it.",
+      rating: 5,
+      avatar: "LM",
     },
   ];
 
@@ -261,25 +280,6 @@ const ServicesPage = () => {
       icon: TrendingUp,
     },
   ];
-
-  // Animated stats effect
-  useEffect(() => {
-    const duration = 2000;
-    const interval = 50;
-    const steps = duration / interval;
-
-    const timer = setInterval(() => {
-      setAnimatedStats((prev) => ({
-        projects: Math.min(prev.projects + 150 / steps, 150),
-        clients: Math.min(prev.clients + 95 / steps, 95),
-        satisfaction: Math.min(prev.satisfaction + 98 / steps, 98),
-      }));
-    }, interval);
-
-    setTimeout(() => clearInterval(timer), duration);
-
-    return () => clearInterval(timer);
-  }, []);
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -329,46 +329,99 @@ const ServicesPage = () => {
   const ActiveIcon = services[activeService].icon;
 
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className='min-h-screen bg-gradient-to-br from-secondary/20 via-white to-secondary/30'>
       <Navigation />
       {/* Hero Section */}
-      <div className='relative overflow-hidden bg-gradient-to-r from-pink-600 via-pink-300 to-pink-500 text-white'>
-        <div className='absolute inset-0 bg-black/20'></div>
-        {/* Animated background elements */}
-        <div className='absolute inset-0 overflow-hidden'>
-          <div className='absolute top-20 left-10 w-64 h-64 bg-pink-400/20 rounded-full blur-3xl animate-pulse'></div>
-          <div
-            className='absolute bottom-20 right-10 w-80 h-80 bg-purple-400/20 rounded-full blur-3xl animate-pulse'
-            style={{ animationDelay: "1s" }}></div>
-          <div
-            className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-400/10 rounded-full blur-3xl animate-pulse'
-            style={{ animationDelay: "2s" }}></div>
+      <div className='relative overflow-hidden bg-gradient-to-r from-primary via-primary/90 to-primary text-white'>
+        <div className='absolute inset-0 bg-black/10'></div>
+
+        {/* Scattered Decorative Particles with Service-themed Icons */}
+        <div className='absolute inset-0 pointer-events-none z-[5]'>
+          {/* Top Left Area - Innovation */}
+          <div className='absolute top-[15%] left-[8%] animate-float opacity-40'>
+            <Rocket className='w-9 h-9 text-blue-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(147, 197, 253, 0.5))' }} />
+          </div>
+
+          {/* Top Right Area - AI/Brain */}
+          <div className='absolute top-[18%] right-[10%] animate-float opacity-50' style={{ animationDelay: '1.5s' }}>
+            <Brain className='w-10 h-10 text-purple-300/70' style={{ filter: 'drop-shadow(0 0 10px rgba(216, 180, 254, 0.5))' }} />
+          </div>
+
+          {/* Middle Left - Data */}
+          <div className='absolute top-[40%] left-[5%] animate-float opacity-45' style={{ animationDelay: '1.2s' }}>
+            <Database className='w-9 h-9 text-cyan-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(165, 243, 252, 0.4))' }} />
+          </div>
+
+          {/* Middle Right - Design */}
+          <div className='absolute top-[45%] right-[7%] animate-float opacity-40' style={{ animationDelay: '0.6s' }}>
+            <Palette className='w-8 h-8 text-pink-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(244, 114, 182, 0.5))' }} />
+          </div>
+
+          {/* Center Right - Processing */}
+          <div className='absolute top-[35%] right-[15%] animate-float opacity-35' style={{ animationDelay: '2s' }}>
+            <Cpu className='w-7 h-7 text-emerald-300/70' style={{ filter: 'drop-shadow(0 0 6px rgba(110, 231, 183, 0.4))' }} />
+          </div>
+
+          {/* Bottom Left - Security */}
+          <div className='absolute bottom-[25%] left-[12%] animate-float opacity-40' style={{ animationDelay: '0.9s' }}>
+            <Shield className='w-9 h-9 text-indigo-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(165, 180, 252, 0.5))' }} />
+          </div>
+
+          {/* Bottom Right - Settings */}
+          <div className='absolute bottom-[30%] right-[12%] animate-float opacity-45' style={{ animationDelay: '1.8s' }}>
+            <Settings className='w-8 h-8 text-amber-300/70' style={{ filter: 'drop-shadow(0 0 7px rgba(251, 191, 36, 0.4))' }} />
+          </div>
+
+          {/* Top Center - Ideas */}
+          <div className='absolute top-[25%] left-[45%] animate-float opacity-35' style={{ animationDelay: '2.5s' }}>
+            <Lightbulb className='w-7 h-7 text-yellow-200/70' style={{ filter: 'drop-shadow(0 0 6px rgba(254, 240, 138, 0.4))' }} />
+          </div>
+
+          {/* Middle Center - Network */}
+          <div className='absolute top-[50%] left-[20%] animate-float opacity-30' style={{ animationDelay: '1.6s' }}>
+            <Network className='w-7 h-7 text-rose-300/70' style={{ filter: 'drop-shadow(0 0 6px rgba(253, 164, 175, 0.4))' }} />
+          </div>
+
+          {/* Accent Stars */}
+          <div className='absolute top-[30%] right-[25%] animate-float opacity-30' style={{ animationDelay: '2.2s' }}>
+            <Star className='w-6 h-6 text-yellow-200/60' style={{ filter: 'drop-shadow(0 0 5px rgba(254, 240, 138, 0.3))' }} />
+          </div>
+
+          <div className='absolute bottom-[35%] left-[25%] animate-float opacity-35' style={{ animationDelay: '1.4s' }}>
+            <Sparkles className='w-7 h-7 text-pink-200/60' style={{ filter: 'drop-shadow(0 0 6px rgba(251, 207, 232, 0.3))' }} />
+          </div>
         </div>
-        s
-        <div className='container mx-auto px-4 py-24 relative z-10'>
-          <div className='text-center max-w-5xl mx-auto'>
+
+        {/* Animated background elements */}
+        <div className='absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse'></div>
+        <div
+          className='absolute bottom-20 right-10 w-40 h-40 bg-white/10 rounded-full blur-xl animate-pulse'
+          style={{ animationDelay: "1s" }}></div>
+
+        <div className='container mx-auto px-4 py-20 relative z-10'>
+          <div className='text-center max-w-5xl mx-auto cinematic-fade-in'>
             <div className='inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-8'>
-              <Sparkles className='w-5 h-5 animate-pulse' />
+              <Sparkles className='w-5 h-5' />
               <span className='text-sm font-medium'>AI-Powered Solutions</span>
             </div>
 
-            <h1 className='text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-pink-100 to-pink-100 bg-clip-text text-transparent leading-tight'>
+            <h1 className='text-5xl md:text-7xl font-bold mb-8 leading-tight'>
               Transform Your Vision
               <br />
               <span className='text-4xl md:text-6xl'>Into Digital Reality</span>
             </h1>
 
-            <p className='text-xl md:text-2xl text-gray-100 mb-12 leading-relaxed max-w-4xl mx-auto'>
+            <p className='text-xl md:text-2xl text-white/90 mb-12 leading-relaxed max-w-4xl mx-auto'>
               We deliver cutting-edge AI solutions, stunning designs, and
               fortress-level security to elevate your business in the digital
               landscape. From intelligent apps to brand identity, we're your
               complete technology partner.
             </p>
 
-            <div className='flex flex-col sm:flex-row gap-4 justify-center mb-16'>
+            <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <button
                 onClick={() => setIsContactOpen(true)}
-                className='bg-white text-pink-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-pink-50 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center space-x-2'>
+                className='bg-white text-primary px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center space-x-2'>
                 <Send className='w-5 h-5' />
                 <span>Start Your Project</span>
               </button>
@@ -377,37 +430,15 @@ const ServicesPage = () => {
                 <span>Watch Our Work</span>
               </button>
             </div>
-
-            {/* Stats */}
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto'>
-              <div className='bg-white/10 backdrop-blur-sm rounded-2xl p-6'>
-                <div className='text-3xl font-bold mb-2'>
-                  {Math.round(animatedStats.projects)}+
-                </div>
-                <div className='text-pink-100'>Projects Delivered</div>
-              </div>
-              <div className='bg-white/10 backdrop-blur-sm rounded-2xl p-6'>
-                <div className='text-3xl font-bold mb-2'>
-                  {Math.round(animatedStats.clients)}%
-                </div>
-                <div className='text-pink-100'>Client Retention</div>
-              </div>
-              <div className='bg-white/10 backdrop-blur-sm rounded-2xl p-6'>
-                <div className='text-3xl font-bold mb-2'>
-                  {Math.round(animatedStats.satisfaction)}%
-                </div>
-                <div className='text-pink-100'>Satisfaction Rate</div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
       {/* Services Section */}
-      <div className='py-24 bg-white'>
+      <div ref={servicesSection.ref} className='py-24 bg-white'>
         <div className='container mx-auto px-4'>
-          <div className='text-center mb-16'>
-            <div className='inline-flex items-center space-x-2 bg-pink-50 text-pink-600 rounded-full px-4 py-2 mb-6'>
+          <div className={`text-center mb-16 scroll-fade-up ${servicesSection.isVisible ? 'visible' : ''}`}>
+            <div className='inline-flex items-center space-x-2 bg-primary/10 text-primary rounded-full px-4 py-2 mb-6'>
               <Bot className='w-5 h-5' />
               <span className='text-sm font-medium'>Our Core Services</span>
             </div>
@@ -429,7 +460,7 @@ const ServicesPage = () => {
                   onClick={() => setActiveService(index)}
                   className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                     activeService === index
-                      ? "bg-gradient-to-r from-pink-500 to-pink-600 text-white shadow-lg"
+                      ? "bg-gradient-to-r from-primary via-primary/90 to-primary text-white shadow-lg"
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                   }`}>
                   {service.title.split(" ")[0]} {service.title.split(" ")[1]}
@@ -438,7 +469,7 @@ const ServicesPage = () => {
             </div>
 
             {/* Active Service Display */}
-            <div className='bg-gradient-to-br from-gray-50 to-pink-50 rounded-3xl p-8 md:p-12 shadow-xl'>
+            <div className='bg-gradient-to-br from-gray-50 to-secondary/20 rounded-3xl p-8 md:p-12 shadow-xl'>
               <div className='grid lg:grid-cols-2 gap-12 items-center'>
                 <div>
                   <div
@@ -449,7 +480,7 @@ const ServicesPage = () => {
                   <h3 className='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
                     {services[activeService].title}
                   </h3>
-                  <p className='text-lg text-pink-600 font-semibold mb-6'>
+                  <p className='text-lg text-primary font-semibold mb-6'>
                     {services[activeService].subtitle}
                   </p>
                   <p className='text-gray-700 mb-8 leading-relaxed text-lg'>
@@ -467,7 +498,7 @@ const ServicesPage = () => {
                       <span className='text-sm text-gray-500'>
                         Starting at:
                       </span>
-                      <span className='font-semibold ml-2 text-pink-600'>
+                      <span className='font-semibold ml-2 text-primary'>
                         {services[activeService].startingPrice}
                       </span>
                     </div>
@@ -540,9 +571,9 @@ const ServicesPage = () => {
       </div>
 
       {/* Process Section */}
-      <div className='py-24 bg-gradient-to-br from-pink-50 to-purple-50'>
+      <div ref={processSection.ref} className='py-24 bg-gradient-to-br from-secondary/20 to-transparent'>
         <div className='container mx-auto px-4'>
-          <div className='text-center mb-16'>
+          <div className={`text-center mb-16 scroll-fade-up ${processSection.isVisible ? 'visible' : ''}`}>
             <h2 className='text-4xl md:text-5xl font-bold text-gray-900 mb-6'>
               Our Proven Process
             </h2>
@@ -555,12 +586,15 @@ const ServicesPage = () => {
           <div className='max-w-6xl mx-auto'>
             <div className='grid md:grid-cols-5 gap-8'>
               {process.map((step, index) => (
-                <div key={step.step} className='relative'>
+                <div
+                  key={step.step}
+                  className={`relative scroll-scale ${processSection.isVisible ? 'visible' : ''}`}
+                  style={{ transitionDelay: `${index * 100}ms` }}>
                   {index < process.length - 1 && (
-                    <div className='hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-pink-500 to-pink-500 transform translate-x-4'></div>
+                    <div className='hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-primary to-primary transform translate-x-4'></div>
                   )}
                   <div className='text-center'>
-                    <div className='inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full mb-6 font-bold text-xl shadow-lg'>
+                    <div className='inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-primary via-primary/90 to-primary text-white rounded-full mb-6 font-bold text-xl shadow-lg'>
                       <step.icon className='w-8 h-8' />
                     </div>
                     <h3 className='text-lg font-bold text-gray-900 mb-3'>
@@ -577,10 +611,10 @@ const ServicesPage = () => {
         </div>
       </div>
 
-      {/* Testimonials */}
-      <div className='py-24 bg-white'>
+      {/* Testimonials - Endless Scrolling Carousel */}
+      <div ref={testimonialsSection.ref} className='py-24 bg-white overflow-hidden'>
         <div className='container mx-auto px-4'>
-          <div className='text-center mb-16'>
+          <div className={`text-center mb-16 scroll-fade-up ${testimonialsSection.isVisible ? 'visible' : ''}`}>
             <h2 className='text-4xl md:text-5xl font-bold text-gray-900 mb-6'>
               What Our Clients Say
             </h2>
@@ -590,50 +624,89 @@ const ServicesPage = () => {
             </p>
           </div>
 
-          <div className='max-w-6xl mx-auto grid md:grid-cols-3 gap-8'>
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className='bg-gradient-to-br from-pink-50 to-purple-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300'>
-                <div className='flex items-center mb-4'>
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className='w-5 h-5 text-yellow-400 fill-current'
-                    />
-                  ))}
-                </div>
-                <blockquote className='text-gray-700 mb-6 leading-relaxed'>
-                  "{testimonial.content}"
-                </blockquote>
-                <div className='flex items-center'>
-                  <div className='w-12 h-12 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full flex items-center justify-center font-bold mr-4'>
-                    {testimonial.avatar}
-                  </div>
-                  <div>
-                    <div className='font-bold text-gray-900'>
-                      s{testimonial.name}
+          {/* Endless Scrolling Testimonials */}
+          <div className='relative'>
+            <div className='flex animate-scroll-left'>
+              {/* First set of testimonials */}
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={`first-${index}`}
+                  className='flex-shrink-0 w-96 mx-4'>
+                  <div className='bg-gradient-to-br from-secondary/10 to-primary/10 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full'>
+                    <div className='flex items-center mb-4'>
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className='w-5 h-5 text-yellow-400 fill-current'
+                        />
+                      ))}
                     </div>
-                    <div className='text-gray-600 text-sm'>
-                      {testimonial.position}
+                    <blockquote className='text-gray-700 mb-6 leading-relaxed'>
+                      "{testimonial.content}"
+                    </blockquote>
+                    <div className='flex items-center'>
+                      <div className='w-12 h-12 bg-gradient-to-r from-primary via-primary/90 to-primary text-white rounded-full flex items-center justify-center font-bold mr-4'>
+                        {testimonial.avatar}
+                      </div>
+                      <div>
+                        <div className='font-bold text-gray-900'>
+                          {testimonial.name}
+                        </div>
+                        <div className='text-gray-600 text-sm'>
+                          {testimonial.position}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+              {/* Duplicate set for endless scroll */}
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={`second-${index}`}
+                  className='flex-shrink-0 w-96 mx-4'>
+                  <div className='bg-gradient-to-br from-secondary/10 to-primary/10 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full'>
+                    <div className='flex items-center mb-4'>
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className='w-5 h-5 text-yellow-400 fill-current'
+                        />
+                      ))}
+                    </div>
+                    <blockquote className='text-gray-700 mb-6 leading-relaxed'>
+                      "{testimonial.content}"
+                    </blockquote>
+                    <div className='flex items-center'>
+                      <div className='w-12 h-12 bg-gradient-to-r from-primary via-primary/90 to-primary text-white rounded-full flex items-center justify-center font-bold mr-4'>
+                        {testimonial.avatar}
+                      </div>
+                      <div>
+                        <div className='font-bold text-gray-900'>
+                          {testimonial.name}
+                        </div>
+                        <div className='text-gray-600 text-sm'>
+                          {testimonial.position}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
       {/* CTA Section */}
-      <div className='py-24 bg-gradient-to-r from-pink-600 via-pink-300 to-pink-500 text-white relative overflow-hidden'>
+      <div ref={ctaSection.ref} className='py-24 bg-gradient-to-r from-primary via-primary/90 to-primary text-white relative overflow-hidden'>
         <div className='absolute inset-0 bg-black/10'></div>
         <div className='container mx-auto px-4 relative z-10'>
-          <div className='text-center max-w-4xl mx-auto'>
+          <div className={`text-center max-w-4xl mx-auto scroll-fade-up ${ctaSection.isVisible ? 'visible' : ''}`}>
             <h2 className='text-4xl md:text-5xl font-bold mb-6'>
               Ready to Transform Your Business?
             </h2>
-            <p className='text-xl text-gray-100 mb-12 leading-relaxed'>
+            <p className='text-xl text-white/90 mb-12 leading-relaxed'>
               Let's discuss your project and explore how our AI-powered
               solutions can accelerate your growth and success.
             </p>
@@ -641,7 +714,7 @@ const ServicesPage = () => {
             <div className='flex flex-col sm:flex-row gap-4 justify-center mb-12'>
               <button
                 onClick={() => setIsContactOpen(true)}
-                className='bg-white text-pink-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-pink-50 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center space-x-2'>
+                className='bg-white text-primary px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center space-x-2'>
                 <Send className='w-5 h-5' />
                 <span>Start Your Project</span>
               </button>
@@ -655,12 +728,12 @@ const ServicesPage = () => {
               <div className='text-center'>
                 <Mail className='w-8 h-8 mx-auto mb-3' />
                 <div className='font-semibold'>Email Us</div>
-                <div className='text-pink-100'>service@careernamimi.org</div>
+                <div className='text-white/80'>service@careernamimi.org</div>
               </div>
               <div className='text-center'>
                 <Phone className='w-8 h-8 mx-auto mb-3' />
                 <div className='font-semibold'>Call Us</div>
-                <div className='text-pink-100'>
+                <div className='text-white/80'>
                   {" "}
                   +255 628 055 646/673 045 414
                 </div>
@@ -668,7 +741,7 @@ const ServicesPage = () => {
               <div className='text-center'>
                 <Calendar className='w-8 h-8 mx-auto mb-3' />
                 <div className='font-semibold'>Response Time</div>
-                <div className='text-pink-100'>Within 24 hours</div>
+                <div className='text-white/80'>Within 24 hours</div>
               </div>
             </div>
           </div>
@@ -712,7 +785,7 @@ const ServicesPage = () => {
                       value={contactForm.name}
                       onChange={handleInputChange}
                       required
-                      className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors'
+                      className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors'
                       placeholder='Your full name'
                     />
                   </div>
@@ -726,7 +799,7 @@ const ServicesPage = () => {
                       value={contactForm.email}
                       onChange={handleInputChange}
                       required
-                      className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors'
+                      className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors'
                       placeholder='your.email@company.com'
                     />
                   </div>
@@ -742,7 +815,7 @@ const ServicesPage = () => {
                       name='company'
                       value={contactForm.company}
                       onChange={handleInputChange}
-                      className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors'
+                      className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors'
                       placeholder='Your company name'
                     />
                   </div>
@@ -754,7 +827,7 @@ const ServicesPage = () => {
                       name='service'
                       value={contactForm.service}
                       onChange={handleInputChange}
-                      className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors'>
+                      className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors'>
                       <option value=''>Select a service</option>
                       <option value='ai-development'>
                         AI Web & Mobile Development
@@ -781,7 +854,7 @@ const ServicesPage = () => {
                     name='budget'
                     value={contactForm.budget}
                     onChange={handleInputChange}
-                    className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors'>
+                    className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors'>
                     <option value=''>Select budget range</option>
                     <option value='under-50'>Under $50</option>
                     <option value='100-250'>$100 - $250</option>
@@ -801,7 +874,7 @@ const ServicesPage = () => {
                     onChange={handleInputChange}
                     required
                     rows={4}
-                    className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors'
+                    className='w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors'
                     placeholder='Tell us about your project goals, requirements, and timeline...'></textarea>
                 </div>
 
@@ -815,7 +888,7 @@ const ServicesPage = () => {
                   <button
                     type='submit'
                     disabled={submitting}
-                    className={`bg-gradient-to-r from-pink-500 to-pink-300 text-white px-8 py-3 rounded-xl font-bold hover:from-pink-600 hover:to-pink-700 transition-all duration-300 flex items-center space-x-2 shadow-lg ${
+                    className={`bg-gradient-to-r from-primary via-primary/90 to-primary text-white px-8 py-3 rounded-xl font-bold hover:scale-105 transition-all duration-300 flex items-center space-x-2 shadow-lg ${
                       submitting ? "opacity-50 cursor-not-allowed" : ""
                     }`}>
                     <Send className='w-5 h-5' />
