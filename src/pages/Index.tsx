@@ -716,12 +716,12 @@ const Index = () => {
             </p>
           </div>
 
-          <div className={`overflow-hidden relative py-8 scroll-scale ${partnersSection.isVisible ? 'visible' : ''}`}>
+          <div className='overflow-hidden relative py-8'>
             <div className='absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10'></div>
             <div className='absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10'></div>
-            <div className='flex animate-scroll-horizontal whitespace-nowrap'>
-              {[...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, index) => (
-                <div key={index} className='inline-flex items-center justify-center mx-12 group'>
+            <div className='flex animate-scroll-horizontal'>
+              {[...partnerLogos, ...partnerLogos].map((logo, index) => (
+                <div key={index} className='flex-shrink-0 flex items-center justify-center mx-12 group'>
                   <div className='relative'>
                     <div className='absolute inset-0 bg-primary/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
                     <img
