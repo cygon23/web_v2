@@ -162,26 +162,30 @@ const ContactForm = ({ className }: ContactFormProps) => {
 
   return (
     <div className={cn("relative", className)}>
-      <div className='relative bg-gradient-glass backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-glass'>
-        <div className='absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full animate-float' />
-        <div className='absolute -bottom-6 -left-6 w-32 h-32 bg-primary-glow/10 rounded-full animate-pulse-soft' />
+      <div className='relative bg-gradient-to-br from-white via-secondary/5 to-primary/5 backdrop-blur-xl border border-gray-200 rounded-3xl p-8 md:p-10 shadow-2xl hover:shadow-3xl transition-all duration-500'>
+        {/* Decorative floating elements */}
+        <div className='absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-r from-primary via-primary/80 to-primary/60 rounded-full blur-2xl opacity-20 animate-float' />
+        <div className='absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-r from-secondary via-secondary/80 to-secondary/60 rounded-full blur-2xl opacity-20 animate-pulse' />
 
         <div className='relative z-10'>
-          <div className='text-center mb-8'>
-            <h2 className='text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2'>
-              Let's Connect
+          <div className='text-center mb-10'>
+            <div className='inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary via-primary/90 to-primary text-white rounded-2xl mb-4 shadow-lg'>
+              <Send className='w-8 h-8' />
+            </div>
+            <h2 className='text-3xl md:text-4xl font-bold text-gray-900 mb-3'>
+              Send Us a Message
             </h2>
-            <p className='text-muted-foreground'>
+            <p className='text-gray-600 text-lg'>
               Share your thoughts and we'll respond within 24 hours
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className='space-y-6'>
             {/* Name & Email */}
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
               <div className='space-y-2'>
-                <label className='text-sm font-medium text-foreground'>
-                  Full Name
+                <label className='text-sm font-semibold text-gray-700 flex items-center'>
+                  Full Name <span className='text-primary ml-1'>*</span>
                 </label>
                 <Input
                   value={formData.name}
@@ -189,20 +193,20 @@ const ContactForm = ({ className }: ContactFormProps) => {
                   placeholder='John Doe'
                   disabled={isSubmitting}
                   className={cn(
-                    "h-12 bg-white/50 backdrop-blur border-white/30 focus:border-primary/50 focus:ring-primary/20",
-                    errors.name && "border-destructive"
+                    "h-14 bg-white border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-base transition-all duration-300",
+                    errors.name && "border-red-500 focus:border-red-500"
                   )}
                 />
                 {errors.name && (
-                  <p className='text-sm text-destructive flex items-center gap-1'>
+                  <p className='text-sm text-red-500 flex items-center gap-1 mt-2'>
                     <AlertCircle className='w-4 h-4' /> {errors.name}
                   </p>
                 )}
               </div>
 
               <div className='space-y-2'>
-                <label className='text-sm font-medium text-foreground'>
-                  Email Address
+                <label className='text-sm font-semibold text-gray-700 flex items-center'>
+                  Email Address <span className='text-primary ml-1'>*</span>
                 </label>
                 <Input
                   type='email'
@@ -211,12 +215,12 @@ const ContactForm = ({ className }: ContactFormProps) => {
                   placeholder='john@example.com'
                   disabled={isSubmitting}
                   className={cn(
-                    "h-12 bg-white/50 backdrop-blur border-white/30 focus:border-primary/50 focus:ring-primary/20",
-                    errors.email && "border-destructive"
+                    "h-14 bg-white border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-base transition-all duration-300",
+                    errors.email && "border-red-500 focus:border-red-500"
                   )}
                 />
                 {errors.email && (
-                  <p className='text-sm text-destructive flex items-center gap-1'>
+                  <p className='text-sm text-red-500 flex items-center gap-1 mt-2'>
                     <AlertCircle className='w-4 h-4' /> {errors.email}
                   </p>
                 )}
@@ -225,8 +229,8 @@ const ContactForm = ({ className }: ContactFormProps) => {
 
             {/* Subject */}
             <div className='space-y-2'>
-              <label className='text-sm font-medium text-foreground'>
-                Subject
+              <label className='text-sm font-semibold text-gray-700 flex items-center'>
+                Subject <span className='text-primary ml-1'>*</span>
               </label>
               <Input
                 value={formData.subject}
@@ -234,12 +238,12 @@ const ContactForm = ({ className }: ContactFormProps) => {
                 placeholder="What's this about?"
                 disabled={isSubmitting}
                 className={cn(
-                  "h-12 bg-white/50 backdrop-blur border-white/30 focus:border-primary/50 focus:ring-primary/20",
-                  errors.subject && "border-destructive"
+                  "h-14 bg-white border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-base transition-all duration-300",
+                  errors.subject && "border-red-500 focus:border-red-500"
                 )}
               />
               {errors.subject && (
-                <p className='text-sm text-destructive flex items-center gap-1'>
+                <p className='text-sm text-red-500 flex items-center gap-1 mt-2'>
                   <AlertCircle className='w-4 h-4' /> {errors.subject}
                 </p>
               )}
@@ -247,36 +251,38 @@ const ContactForm = ({ className }: ContactFormProps) => {
 
             {/* Message */}
             <div className='space-y-2'>
-              <label className='text-sm font-medium text-foreground'>
-                Message
+              <label className='text-sm font-semibold text-gray-700 flex items-center'>
+                Message <span className='text-primary ml-1'>*</span>
               </label>
               <Textarea
                 value={formData.message}
                 onChange={(e) => handleInputChange("message", e.target.value)}
                 placeholder='Tell us more about your inquiry...'
-                rows={5}
+                rows={6}
                 disabled={isSubmitting}
                 className={cn(
-                  "bg-white/50 backdrop-blur border-white/30 focus:border-primary/50 focus:ring-primary/20 resize-none",
-                  errors.message && "border-destructive"
+                  "bg-white border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-base resize-none transition-all duration-300",
+                  errors.message && "border-red-500 focus:border-red-500"
                 )}
               />
               {errors.message && (
-                <p className='text-sm text-destructive flex items-center gap-1'>
+                <p className='text-sm text-red-500 flex items-center gap-1 mt-2'>
                   <AlertCircle className='w-4 h-4' /> {errors.message}
                 </p>
               )}
             </div>
 
             {/* reCAPTCHA */}
-            <div className='flex justify-center'>
-              <ReCAPTCHA
-                ref={recaptchaRef}
-                sitekey={getRecaptchaSiteKey()}
-                onChange={handleRecaptchaChange}
-                onError={handleRecaptchaError}
-                onExpired={() => setRecaptchaToken(null)}
-              />
+            <div className='flex justify-center py-4'>
+              <div className='transform hover:scale-105 transition-transform duration-300'>
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={getRecaptchaSiteKey()}
+                  onChange={handleRecaptchaChange}
+                  onError={handleRecaptchaError}
+                  onExpired={() => setRecaptchaToken(null)}
+                />
+              </div>
             </div>
 
             {/* Submit */}
@@ -284,25 +290,34 @@ const ContactForm = ({ className }: ContactFormProps) => {
               type='submit'
               disabled={isSubmitting || submitSuccess || !recaptchaToken}
               className={cn(
-                "w-full h-12 bg-gradient-primary hover:shadow-elegant transition-all duration-300 group",
-                submitSuccess && "bg-green-500 hover:bg-green-500",
+                "w-full h-14 text-lg font-bold bg-gradient-to-r from-primary via-primary/90 to-primary hover:shadow-2xl hover:scale-105 transition-all duration-300 group rounded-xl",
+                submitSuccess && "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-500 hover:to-green-600",
                 !recaptchaToken &&
                   !isSubmitting &&
-                  "opacity-50 cursor-not-allowed"
+                  "opacity-50 cursor-not-allowed hover:scale-100"
               )}>
               {isSubmitting ? (
-                <Loader2 className='w-5 h-5 animate-spin' />
+                <div className='flex items-center justify-center'>
+                  <Loader2 className='w-6 h-6 animate-spin mr-2' />
+                  <span>Sending...</span>
+                </div>
               ) : submitSuccess ? (
-                <>
-                  <CheckCircle className='w-5 h-5 mr-2' /> Message Sent!
-                </>
+                <div className='flex items-center justify-center'>
+                  <CheckCircle className='w-6 h-6 mr-2' />
+                  <span>Message Sent Successfully!</span>
+                </div>
               ) : (
-                <>
-                  <Send className='w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform' />{" "}
-                  Send Message
-                </>
+                <div className='flex items-center justify-center'>
+                  <Send className='w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform' />
+                  <span>Send Message</span>
+                </div>
               )}
             </Button>
+
+            {/* Helper text */}
+            <p className='text-center text-sm text-gray-500 mt-4'>
+              We respect your privacy and will never share your information
+            </p>
           </form>
         </div>
       </div>
