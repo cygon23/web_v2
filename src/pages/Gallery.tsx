@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CircularStat from "@/components/CircularStat";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import {
   MapPin,
   Download,
@@ -18,6 +20,13 @@ import {
   Users,
   Award,
   Star,
+  Camera,
+  Image as ImageIcon,
+  Aperture,
+  Film,
+  Video,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 
 // Import images
@@ -102,6 +111,11 @@ const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
+
+  // Scroll animation hooks
+  const statsSection = useScrollAnimation({ threshold: 0.1 });
+  const showcaseSection = useScrollAnimation({ threshold: 0.1 });
+  const gridSection = useScrollAnimation({ threshold: 0.1 });
 
   const categories = [
     { id: "all", name: "All Events" },
@@ -287,7 +301,7 @@ const Gallery = () => {
     { number: "20+", label: "Events & Occasions", icon: Calendar },
     { number: "1200+", label: "Participants", icon: Users },
     { number: "15+", label: "Awards & Recognition", icon: Award },
-    { number: "2010K+", label: "Community Impact", icon: Star },
+    { number: "2010+", label: "Community Impact", icon: Star },
   ];
 
   const filteredEvents = featuredEvents.filter((event) => {
@@ -317,61 +331,163 @@ const Gallery = () => {
     <div className='min-h-screen'>
       <Navigation />
 
-      {/* Hero Section */}
-      <section className='relative pt-32 pb-20 overflow-hidden'>
-        <div
-          className='absolute inset-0 bg-cover bg-center'
-          style={{ backgroundImage: `url(${heroImage})` }}>
-          <div className='absolute inset-0 bg-gradient-hero'></div>
+      {/* Hero Section - Enhanced */}
+      <section className='relative min-h-[85vh] flex items-center justify-center overflow-hidden'>
+        {/* Background with parallax effect */}
+        <div className='absolute inset-0'>
+          <div
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat scale-105'
+            style={{ backgroundImage: `url(${heroImage})` }}>
+          </div>
+          {/* Gradient overlays */}
+          <div className='absolute inset-0' style={{
+            background: 'linear-gradient(135deg, hsla(327, 73%, 20%, 0.7) 0%, hsla(327, 73%, 30%, 0.6) 50%, hsla(327, 73%, 25%, 0.7) 100%)'
+          }} />
+          <div className='absolute inset-0 bg-slate-900/40' />
+          {/* Animated gradient accent */}
+          <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-primary/10 to-transparent gradient-shift opacity-60' />
         </div>
 
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className='max-w-4xl mx-auto text-center text-white'>
-            <Badge className='mb-6 bg-white/20 text-white border-white/30'>
-              Gallery
-            </Badge>
+        {/* Scattered Decorative Particles with Gallery-themed Icons */}
+        <div className='absolute inset-0 pointer-events-none z-[5]'>
+          {/* Top Left Area */}
+          <div className='absolute top-[15%] left-[8%] animate-float opacity-40'>
+            <Camera className='w-9 h-9 text-blue-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(147, 197, 253, 0.5))' }} />
+          </div>
+          <div className='absolute top-[12%] left-[15%] w-2 h-2 bg-white/30 rounded-full blur-[1px]' style={{ animationDelay: '0.5s' }}></div>
+          <div className='absolute top-[20%] left-[12%] w-3 h-3 bg-primary/40 rounded-full blur-sm' style={{ animationDelay: '1s' }}></div>
 
-            <h1 className='text-4xl md:text-6xl font-heading font-bold mb-6'>
-              Gallery
-            </h1>
+          {/* Top Right Area */}
+          <div className='absolute top-[18%] right-[10%] animate-float opacity-50' style={{ animationDelay: '1.5s' }}>
+            <Sparkles className='w-10 h-10 text-yellow-300/70' style={{ filter: 'drop-shadow(0 0 10px rgba(253, 224, 71, 0.5))' }} />
+          </div>
+          <div className='absolute top-[10%] right-[18%] w-2 h-2 bg-white/40 rounded-full blur-[1px]' style={{ animationDelay: '2s' }}></div>
+          <div className='absolute top-[15%] right-[6%] animate-float opacity-30' style={{ animationDelay: '0.8s' }}>
+            <Star className='w-6 h-6 text-yellow-200/60' />
+          </div>
 
-            <p className='text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto'>
-              Our Events & Occasions - Capturing moments that inspire, educate,
-              and transform communities through innovation and collaboration.
-            </p>
+          {/* Left Side */}
+          <div className='absolute top-[40%] left-[5%] animate-float opacity-45' style={{ animationDelay: '1.2s' }}>
+            <ImageIcon className='w-9 h-9 text-purple-400/70' style={{ filter: 'drop-shadow(0 0 8px rgba(192, 132, 252, 0.4))' }} />
+          </div>
+          <div className='absolute top-[48%] left-[10%] w-2.5 h-2.5 bg-blue-300/30 rounded-full blur-sm' style={{ animationDelay: '1.8s' }}></div>
+          <div className='absolute top-[35%] left-[3%] w-1.5 h-1.5 bg-white/40 rounded-full blur-[1px]'></div>
+
+          {/* Right Side */}
+          <div className='absolute top-[45%] right-[7%] animate-float opacity-40' style={{ animationDelay: '0.6s' }}>
+            <Aperture className='w-8 h-8 text-pink-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(244, 114, 182, 0.5))' }} />
+          </div>
+          <div className='absolute top-[38%] right-[12%] w-2 h-2 bg-white/35 rounded-full blur-[1px]' style={{ animationDelay: '1.4s' }}></div>
+          <div className='absolute top-[52%] right-[5%] animate-float opacity-35' style={{ animationDelay: '2.2s' }}>
+            <Film className='w-7 h-7 text-purple-300/60' style={{ filter: 'drop-shadow(0 0 8px rgba(216, 180, 254, 0.4))' }} />
+          </div>
+
+          {/* Bottom Left Area */}
+          <div className='absolute bottom-[20%] left-[12%] animate-float opacity-35' style={{ animationDelay: '1.6s' }}>
+            <Video className='w-8 h-8 text-red-300/60' style={{ filter: 'drop-shadow(0 0 8px rgba(252, 165, 165, 0.4))' }} />
+          </div>
+          <div className='absolute bottom-[25%] left-[8%] w-2 h-2 bg-white/30 rounded-full blur-[1px]' style={{ animationDelay: '0.9s' }}></div>
+          <div className='absolute bottom-[18%] left-[5%] w-3 h-3 bg-green-300/30 rounded-full blur-sm' style={{ animationDelay: '1.3s' }}></div>
+
+          {/* Bottom Right Area */}
+          <div className='absolute bottom-[22%] right-[15%] animate-float opacity-45' style={{ animationDelay: '0.7s' }}>
+            <Eye className='w-9 h-9 text-blue-300/70' style={{ filter: 'drop-shadow(0 0 10px rgba(147, 197, 253, 0.5))' }} />
+          </div>
+          <div className='absolute bottom-[15%] right-[10%] w-2.5 h-2.5 bg-primary/40 rounded-full blur-sm' style={{ animationDelay: '2.1s' }}></div>
+          <div className='absolute bottom-[28%] right-[8%] w-1.5 h-1.5 bg-white/40 rounded-full blur-[1px]' style={{ animationDelay: '1.1s' }}></div>
+
+          {/* Center Area with Award */}
+          <div className='absolute top-[35%] right-[30%] animate-float opacity-40' style={{ animationDelay: '1.9s' }}>
+            <Award className='w-8 h-8 text-amber-400/70' style={{ filter: 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.4))' }} />
+          </div>
+
+          {/* Center Scattered Particles */}
+          <div className='absolute top-[30%] left-[25%] w-1 h-1 bg-white/50 rounded-full blur-[0.5px]' style={{ animationDelay: '0.4s' }}></div>
+          <div className='absolute top-[60%] left-[20%] w-1.5 h-1.5 bg-primary/30 rounded-full blur-[1px]' style={{ animationDelay: '1.7s' }}></div>
+          <div className='absolute top-[55%] right-[25%] w-1 h-1 bg-white/40 rounded-full blur-[0.5px]' style={{ animationDelay: '0.3s' }}></div>
+          <div className='absolute top-[25%] left-[35%] w-2 h-2 bg-yellow-200/20 rounded-full blur-sm' style={{ animationDelay: '1.9s' }}></div>
+
+          {/* Small accent sparkles */}
+          <div className='absolute top-[22%] left-[20%] animate-float opacity-25' style={{ animationDelay: '2.3s' }}>
+            <Sparkles className='w-5 h-5 text-white/50' />
+          </div>
+          <div className='absolute bottom-[35%] right-[20%] animate-float opacity-30' style={{ animationDelay: '1.5s' }}>
+            <Star className='w-5 h-5 text-yellow-100/50' />
           </div>
         </div>
+
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20'>
+          <div className='max-w-5xl mx-auto text-center text-white'>
+            {/* Animated Badge */}
+            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.2s' }}>
+              <Badge className='mb-8 bg-white/15 text-white border-white/30 hover:bg-white/25 backdrop-blur-md px-6 py-2.5 text-base font-semibold shadow-lg'>
+                Gallery
+              </Badge>
+            </div>
+
+            {/* Main Heading with staggered animation */}
+            <div className='cinematic-scale-in opacity-0' style={{ animationDelay: '0.4s' }}>
+              <h1 className='text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-8 leading-tight'>
+                Our <span className='block mt-2' style={{
+                  color: 'hsl(327, 73%, 65%)',
+                  textShadow: '0 0 40px hsla(327, 73%, 60%, 0.7), 0 0 20px hsla(327, 73%, 60%, 0.9), 0 4px 12px rgba(0,0,0,0.4)'
+                }}>Gallery</span>
+              </h1>
+            </div>
+
+            {/* Description */}
+            <div className='cinematic-fade-in opacity-0 mb-10' style={{ animationDelay: '0.6s' }}>
+              <p className='text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed font-medium'>
+                Our Events & Occasions - Capturing moments that inspire, educate,
+                and transform communities through innovation and collaboration.
+              </p>
+            </div>
+
+            {/* Decorative floating elements */}
+            <div className='absolute top-1/4 left-10 w-20 h-20 bg-white/5 rounded-full blur-2xl animate-float'></div>
+            <div className='absolute bottom-1/4 right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-float' style={{ animationDelay: '1s' }}></div>
+          </div>
+        </div>
+
+        {/* Bottom gradient fade */}
+        <div className='absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[8]' />
       </section>
 
-      {/* Stats Section */}
-      <section className='py-16 bg-secondary/30'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
+      {/* Stats Section - Circular Progress Rings */}
+      <section ref={statsSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
+        <div className='absolute inset-0 opacity-5' style={{
+          backgroundImage: 'radial-gradient(circle at 50% 50%, hsl(327, 73%, 56%) 0%, transparent 50%)'
+        }}></div>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
+          <div className='grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8'>
             {stats.map((stat, index) => (
               <div
                 key={index}
-                className='text-center group hover:scale-105 transition-transform duration-300'>
-                <div className='flex justify-center mb-4'>
-                  <stat.icon className='w-8 h-8 text-primary' />
-                </div>
-                <h3 className='text-3xl font-heading font-bold text-foreground mb-2'>
-                  {stat.number}
-                </h3>
-                <p className='text-muted-foreground font-medium'>
-                  {stat.label}
-                </p>
+                className={`scroll-scale ${statsSection.isVisible ? 'visible' : ''}`}
+                style={{ transitionDelay: `${index * 100}ms` }}>
+                <CircularStat
+                  number={stat.number}
+                  label={stat.label}
+                  icon={stat.icon}
+                  maxValue={2500}
+                  isVisible={statsSection.isVisible}
+                  delay={index * 200}
+                />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Event Showcase */}
-      <section className='py-20'>
+      {/* Featured Event Showcase - Enhanced */}
+      <section ref={showcaseSection.ref} className='py-24'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
+          <div className={`text-center mb-16 scroll-fade-up ${showcaseSection.isVisible ? 'visible' : ''}`}>
+            <Badge className='mb-6 bg-primary/10 border-primary/20 px-5 py-2' style={{ color: 'hsl(327, 73%, 56%)' }}>
+              Featured Events
+            </Badge>
             <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6 text-foreground'>
-              Our <span className='text-primary'>Events & Occasions</span>
+              Our <span style={{ color: 'hsl(327, 73%, 56%)' }}>Events & Occasions</span>
             </h2>
             <p className='text-muted-foreground text-lg max-w-2xl mx-auto'>
               Discover the highlights from our impactful events that bring
@@ -380,7 +496,7 @@ const Gallery = () => {
           </div>
 
           {/* Interactive Event Showcase */}
-          <div className='relative bg-gradient-card rounded-2xl p-8 shadow-elegant overflow-hidden'>
+          <div className={`relative modern-card rounded-3xl p-10 shadow-2xl overflow-hidden scroll-scale ${showcaseSection.isVisible ? 'visible' : ''}`} style={{ transitionDelay: '200ms' }}>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 items-center'>
               <div className='space-y-6'>
                 <div className='flex items-center space-x-2'>
@@ -522,20 +638,26 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* Category Filter and Events Grid */}
-      <section className='py-20 bg-secondary/30'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+      {/* Category Filter and Events Grid - Enhanced */}
+      <section ref={gridSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
+        <div className='absolute inset-0 opacity-5' style={{
+          backgroundImage: 'radial-gradient(circle at 50% 50%, hsl(327, 73%, 56%) 0%, transparent 50%)'
+        }}></div>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
           {/* Category Filter */}
-          <div className='flex flex-wrap gap-3 justify-center mb-12'>
+          <div className={`flex flex-wrap gap-4 justify-center mb-16 scroll-fade-up ${gridSection.isVisible ? 'visible' : ''}`}>
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
+                className={`px-8 py-3.5 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-md ${
                   selectedCategory === category.id
-                    ? "bg-primary text-primary-foreground shadow-elegant"
-                    : "bg-background text-foreground hover:bg-primary/10 hover:shadow-card"
-                }`}>
+                    ? "text-white shadow-xl"
+                    : "bg-background text-foreground hover:shadow-lg"
+                }`}
+                style={selectedCategory === category.id ? {
+                  background: 'linear-gradient(135deg, hsl(327, 73%, 56%) 0%, hsl(327, 73%, 70%) 100%)'
+                } : {}}>
                 {category.name}
               </button>
             ))}
@@ -544,9 +666,11 @@ const Gallery = () => {
           {/* Events Grid */}
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
             {filteredEvents.map((event, index) => (
-              <Card
+              <div
                 key={event.id}
-                className='group hover:shadow-hover transition-all duration-500 border-0 shadow-card overflow-hidden hover:scale-105'>
+                className={`scroll-scale ${gridSection.isVisible ? 'visible' : ''}`}
+                style={{ transitionDelay: `${index * 100}ms` }}>
+                <Card className='modern-card group hover:shadow-2xl transition-all duration-500 border-0 shadow-card overflow-hidden h-full'>
                 <div
                   className='h-48 bg-cover bg-center relative cursor-pointer'
                   style={{ backgroundImage: `url(${event.images[0]})` }}
@@ -629,6 +753,7 @@ const Gallery = () => {
                   </div>
                 </CardContent>
               </Card>
+              </div>
             ))}
           </div>
 
