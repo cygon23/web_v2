@@ -7,12 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AnimatedStatsGraph from "@/components/AnimatedStatsGraph";
-import { 
-  ArrowRight, 
-  Play, 
-  Users, 
-  Target, 
-  Award, 
+import {
+  ArrowRight,
+  Play,
+  Users,
+  Target,
+  Award,
   Sparkles,
   ChevronLeft,
   ChevronRight,
@@ -23,7 +23,9 @@ import {
   Heart,
   Star,
   TrendingUp,
-  Zap
+  Zap,
+  X,
+  CheckCircle
 } from "lucide-react";
 import CountUp from "react-countup";
 
@@ -51,6 +53,7 @@ import ChatBot from "@/components/ChatBot";
 const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<number | null>(null);
   const partnerLogos = [partner1, partner2, partner3, partner4, partner5];
 
   // Scroll animations for each section
@@ -133,6 +136,17 @@ const Index = () => {
         "Gain practical knowledge you can apply immediately in your field.",
       icon: TrendingUp,
       image: teamImage,
+      detailedContent: {
+        overview: "Our comprehensive training programs are designed to equip youth with practical skills and knowledge that can be immediately applied in their chosen fields.",
+        features: [
+          "Hands-on learning experiences with real-world applications",
+          "Expert instructors with industry experience",
+          "Customized training modules for different skill levels",
+          "Certificate of completion for all participants",
+          "Post-training support and resources"
+        ],
+        impact: "Over 500 young people have successfully completed our training programs, with 85% reporting improved career prospects and skill confidence."
+      }
     },
     {
       title: "Workshops",
@@ -140,6 +154,17 @@ const Index = () => {
         "Experience real-world problem-solving in a collaborative environment.",
       icon: Users,
       image: eventImage,
+      detailedContent: {
+        overview: "Our interactive workshops provide a collaborative environment where participants tackle real-world challenges and develop essential professional skills.",
+        features: [
+          "Interactive group activities and team projects",
+          "Problem-solving exercises based on actual industry scenarios",
+          "Networking opportunities with peers and professionals",
+          "Skill-building in communication, leadership, and teamwork",
+          "Access to mentors and industry experts"
+        ],
+        impact: "We've conducted over 50 workshops, creating spaces where youth learn to collaborate, innovate, and build lasting professional relationships."
+      }
     },
     {
       title: "Career Talks",
@@ -147,14 +172,25 @@ const Index = () => {
         "Our career talks will inspire and guide you on your journey to success.",
       icon: Lightbulb,
       image: eventImage2,
+      detailedContent: {
+        overview: "Career Talks feature successful professionals sharing their journeys, insights, and practical advice to inspire and guide young people toward their career goals.",
+        features: [
+          "Guest speakers from diverse industries and backgrounds",
+          "Interactive Q&A sessions with professionals",
+          "Career pathway exploration and planning guidance",
+          "Inspiration from real success stories",
+          "Networking opportunities with industry leaders"
+        ],
+        impact: "With 25+ career talks delivered, we've connected hundreds of youth with role models and mentors who provide invaluable guidance and inspiration."
+      }
     },
     {
-      title: "Career Guidance AI",
+      title: "Career Guidance Platform",
       description:
         "Discover our AI-driven career guidance tool designed to help students make informed decisions.",
       icon: Zap,
       image: abstractBg,
-      link: "https://careerguidance.careernamimi.org/",
+      link: "https://caeerhub-platform.vercel.app/",
     },
   ];
 
@@ -492,7 +528,11 @@ const Index = () => {
                         </a>
                       </Button>
                     ) : (
-                      <Button variant='outline' size='sm' className='w-full hover:bg-primary/5'>
+                      <Button
+                        variant='outline'
+                        size='sm'
+                        className='w-full hover:bg-primary/5'
+                        onClick={() => setSelectedService(index)}>
                         Learn More
                       </Button>
                     )}
@@ -533,13 +573,13 @@ const Index = () => {
               <Button
                 variant='outline'
                 size='lg'
-                className='border-white/50 text-white hover:bg-white hover:text-primary backdrop-blur-sm hover:scale-105 transition-all'>
+                className='border-white border-2 text-white bg-white/10 hover:bg-white hover:text-primary backdrop-blur-sm hover:scale-105 transition-all shadow-lg'>
                 Mobile Money
               </Button>
               <Button
                 variant='outline'
                 size='lg'
-                className='border-white/50 text-white hover:bg-white hover:text-primary backdrop-blur-sm hover:scale-105 transition-all'>
+                className='border-white border-2 text-white bg-white/10 hover:bg-white hover:text-primary backdrop-blur-sm hover:scale-105 transition-all shadow-lg'>
                 Bank Transfer
               </Button>
             </div>
@@ -700,6 +740,85 @@ const Index = () => {
           </div>
         </div>
       )}
+
+      {/* Service Details Modal */}
+      {selectedService !== null && services[selectedService].detailedContent && (() => {
+        const ServiceIcon = services[selectedService].icon;
+        const service = services[selectedService];
+        return (
+          <div
+            className='fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4'
+            onClick={() => setSelectedService(null)}>
+            <div
+              className='relative w-full max-w-3xl bg-white rounded-2xl overflow-hidden shadow-2xl'
+              onClick={(e) => e.stopPropagation()}>
+              {/* Header with Image */}
+              <div className='relative h-48 bg-cover bg-center' style={{ backgroundImage: `url(${service.image})` }}>
+                <div className='absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 flex items-center justify-center'>
+                  <div className='text-center text-white'>
+                    <ServiceIcon className='w-16 h-16 mx-auto mb-4' />
+                    <h3 className='text-3xl font-heading font-bold'>{service.title}</h3>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedService(null)}
+                  className='absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center transition-all group'
+                  aria-label='Close'>
+                  <X className='w-6 h-6 text-white group-hover:rotate-90 transition-transform' />
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className='p-8 max-h-[60vh] overflow-y-auto'>
+                {/* Overview */}
+                <div className='mb-8'>
+                  <h4 className='text-xl font-heading font-bold mb-3 text-foreground'>Overview</h4>
+                  <p className='text-muted-foreground leading-relaxed'>
+                    {service.detailedContent?.overview}
+                  </p>
+                </div>
+
+                {/* Features */}
+                <div className='mb-8'>
+                  <h4 className='text-xl font-heading font-bold mb-4 text-foreground'>Key Features</h4>
+                  <div className='space-y-3'>
+                    {service.detailedContent?.features.map((feature, idx) => (
+                      <div key={idx} className='flex items-start gap-3'>
+                        <CheckCircle className='w-5 h-5 text-primary flex-shrink-0 mt-0.5' />
+                        <p className='text-muted-foreground leading-relaxed'>{feature}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Impact */}
+                <div className='bg-gradient-to-br from-primary/5 to-primary/10 p-6 rounded-xl border-2 border-primary/20'>
+                  <h4 className='text-xl font-heading font-bold mb-3 text-foreground flex items-center gap-2'>
+                    <Award className='w-6 h-6 text-primary' />
+                    Our Impact
+                  </h4>
+                  <p className='text-muted-foreground leading-relaxed'>
+                    {service.detailedContent?.impact}
+                  </p>
+                </div>
+
+                {/* CTA */}
+                <div className='mt-8 text-center'>
+                  <Button
+                    variant='hero'
+                    size='lg'
+                    asChild
+                    className='shadow-lg hover:shadow-xl transition-all'>
+                    <Link to='/contact'>
+                      Get Involved <ArrowRight className='ml-2 w-5 h-5' />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Partners Section */}
       <section ref={partnersSection.ref} className='py-20 bg-gradient-to-b from-transparent to-secondary/20'>
