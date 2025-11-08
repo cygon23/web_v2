@@ -194,7 +194,13 @@ const Index = () => {
                 <span className='block text-white'>
                   Welcome to
                 </span>
-                <span className='block mt-2 text-primary drop-shadow-lg'>
+                <span
+                  className='block mt-2 font-black'
+                  style={{
+                    color: 'hsl(327, 73%, 65%)',
+                    textShadow: '0 0 40px hsla(327, 73%, 60%, 0.6), 0 0 20px hsla(327, 73%, 60%, 0.8), 0 4px 8px rgba(0,0,0,0.3)'
+                  }}
+                >
                   Career Na Mimi
                 </span>
               </h1>
