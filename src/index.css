@@ -358,4 +358,22 @@
     backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.18);
   }
+
+  /* Continuous horizontal scrolling animation for partners */
+  @keyframes scroll-horizontal {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-33.333%);
+    }
+  }
+
+  .animate-scroll-horizontal {
+    animation: scroll-horizontal 30s linear infinite;
+  }
+
+  .animate-scroll-horizontal:hover {
+    animation-play-state: paused;
+  }
 }

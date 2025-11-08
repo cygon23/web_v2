@@ -462,11 +462,16 @@ const Index = () => {
                   <div
                     className='h-56 bg-cover bg-center relative overflow-hidden'
                     style={{ backgroundImage: `url(${service.image})` }}>
-                    <div className='absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 flex items-center justify-center transition-all duration-300 group-hover:scale-110'>
-                      <div className='transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300'>
-                        <service.icon className='w-16 h-16 text-white drop-shadow-lg' />
+                    {/* First 3 images clear and visible, 4th (AI) has overlay */}
+                    {index < 3 ? (
+                      <div className='absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-300'></div>
+                    ) : (
+                      <div className='absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 flex items-center justify-center transition-all duration-300 group-hover:scale-110'>
+                        <div className='transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300'>
+                          <service.icon className='w-16 h-16 text-white drop-shadow-lg' />
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
 
                   <CardContent className='p-6'>
