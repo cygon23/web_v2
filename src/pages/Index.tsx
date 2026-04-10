@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
+import Hero from "@/components/Hero";
+import { cn } from "@/lib/utils";
 import Footer from "@/components/Footer";
-import AnimatedStatsGraph from "@/components/AnimatedStatsGraph";
 import {
   ArrowRight,
   Play,
@@ -25,12 +27,13 @@ import {
   TrendingUp,
   Zap,
   X,
-  CheckCircle
+  CheckCircle,
+  Ticket,
+  Briefcase
 } from "lucide-react";
 import CountUp from "react-countup";
 
 // hero images
-import heroImage from "@/assets/hero-career-guidance.jpg";
 import teamImage from "@/assets/team-collaboration.jpg";
 import eventImage from "@/assets/career-event.jpg";
 import eventImage2 from "@/assets/tailks.jpg";
@@ -204,272 +207,224 @@ const Index = () => {
   return (
     <div className='min-h-screen'>
       <Navigation />
+      <Hero />
 
-      {/* Hero Section - Professional & Clean */}
-      <section className='relative min-h-screen flex items-center justify-center overflow-hidden'>
-        {/* Background Layers */}
-        <div className='absolute inset-0'>
-          {/* Base image with subtle overlay */}
-          <div
-            className='absolute inset-0 bg-cover bg-center bg-no-repeat'
-            style={{ backgroundImage: `url(${heroImage})` }}
-          />
 
-          {/* Professional gradient overlay using primary brand color - REDUCED OPACITY */}
-          <div className='absolute inset-0' style={{ background: 'linear-gradient(135deg, hsla(327, 73%, 20%, 0.6) 0%, hsla(327, 73%, 30%, 0.5) 50%, hsla(327, 73%, 25%, 0.6) 100%)' }} />
+      {/* About Us & Achievements Section */}
+      <section ref={aboutSection.ref} className='py-24 relative overflow-hidden bg-slate-50'>
+        {/* Subtle decorative background patterns */}
+        <div className='absolute top-0 right-0 w-1/3 h-full bg-primary/5 -skew-x-12 transform origin-top' />
 
-          {/* Dark overlay for better text readability - REDUCED OPACITY */}
-          <div className='absolute inset-0 bg-slate-900/30' />
-
-          {/* Subtle animated gradient accent */}
-          <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-primary/5 to-transparent gradient-shift opacity-50' />
-        </div>
-
-        {/* Content */}
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20'>
-          <div className='max-w-6xl mx-auto'>
-            {/* Badge */}
-            <div className='text-center cinematic-fade-in opacity-0' style={{ animationDelay: '0.2s' }}>
-              <Badge className='mb-8 bg-white/10 text-white border-white/20 hover:bg-white/15 px-6 py-2 text-sm backdrop-blur-sm'>
-                Empowering Youth Since 2023
-              </Badge>
-            </div>
-
-            {/* Main Heading */}
-            <div className='text-center cinematic-scale-in opacity-0' style={{ animationDelay: '0.4s' }}>
-              <h1 className='text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight'>
-                <span className='block text-white'>
-                  Welcome to
-                </span>
-                <span
-                  className='block mt-2 font-black'
-                  style={{
-                    color: 'hsl(327, 73%, 65%)',
-                    textShadow: '0 0 40px hsla(327, 73%, 60%, 0.6), 0 0 20px hsla(327, 73%, 60%, 0.8), 0 4px 8px rgba(0,0,0,0.3)'
-                  }}
-                >
-                  Career Na Mimi
-                </span>
-              </h1>
-            </div>
-
-            {/* Tagline */}
-            <div className='text-center cinematic-fade-in opacity-0 mb-8' style={{ animationDelay: '0.6s' }}>
-              <p className='text-xl md:text-2xl text-white/90 font-medium'>
-                "Your Journey, Your Success"
-              </p>
-            </div>
-
-            {/* Description */}
-            <div className='text-center cinematic-fade-in opacity-0 mb-12' style={{ animationDelay: '0.8s' }}>
-              <p className='text-base md:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed'>
-                Career Na Mimi empowers youth with skills, mentorship, and opportunities
-                to unlock their potential and achieve their dreams.
-              </p>
-            </div>
-
-            {/* Animated Stats Graph */}
-            <div className='cinematic-fade-in opacity-0 mb-12' style={{ animationDelay: '1s' }}>
-              <AnimatedStatsGraph
-                stats={[
-                  {
-                    number: '500+',
-                    label: 'Youth Empowered',
-                    value: 500,
-                    color: 'hsl(327, 73%, 56%)' // Primary brand color
-                  },
-                  {
-                    number: '50+',
-                    label: 'Workshops Conducted',
-                    value: 50,
-                    color: 'hsl(327, 73%, 65%)' // Lighter variant
-                  },
-                  {
-                    number: '25+',
-                    label: 'Career Talks',
-                    value: 25,
-                    color: 'hsl(327, 73%, 70%)' // Even lighter
-                  },
-                  {
-                    number: '100+',
-                    label: 'Success Stories',
-                    value: 100,
-                    color: 'hsl(327, 73%, 48%)' // Darker variant
-                  },
-                ]}
-              />
-            </div>
-
-            {/* CTA Button */}
-            <div className='text-center cinematic-fade-in opacity-0' style={{ animationDelay: '1.2s' }}>
-              <Button
-                variant='hero'
-                size='lg'
-                asChild
-                className='group relative overflow-hidden shadow-2xl hover:shadow-pink-500/50 transition-all duration-300'
-              >
-                <Link to='/about'>
-                  <span className='relative z-10'>Discover More</span>
-                  <ArrowRight className='ml-2 w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform' />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom gradient fade */}
-        <div className='absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[8]' />
-      </section>
-
-      {/* AI Career Guidance Section */}
-      <section ref={aiSection.ref} className='py-24 relative overflow-hidden'>
-        <div className='absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent'></div>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-16 items-center'>
-            <div className={`scroll-fade-left ${aiSection.isVisible ? 'visible' : ''}`}>
-              <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
-                AI-Powered Innovation
-              </Badge>
-              <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
-                AI-Powered Career Guidance
-              </h2>
-              <p className='text-lg text-muted-foreground mb-8 leading-relaxed'>
-                Designed to assist with <strong className='text-primary'>CV building</strong>,{" "}
-                <strong className='text-primary'>job transitions</strong>,{" "}
-                <strong className='text-primary'>career growth</strong>, and{" "}
-                <strong className='text-primary'>personalized guidance</strong> to help individuals
-                succeed in their professional journey.
-              </p>
-              <Button variant='hero' size='lg' asChild className='shadow-lg hover:shadow-primary/30 transition-all duration-300'>
-                <a
-                  href='https://caeerhub-platform.vercel.app/'
-                  target='_blank'
-                  rel='noopener noreferrer'>
-                  See It in Action <ArrowRight className='ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform' />
-                </a>
-              </Button>
-            </div>
 
-            <div className={`relative scroll-fade-right ${aiSection.isVisible ? 'visible' : ''}`}>
-              <div className='absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-3xl blur-2xl opacity-50'></div>
-              <div
-                className='relative rounded-3xl shadow-2xl overflow-hidden border border-primary/20 modern-card'
-                style={{ backgroundImage: `url(${abstractBg})` }}>
-                <div className='bg-gradient-to-br from-primary/95 to-primary/80 p-10 h-80 flex items-center justify-center backdrop-blur-sm'>
-                  <div className='text-center text-white'>
-                    <div className='w-20 h-20 mx-auto mb-6 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm animate-float'>
-                      <Zap className='w-12 h-12 text-white' />
-                    </div>
-                    <h3 className='text-2xl font-bold mb-2'>
-                      AI Career Assistant
-                    </h3>
-                    <p className='text-white/90 text-lg'>
-                      Smart. Personalized. Effective.
-                    </p>
-                  </div>
-                </div>
+            {/* Left Column: Story & Narrative */}
+            <div className={`space-y-8 scroll-fade-left ${aboutSection.isVisible ? 'visible' : ''}`}>
+              <div>
+                <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider'>
+                  About Our Mission
+                </Badge>
+                <h2 className='text-4xl md:text-5xl font-heading font-black text-slate-900 leading-[1.15] mb-6'>
+                  Empowering Dreams,<br />
+                  <span className='text-primary'>One Story</span> at a Time
+                </h2>
+                <div className='w-20 h-1.5 bg-primary rounded-full mb-8' />
+              </div>
+
+              <p className='text-lg text-slate-600 leading-relaxed max-w-xl'>
+                Career Na Mimi is a youth empowerment organization based in Tanzania, dedicated to bridging the gap between young people and the opportunities they need to thrive.
+              </p>
+
+              <div className='space-y-4'>
+                <p className='text-slate-600 leading-relaxed max-w-xl'>
+                  We empower youth through quality education, mentorship, and skill development programs, preparing them for successful careers and sustainable livelihoods.
+                </p>
+              </div>
+
+              <div className='pt-4'>
+                <Button variant='hero' size='lg' asChild className='shadow-xl shadow-primary/20 rounded-full group px-8'>
+                  <Link to='/about'>
+                    Learn Our Full Story
+                  </Link>
+                </Button>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* About Section */}
-      <section ref={aboutSection.ref} className='py-24 bg-gradient-to-br from-secondary/30 to-transparent relative'>
-        <div className='absolute inset-0 opacity-5' style={{ backgroundImage: `url(${teamImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
-          <div className={`text-center mb-16 scroll-fade-up ${aboutSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
-              About Us
-            </Badge>
-            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-8 leading-tight'>
-              Empowering Dreams, One Story at a Time
-            </h2>
-            <p className='text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed'>
-              Career Na Mimi is a youth empowerment organization based in
-              Tanzania, dedicated to bridging the gap between young people and
-              the opportunities they need to thrive. We empower youth through
-              quality education, mentorship, and skill development programs,
-              preparing them for successful careers and sustainable livelihoods.
-            </p>
-          </div>
+            {/* Right Column: Creative Achievement Grid */}
+            <div className={`grid grid-cols-2 gap-4 md:gap-6 scroll-fade-right ${aboutSection.isVisible ? 'visible' : ''}`}>
+              {[
+                {
+                  number: 500,
+                  suffix: "+",
+                  label: "Youth Empowered",
+                  icon: Users,
+                  color: "bg-blue-500",
+                  delay: 0.1
+                },
+                {
+                  number: 50,
+                  suffix: "+",
+                  label: "Workshops",
+                  icon: BookOpen,
+                  color: "bg-primary",
+                  delay: 0.2
+                },
+                {
+                  number: 25,
+                  suffix: "+",
+                  label: "Career Talks",
+                  icon: Sparkles,
+                  color: "bg-amber-500",
+                  delay: 0.3
+                },
+                {
+                  number: 100,
+                  suffix: "+",
+                  label: "Success Stories",
+                  icon: Award,
+                  color: "bg-emerald-500",
+                  delay: 0.4
+                }
+              ].map((stat, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: stat.delay }}
+                  viewport={{ once: true }}
+                  className='group relative'
+                >
+                  <div className='absolute inset-0 bg-white rounded-[2rem] shadow-xl group-hover:shadow-2xl transition-all duration-500 -rotate-2 group-hover:rotate-0' />
+                  <Card className='relative h-full border-none shadow-none bg-white rounded-[2rem] overflow-hidden p-6 md:p-8 flex flex-col items-center text-center group-hover:-translate-y-2 transition-transform duration-500'>
+                    <div className={cn(
+                      "w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg transform rotate-3 group-hover:rotate-12 transition-transform duration-500",
+                      stat.color
+                    )}>
+                      <stat.icon className='w-6 h-6 md:w-8 md:h-8' />
+                    </div>
 
-          <div className={`flex flex-col sm:flex-row gap-6 justify-center scroll-scale ${aboutSection.isVisible ? 'visible' : ''}`}>
-            <Button variant='hero' size='lg' asChild className='shadow-xl hover:shadow-primary/30 hover:scale-105 transition-all duration-300'>
-              <Link to='/about'>
-                Learn More <ArrowRight className='ml-2 w-5 h-5' />
-              </Link>
-            </Button>
-            <Button variant='outline' size='lg' asChild className='hover:scale-105 transition-all duration-300 border-2'>
-              <Link to='/contact'>Contact Us</Link>
-            </Button>
+                    <div className='space-y-1'>
+                      <h3 className='text-3xl md:text-4xl font-black text-slate-900'>
+                        <CountUp end={stat.number} duration={2.5} enableScrollSpy scrollSpyOnce />
+                        <span className='text-primary'>{stat.suffix}</span>
+                      </h3>
+                      <p className='text-sm md:text-base font-bold text-slate-500 tracking-tight leading-tight uppercase'>
+                        {stat.label}
+                      </p>
+                    </div>
+
+                    {/* Decorative element */}
+                    <div className='absolute top-2 right-2 w-16 h-16 bg-slate-50 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-150 duration-700' />
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
 
       {/* Strategic Objectives */}
-      <section ref={objectivesSection.ref} className='py-24'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className={`text-center mb-16 scroll-fade-up ${objectivesSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
-              Our Strategic Objectives
+      <section ref={objectivesSection.ref} className='py-32 relative overflow-hidden bg-white'>
+        <div className='absolute inset-0 opacity-[0.03] pointer-events-none' style={{ backgroundImage: 'radial-gradient(#0056b3 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
+        
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
+          <div className={cn(
+            "text-center mb-20 scroll-fade-up",
+            objectivesSection.isVisible && "visible"
+          )}>
+            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 px-6 py-2 rounded-full uppercase tracking-widest text-[10px] font-black'>
+              Institutional Protocol
             </Badge>
-            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-8 leading-tight'>
-              Building a Transformative Movement
+            <h2 className='text-4xl md:text-6xl font-heading font-black mb-6 leading-[1.1] tracking-tight text-slate-900'>
+              Building a <br /> Transformative Movement
             </h2>
-            <p className='text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed'>
-              We are building more than an organization—we are leading a
-              transformative movement to empower youth across Africa. Each
-              objective reflects our commitment to creating inclusive,
-              sustainable, and innovation-driven development.
+            <p className='text-lg md:text-xl text-slate-500 max-w-4xl mx-auto leading-relaxed font-medium'>
+              We are leading a movement to empower youth across Africa. Each objective reflects our commitment to creating inclusive, sustainable, and innovation-driven development.
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-10'>
             {objectives.map((objective, index) => (
-              <div
+              <motion.div
                 key={index}
-                className={`scroll-scale ${objectivesSection.isVisible ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 100}ms` }}>
-                <Card className='modern-card h-full border-2 border-transparent hover:border-primary/20'>
-                  <CardContent className='p-8'>
-                    <div
-                      className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${objective.color} flex items-center justify-center mb-6 shadow-lg transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
-                      <objective.icon className='w-8 h-8 text-white' />
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.15 }}
+                viewport={{ once: true }}
+                className='group'
+              >
+                <Card className='relative h-full overflow-hidden border border-slate-100 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.08)] transition-all duration-700 rounded-[2.5rem] group-hover:-translate-y-3'>
+                  {/* Card Background Decoration */}
+                  <div className={cn(
+                    "absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-5 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-10",
+                    objective.color.split(' ')[0]
+                  )} />
+                  
+                  <CardContent className='p-10 flex flex-col h-full'>
+                    <div className='mb-8 relative'>
+                      <div className={cn(
+                        "w-20 h-20 rounded-[1.75rem] flex items-center justify-center relative overflow-hidden shadow-2xl transition-all duration-700 group-hover:rotate-6",
+                        "bg-gradient-to-br", objective.color
+                      )}>
+                        {/* Glassmorphic nested container */}
+                        <div className='absolute inset-1 rounded-[1.5rem] bg-white/10 backdrop-blur-sm border border-white/20' />
+                        <objective.icon className='w-10 h-10 text-white relative z-10 drop-shadow-lg' />
+                      </div>
+                      
+                      {/* Pulse effect */}
+                      <div className={cn(
+                        "absolute -inset-2 rounded-[2rem] opacity-0 group-hover:opacity-20 blur-xl transition-all duration-1000 bg-gradient-to-br",
+                        objective.color
+                      )} />
                     </div>
 
-                    <h3 className='text-2xl font-heading font-bold mb-4'>
+                    <h3 className='text-2xl md:text-3xl font-black mb-4 tracking-tight text-slate-900'>
                       {objective.title}
                     </h3>
-                    <p className='text-muted-foreground mb-8 leading-relaxed text-base'>
+                    <p className='text-slate-500 mb-10 leading-relaxed font-medium text-lg flex-grow'>
                       {objective.description}
                     </p>
 
-                    <div className='space-y-4'>
-                      <div className='flex justify-between text-sm font-medium'>
-                        <span>Progress</span>
-                        <span className='text-primary'>
-                          {objective.raised}/{objective.goal}
-                        </span>
-                      </div>
-
-                      <div className='relative w-full bg-secondary/50 rounded-full h-3 overflow-hidden'>
-                        <div
-                          className={`h-3 rounded-full bg-gradient-to-r ${objective.color} transition-all duration-1000 relative overflow-hidden`}
-                          style={{ width: `${objective.percentage}%` }}>
-                          <div className='absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer'></div>
+                    <div className='mt-auto space-y-6'>
+                      <div className='flex justify-between items-end'>
+                        <div className='space-y-1'>
+                          <p className='text-[10px] font-black uppercase tracking-[0.2em] text-slate-400'>Implementation Protocol</p>
+                          <p className='text-xl font-black text-slate-900 tracking-tight'>
+                            {objective.raised.toLocaleString()} <span className='text-slate-300 mx-1'>/</span> {objective.goal.toLocaleString()}
+                          </p>
+                        </div>
+                        <div className='text-right'>
+                          <span className={cn(
+                            "text-3xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-br",
+                            objective.color
+                          )}>
+                            {objective.percentage}%
+                          </span>
                         </div>
                       </div>
 
-                      <div className='text-right'>
-                        <span className='text-2xl font-bold text-primary'>
-                          {objective.percentage}%
-                        </span>
+                      <div className='relative w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-50'>
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${objective.percentage}%` }}
+                          transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+                          className={cn(
+                            "h-full rounded-full transition-all relative overflow-hidden bg-gradient-to-r",
+                            objective.color
+                          )}>
+                          <div className='absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer scale-x-150'></div>
+                        </motion.div>
+                      </div>
+                      
+                      <div className='pt-2 flex items-center gap-3'>
+                         <div className={cn("w-2 h-2 rounded-full animate-pulse", objective.color.split(' ')[0])} />
+                         <span className='text-[10px] font-black uppercase tracking-widest text-slate-400'>Active Strategy in Progress</span>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -524,7 +479,7 @@ const Index = () => {
                           href={service.link}
                           target='_blank'
                           rel='noopener noreferrer'>
-                          Try Now <ArrowRight className='ml-2 w-4 h-4' />
+                          Try Now
                         </a>
                       </Button>
                     ) : (
@@ -544,115 +499,80 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Donation CTA */}
-      <section ref={donationSection.ref} className='py-28 relative overflow-hidden'>
+
+
+
+      {/* Event Spotlight Section */}
+      <section ref={donationSection.ref} className='py-32 relative overflow-hidden group'>
         <div
-          className='absolute inset-0 bg-cover bg-center scale-105'
+          className='absolute inset-0 bg-cover bg-center transition-transform duration-[10s] group-hover:scale-110'
           style={{ backgroundImage: `url(${eventImage})` }}>
-          <div className='absolute inset-0 bg-gradient-to-br from-primary/95 to-primary/85'></div>
+          <div className='absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/80 to-primary/20'></div>
         </div>
 
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className={`max-w-4xl mx-auto text-center text-white scroll-scale ${donationSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-8 bg-white/20 text-white border-white/30 backdrop-blur-sm px-6 py-2 text-sm font-semibold'>
-              Coming Soon!!
+          <div className={cn(
+            "max-w-5xl mx-auto text-center text-white scroll-scale",
+            donationSection.isVisible && "visible"
+          )}>
+            <Badge className='mb-10 bg-white/10 text-white border-white/20 backdrop-blur-md px-8 py-3 text-xs font-black uppercase tracking-[0.3em] rounded-full'>
+              Exclusive Industry Protocol
             </Badge>
-            <h2 className='text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-8 leading-tight'>
-              Career Fair 2025 - Empower the Next Generation
+            
+            <h2 className='text-4xl md:text-6xl lg:text-7xl font-heading font-black mb-10 leading-[1.05] tracking-tighter'>
+              CAREER CONNECT <br />
+              <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary-light to-white opacity-90'>
+                THE INDUSTRY EXPERIENCE TABLE WORKSHOP
+              </span>
             </h2>
-            <p className='text-xl mb-12 text-white/95 leading-relaxed max-w-2xl mx-auto'>
-              Support the next generation of professionals! Your contribution
-              helps students access career guidance, skill-building workshops,
-              and networking opportunities at Career Fair 2025.
+            
+            <p className='text-lg md:text-xl mb-16 text-slate-300 leading-relaxed max-w-4xl mx-auto font-medium'>
+              Join elite industry leaders for a transformative high-table workshop. Master the metrics of professional success and bridge the gap between education and high-impact industry experience.
             </p>
 
-            <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <Button variant='hero' size='lg' className='bg-white text-primary hover:bg-white/90 shadow-xl hover:scale-105 transition-all'>
-                Donate via PayPal
+            <div className='flex justify-center'>
+              <Button 
+                variant='hero' 
+                size='lg' 
+                asChild
+                className='h-20 lg:h-24 px-16 text-xl lg:text-2xl rounded-full shadow-[0_20px_50px_rgba(0,102,255,0.3)] hover:shadow-primary/50 transition-all hover:scale-105 active:scale-95 group/btn'
+              >
+                <a href='https://app.careernamimii.org/events' target='_blank' rel='noopener noreferrer'>
+                  <Ticket className='w-8 h-8 mr-4 group-hover/btn:rotate-12 transition-transform' />
+                  Secure Your Seating
+                </a>
               </Button>
-              <Button
-                variant='outline'
-                size='lg'
-                className='border-white border-2 text-white bg-white/10 hover:bg-white hover:text-primary backdrop-blur-sm hover:scale-105 transition-all shadow-lg'>
-                Mobile Money
-              </Button>
-              <Button
-                variant='outline'
-                size='lg'
-                className='border-white border-2 text-white bg-white/10 hover:bg-white hover:text-primary backdrop-blur-sm hover:scale-105 transition-all shadow-lg'>
-                Bank Transfer
-              </Button>
+            </div>
+
+            {/* Event Meta Info */}
+            <div className='mt-16 flex flex-wrap justify-center gap-12 opacity-80'>
+              <div className='flex items-center gap-4 group'>
+                <div className='w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-primary transition-colors'>
+                  <Calendar className='w-5 h-5 text-white' />
+                </div>
+                <div className='text-left'>
+                  <p className='text-[10px] font-black uppercase tracking-widest text-slate-400'>Event Date</p>
+                  <span className='text-sm font-black text-white'>May 02, 2026</span>
+                </div>
+              </div>
+              <div className='flex items-center gap-4 group'>
+                <div className='w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-primary transition-colors'>
+                  <MapPin className='w-5 h-5 text-white' />
+                </div>
+                <div className='text-left max-w-[300px]'>
+                  <p className='text-[10px] font-black uppercase tracking-widest text-slate-400'>Institutional Venue</p>
+                  <span className='text-sm font-black text-white leading-tight'>CRDB Headquarters, Upanga, Dar es Salaam</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Decorative elements */}
-        <div className='absolute top-20 left-10 w-24 h-24 bg-white/10 rounded-full blur-2xl animate-float'></div>
-        <div className='absolute bottom-20 right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-float' style={{ animationDelay: '1s' }}></div>
+        {/* Cinematic Decorative Orbs */}
+        <div className='absolute top-1/4 -left-20 w-80 h-80 bg-primary/20 rounded-full blur-[100px] animate-pulse pointer-events-none'></div>
+        <div className='absolute bottom-1/4 -right-20 w-80 h-80 bg-accent/20 rounded-full blur-[100px] animate-pulse delay-1000 pointer-events-none'></div>
       </section>
 
-      {/* Team Preview */}
-      <section ref={teamSection.ref} className='py-24'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className={`text-center mb-16 scroll-fade-up ${teamSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
-              Team Members
-            </Badge>
-            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
-              The Faces Behind the Mission
-            </h2>
-          </div>
-
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12'>
-            {[
-              { name: "Rahman Mbahe", role: "Founder", image: rahmanImg },
-              {
-                name: "Abdul Swammad",
-                role: "Director of Operation",
-                image: abdulImg,
-              },
-              { name: "Karen Kamene", role: "Tresure ", image: karenImg },
-              {
-                name: "Godfrey Gozberty",
-                role: "ICT officer",
-                image: godfreyImg,
-              },
-            ].map((member, index) => (
-              <div
-                key={index}
-                className={`scroll-scale ${teamSection.isVisible ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 100}ms` }}>
-                <Card className='modern-card h-full group'>
-                  <CardContent className='p-8 text-center'>
-                    <div className='relative w-32 h-32 mx-auto mb-6'>
-                      <div className='absolute inset-0 bg-gradient-to-br from-primary to-primary/60 rounded-full blur-md opacity-50 group-hover:opacity-70 transition-opacity'></div>
-                      <div className='relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-xl transform group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300'>
-                        <img
-                          src={member.image}
-                          alt={member.name}
-                          className='w-full h-full object-cover'
-                        />
-                      </div>
-                    </div>
-                    <h3 className='text-xl font-heading font-bold mb-2 group-hover:text-primary transition-colors'>
-                      {member.name}
-                    </h3>
-                    <p className='text-muted-foreground font-medium'>{member.role}</p>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
-
-          <div className={`text-center scroll-fade-up ${teamSection.isVisible ? 'visible' : ''}`}>
-            <Button variant='hero' size='lg' asChild className='shadow-lg hover:shadow-primary/30 hover:scale-105 transition-all'>
-              <Link to='/team'>
-                Meet Our Full Team <ArrowRight className='ml-2 w-5 h-5' />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
 
       {/* Testimonials */}
       <section ref={testimonialsSection.ref} className='py-24 bg-gradient-to-br from-secondary/30 to-transparent'>
@@ -705,11 +625,10 @@ const Index = () => {
                       <button
                         key={index}
                         onClick={() => setCurrentTestimonial(index)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                          index === currentTestimonial
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial
                             ? "bg-primary w-8 shadow-lg"
                             : "bg-muted hover:bg-muted-foreground"
-                        }`}
+                          }`}
                         aria-label={`Go to testimonial ${index + 1}`}
                       />
                     ))}
@@ -810,7 +729,7 @@ const Index = () => {
                     asChild
                     className='shadow-lg hover:shadow-xl transition-all'>
                     <Link to='/contact'>
-                      Get Involved <ArrowRight className='ml-2 w-5 h-5' />
+                      Get Involved
                     </Link>
                   </Button>
                 </div>
@@ -860,5 +779,6 @@ const Index = () => {
     </div>
   );
 };
+
 
 export default Index;

@@ -36,6 +36,8 @@ import karenImg from "@/assets/team/KAREEN.jpg";
 import godfreyImg from "@/assets/team/godfrey.jpg";
 import echaImg from "@/assets/team/ECHA.jpg";
 import jofreyImg from "@/assets/team/02.jpg";
+import aishaImg from "@/assets/team/aisha.jpeg";
+import ellnoelaImg from "@/assets/team/pa.jpeg";
 
 const Team = () => {
   const [isVisible, setIsVisible] = useState({});
@@ -52,7 +54,7 @@ const Team = () => {
     {
       id: 1,
       name: "Rahman Mbahe",
-      role: "Executive officer",
+      role: "Chief Executive Officer",
       image: rahmanImg,
       description:
         "Visionary leader driving the mission to empower youth across Africa through career guidance and skill development.",
@@ -67,7 +69,7 @@ const Team = () => {
     {
       id: 3,
       name: "Abdul Swammad",
-      role: "Deputy executive officer",
+      role: "Chief Operating Officer",
       image: jofreyImg,
       description:
         "Operations specialist focused on optimizing processes and ensuring smooth execution of all programs.",
@@ -101,7 +103,7 @@ const Team = () => {
     {
       id: 5,
       name: "Echa Joseph",
-      role: "Public Relation Officer",
+      role: "General Manager",
       image: echaImg,
       description:
         "Digital innovation leader spearheading our online presence and technological advancement.",
@@ -116,7 +118,7 @@ const Team = () => {
     {
       id: 7,
       name: "Godfrey Muganyizi",
-      role: "ICT officer",
+      role: "Head of Technical Department",
       image: godfreyImg,
       description:
         "Technology leader ensuring robust digital infrastructure and innovative solutions.",
@@ -131,7 +133,7 @@ const Team = () => {
     {
       id: 8,
       name: "Jofrey Lazaro",
-      role: "Facilitator",
+      role: "Head of Communications Department",
       image: abdulImg,
       description:
         "Passionate educator dedicated to empowering youth through practical skill training.",
@@ -143,10 +145,42 @@ const Team = () => {
       },
       expertise: ["Education", "Mentoring", "Career Guidance"],
     },
+    {
+      id: 9,
+      name: "Aisha Othman",
+      role: "Secretary",
+      image: aishaImg,
+      description:
+        "Highly organized professional managing institutional coordination and ensuring seamless communication across all departments.",
+      social: {
+        facebook: "#",
+        twitter: "#",
+        linkedin: "#",
+        instagram: "#",
+      },
+      expertise: ["Administration", "Coordination", "Management"],
+      customPosition: "center 20%",
+    },
+    {
+      id: 10,
+      name: "Ellnoela",
+      role: "Public Relation Officer",
+      image: ellnoelaImg,
+      description:
+        "Dynamic communicator dedicated to building strong institutional relationships and enhancing our brand's global presence.",
+      social: {
+        facebook: "#",
+        twitter: "#",
+        linkedin: "#",
+        instagram: "#",
+      },
+      expertise: ["Communications", "Public Relations", "Engagement"],
+      customPosition: "center 15%",
+    },
   ];
 
   const stats = [
-    { number: "6+", label: "Team Members", icon: Users, maxValue: 10 },
+    { number: "8+", label: "Team Members", icon: Users, maxValue: 10 },
     { number: "3+", label: "Years Experience", icon: Award, maxValue: 5 },
     { number: "2010+", label: "Youth Impacted", icon: Target, maxValue: 2500 },
     { number: "100%", label: "Dedication", icon: Heart, maxValue: 100 },
@@ -326,7 +360,7 @@ const Team = () => {
                     className='w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500'
                     style={{
                       objectFit: "cover",
-                      objectPosition: "center top",
+                      objectPosition: member.customPosition || "center top",
                     }}
                   />
                   <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Heart, Mail, Phone, MapPin, Youtube, Facebook, Instagram, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Youtube, Facebook, Instagram, Linkedin } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const Footer = () => {
@@ -13,19 +13,20 @@ const Footer = () => {
         <div className='py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           {/* Brand Section */}
           <div className='lg:col-span-1'>
-            <div className='flex items-center space-x-2 mb-6'>
-              <div className='w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center'>
-                <Heart
-                  className='w-6 h-6 text-primary-foreground'
-                  fill='currentColor'
+            <div className='flex items-center space-x-4 mb-8'>
+              <div className='w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center p-2.5 backdrop-blur-sm border border-white/10'>
+                <img
+                  src={logo}
+                  alt='Career Na Mimi'
+                  className='w-full h-full object-contain'
                 />
               </div>
               <div>
-                <span className='text-xl font-heading font-bold'>
+                <span className='text-2xl font-black tracking-tight block text-white'>
                   Career Na Mimi
                 </span>
-                <p className='text-sm text-background/80 -mt-1'>
-                  Your Journey, Your Success
+                <p className='text-xs text-primary font-black uppercase tracking-[0.2em] -mt-1'>
+                  Elite Talent Ecosystem
                 </p>
               </div>
             </div>
@@ -118,9 +119,9 @@ const Footer = () => {
                 <div>
                   <p className='text-background/80 text-sm'>Email us</p>
                   <a
-                    href='mailto:info@careernamimi.org'
+                    href='mailto:info@careernamimii.org'
                     className='text-sm hover:text-primary-light transition-colors'>
-                    info@careernamimi.org
+                    info@careernamimii.org
                   </a>
                 </div>
               </li>
@@ -128,11 +129,10 @@ const Footer = () => {
                 <Phone className='w-5 h-5 text-primary-light mt-0.5 flex-shrink-0' />
                 <div>
                   <p className='text-background/80 text-sm'>Call us</p>
-                  <a
-                    href='tel:+1234567890'
-                    className='text-sm hover:text-primary-light transition-colors'>
-                    +255 628 055 646/673 045 414
-                  </a>
+                  <div className='flex flex-col'>
+                    <a href='tel:+255628055646' className='text-sm hover:text-primary-light transition-colors'>+255 628 055 646</a>
+                    <a href='tel:+255769721896' className='text-sm hover:text-primary-light transition-colors'>+255 769 721 896</a>
+                  </div>
                 </div>
               </li>
               <li className='flex items-start space-x-3'>
@@ -166,7 +166,7 @@ const Footer = () => {
                 className='border-background/30 text-black hover:bg-background hover:text-foreground'
                 asChild>
                 <a
-                  href='https://careerguidance.careernamimi.org/'
+                  href='https://careerhub.careernamimii.org/'
                   target='_blank'
                   rel='noopener noreferrer'>
                   Try AI Career Guide
@@ -179,9 +179,14 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className='border-t border-background/20 py-6'>
           <div className='flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0'>
-            <p className='text-background/60 text-sm'>
-              © {currentYear} Career Na Mimi Organization. All rights reserved.
-            </p>
+            <div className='flex flex-col'>
+              <p className='text-background/60 text-sm'>
+                © {currentYear} Career Na Mimi Organization. All rights reserved.
+              </p>
+              <p className='text-[10px] text-primary/80 font-bold uppercase tracking-wider mt-1'>
+                Registration: ooNGO/R/8327
+              </p>
+            </div>
             <div className='flex space-x-6'>
               <Link
                 to='/privacy-policy'

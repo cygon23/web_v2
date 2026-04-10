@@ -32,55 +32,52 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className='fixed top-0 left-0 right-0 z-50 bg-white shadow-md border-b border-border transition-all duration-300'>
+    <nav
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        isScrolled 
+          ? "bg-slate-950/20 backdrop-blur-xl border-b border-white/5 py-3 shadow-2xl" 
+          : "bg-transparent py-4"
+      )}
+    >
       <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex items-center justify-between h-16 lg:h-20'>
           {/* Logo */}
-          <Link to='/' className='flex items-center space-x-2 group'>
-            <div className='w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center group-hover:scale-110 transition-transform duration-300'>
+          <Link to='/' className='flex items-center space-x-3 group'>
+            <div className='w-12 h-12 lg:w-16 lg:h-16 rounded-xl lg:rounded-2xl overflow-hidden flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-xl'>
               <img
                 src={logo}
-                alt='Career Na Mimi Logo'
-                className='w-full h-full object-contain'
+                alt='Career Na Mimi'
+                className='w-full h-full object-contain p-1 lg:p-2'
               />
-            </div>
-            <div className='hidden sm:block'>
-              <span className='text-xl font-heading font-bold text-foreground'></span>
-              <p className='text-xs text-white text-muted-foreground -mt-1'>
-                Your Journey, Your Success
-              </p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className='hidden lg:flex items-center space-x-8'>
+          <div className='hidden lg:flex items-center space-x-1 p-1 bg-white/5 backdrop-blur-xl rounded-full border border-white/10'>
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
                 className={cn(
-                  "relative text-sm font-medium transition-colors duration-300 hover:text-primary",
-                  isActive(item.path) ? "text-primary" : "text-foreground/80"
+                  "relative px-6 py-2.5 text-sm font-bold tracking-wide transition-all duration-300 rounded-full",
+                  isActive(item.path) 
+                    ? "text-white bg-primary shadow-glow scale-105" 
+                    : "text-white/80 hover:text-white hover:bg-white/10"
                 )}>
                 {item.name}
-                {isActive(item.path) && (
-                  <div className='absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-primary rounded-full' />
-                )}
               </Link>
             ))}
           </div>
 
           {/* CTA Buttons */}
           <div className='hidden lg:flex items-center space-x-4'>
-            <Button variant='outline' size='sm' asChild>
-              <a
-                href='https://morden-blog-site.vercel.app/'
-                target='_blank'
-                rel='noopener noreferrer'>
-                Career Guide
-              </a>
-            </Button>
-            <Button variant='hero' size='sm' asChild>
+            <Button 
+              variant='hero' 
+              size='sm' 
+              asChild
+              className="shadow-glow hover:shadow-primary/40 rounded-full px-8 h-12"
+            >
               <Link to='/contact'>Get Started</Link>
             </Button>
           </div>
@@ -88,7 +85,7 @@ const Navigation = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className='lg:hidden p-2 text-foreground hover:text-primary transition-colors'
+            className="lg:hidden p-3 rounded-2xl bg-white/10 text-white hover:bg-white/20 backdrop-blur-md border border-white/10 transition-all duration-300"
             aria-label='Toggle menu'>
             {isMenuOpen ? (
               <X className='w-6 h-6' />
@@ -100,35 +97,27 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className='lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-lg border-b border-border shadow-lg'>
-            <div className='px-4 py-6 space-y-4'>
+          <div className='lg:hidden absolute top-full left-4 right-4 mt-4 bg-slate-900/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-[2rem] overflow-hidden cinematic-fade-in'>
+            <div className='px-6 py-8 space-y-3'>
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
                   className={cn(
-                    "block text-base font-medium transition-colors duration-300",
+                    "flex items-center justify-center px-6 py-4 text-lg font-black rounded-2xl transition-all duration-300",
                     isActive(item.path)
-                      ? "text-primary"
-                      : "text-foreground/80 hover:text-primary"
+                      ? "text-white bg-primary shadow-lg scale-[1.02]"
+                      : "text-white/70 hover:bg-white/5 hover:text-white"
                   )}>
                   {item.name}
                 </Link>
               ))}
 
-              <div className='pt-4 space-y-3'>
-                <Button variant='outline' className='w-full' asChild>
-                  <a
-                    href='https://careerhub.careernamimii.org/'
-                    target='_blank'
-                    rel='noopener noreferrer'>
-                    AI Career Guide
-                  </a>
-                </Button>
-                <Button variant='hero' className='w-full' asChild>
+              <div className='pt-6'>
+                <Button variant='hero' className='w-full h-14 rounded-2xl text-lg font-black shadow-glow' asChild>
                   <Link to='/contact' onClick={() => setIsMenuOpen(false)}>
-                    Get Started
+                    Join Now
                   </Link>
                 </Button>
               </div>
