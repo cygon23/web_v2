@@ -15,8 +15,6 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
 import LoadingScreen from "@/components/Loading";
-import ProjectsPage from "./pages/ProjectsPage";
-import AIServicesPage from "./pages/AIServicesPage";
 
 const queryClient = new QueryClient();
 
@@ -46,9 +44,6 @@ const App = () => {
             <Route path='/team' element={<Team />} />
             <Route path='/contact' element={<Contact />} />
             <Route path='/privacy-policy' element={<PrivacyPolicy />} />
-
-            <Route path='/projects' element={<ProjectsPage />} />
-            <Route path='/services' element={<AIServicesPage />} />
 
             {/* Catch-all 404 route */}
             <Route path='*' element={<NotFound />} />

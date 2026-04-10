@@ -26,8 +26,6 @@ const Navigation = () => {
     { name: "Events", path: "/events" },
     { name: "Gallery", path: "/gallery" },
     { name: "Team", path: "/team" },
-    { name: "Projects", path: "/projects" },
-    { name: "Services", path: "/services" },
     { name: "Contact", path: "/contact" },
   ];
 
@@ -122,7 +120,7 @@ const Navigation = () => {
               <div className='pt-4 space-y-3'>
                 <Button variant='outline' className='w-full' asChild>
                   <a
-                    href='https://careerguider.vercel.app/'
+                    href='https://careerhub.careernamimii.org/'
                     target='_blank'
                     rel='noopener noreferrer'>
                     AI Career Guide
