@@ -5,8 +5,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 // ============================================================================
 const CONFIG = {
   allowedOrigins: [
-    "https://careernamimi.org",
-    "https://www.careernamimi.org",
+    "https://careernamimii.org",
+    "https://www.careernamimii.org",
     "http://localhost:8080",
     "http://localhost:5173", // Vite default
     "https://localhost:8000",
@@ -201,7 +201,7 @@ async function sendEmail(contactData: any) {
     const nodemailer = await import("npm:nodemailer@6.9.4");
 
     const transporter = nodemailer.createTransport({
-      host: Deno.env.get("EMAIL_HOST") || "smtp.hostinger.com",
+      host: Deno.env.get("EMAIL_HOST") || "smtp.zoho.com",
       port: Number(Deno.env.get("EMAIL_PORT") || 465),
       secure: true,
       auth: {
@@ -235,9 +235,8 @@ async function sendEmail(contactData: any) {
       from: `"Website Contact Form" <${Deno.env.get("EMAIL_USER")}>`,
       to: Deno.env.get("RECIPIENT_EMAIL") || Deno.env.get("EMAIL_USER"),
       subject: `Contact Form: ${emailSubject}`,
-      text: `Name: ${name}\nEmail: ${email}\n${
-        subject ? `Subject: ${subject}\n` : ""
-      }Message:\n${message}`,
+      text: `Name: ${name}\nEmail: ${email}\n${subject ? `Subject: ${subject}\n` : ""
+        }Message:\n${message}`,
       html: htmlBody,
       replyTo: email,
     };
@@ -272,8 +271,7 @@ serve(async (req: Request) => {
 
   console.log("=== NEW REQUEST ===");
   console.log(
-    `${new Date().toISOString()} - ${
-      req.method
+    `${new Date().toISOString()} - ${req.method
     } request from ${origin} (IP: ${clientIP})`
   );
 

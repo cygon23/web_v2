@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import CircularStat from "@/components/CircularStat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import {
@@ -24,11 +23,12 @@ import {
   Star,
 } from "lucide-react";
 import CountUp from "react-countup";
+import { motion } from "framer-motion";
 
 // Import images (you'll need to add these to your assets)
-import aboutHeroImage from "@/assets/hero-career-guidance.jpg";
-import founderImage from "@/assets/team-collaboration.jpg";
-import missionImage from "@/assets/career-event.jpg";
+import aboutHeroImage from "@/assets/gallery/eventG/lnks/lady2.jpg";
+import founderImage from "@/assets/hero3.jpeg";
+import missionImage from "@/assets/events/tourism.jpg";
 
 const About = () => {
   // Scroll animations for each section
@@ -43,25 +43,26 @@ const About = () => {
       icon: Award,
       title: "Innovation Awards",
       items: [
+        "Tanzania First AI Forum 2nd Winner",
         "Afro Innovation Award (2024)",
         "TEHAMA Award – Education (2025)",
         "Arusha Innovation Week Champion (2025)",
       ],
-      color: "from-yellow-500 to-yellow-600",
+      color: "from-yellow-400 to-amber-600",
     },
     {
       icon: Users,
       title: "Youth Empowered",
-      count: "2010+",
+      count: "3500+",
       description: "Youth Across Tanzania",
-      color: "from-green-500 to-green-600",
+      color: "from-green-400 to-emerald-600",
     },
     {
       icon: Briefcase,
       title: "Career Access",
-      count: "1200+",
+      count: "300+",
       description: "Job & Internship Connections",
-      color: "from-blue-500 to-blue-600",
+      color: "from-sky-400 to-blue-600",
     },
     {
       icon: Globe,
@@ -70,7 +71,7 @@ const About = () => {
         "Nominated in WSIS Prizes 2025",
         "International Conference on Energy Aquatec and sustainability(ICEAS-2025)",
       ],
-      color: "from-purple-500 to-purple-600",
+      color: "from-fuchsia-400 to-purple-600",
     },
   ];
 
@@ -113,12 +114,7 @@ const About = () => {
     },
   ];
 
-  const impactStats = [
-    { number: "2010+", label: "Youth Empowered", icon: Users },
-    { number: "50+", label: "Workshops Conducted", icon: BookOpen },
-    { number: "25+", label: "Career Talks Delivered", icon: Sparkles },
-    { number: "1200+", label: "Career Connections", icon: Briefcase },
-  ];
+
 
   return (
     <div className='min-h-screen'>
@@ -129,16 +125,14 @@ const About = () => {
         {/* Background with parallax effect */}
         <div className='absolute inset-0'>
           <div
-            className='absolute inset-0 bg-cover bg-center bg-no-repeat scale-105'
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat scale-100'
             style={{ backgroundImage: `url(${aboutHeroImage})` }}>
           </div>
-          {/* Gradient overlays */}
-          <div className='absolute inset-0' style={{
-            background: 'linear-gradient(135deg, hsla(327, 73%, 20%, 0.7) 0%, hsla(327, 73%, 30%, 0.6) 50%, hsla(327, 73%, 25%, 0.7) 100%)'
-          }} />
-          <div className='absolute inset-0 bg-slate-900/40' />
-          {/* Animated gradient accent */}
-          <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-primary/10 to-transparent gradient-shift opacity-60' />
+          {/* Refined clean overlays */}
+          <div className='absolute inset-0 bg-slate-950/40' />
+          <div className='absolute inset-0 bg-gradient-to-b from-slate-950/20 via-transparent to-slate-950/60' />
+          {/* Suble animated accent */}
+          <div className='absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-primary/5 opacity-40' />
         </div>
 
         {/* Scattered Decorative Particles with About-themed Icons */}
@@ -211,13 +205,6 @@ const About = () => {
 
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20'>
           <div className='max-w-5xl mx-auto text-center text-white'>
-            {/* Animated Badge */}
-            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.2s' }}>
-              <Badge className='mb-8 bg-white/15 text-white border-white/30 hover:bg-white/25 backdrop-blur-md px-6 py-2.5 text-base font-semibold shadow-lg'>
-                Our Story
-              </Badge>
-            </div>
-
             {/* Main Heading with staggered animation */}
             <div className='cinematic-scale-in opacity-0' style={{ animationDelay: '0.4s' }}>
               <h1 className='text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-8 leading-tight'>
@@ -233,11 +220,47 @@ const About = () => {
 
             {/* Description */}
             <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.6s' }}>
-              <p className='text-lg md:text-xl mb-10 text-white/90 max-w-3xl mx-auto leading-relaxed font-medium'>
+              <p className='text-lg md:text-xl mb-12 text-white/90 max-w-3xl mx-auto leading-relaxed font-medium'>
                 Career Na Mimi is a youth empowerment organization based in
                 Tanzania, dedicated to bridging the gap between young people and
                 the opportunities they need to thrive in today's dynamic world.
               </p>
+            </div>
+
+            {/* Statistics Bar */}
+            <div className='mt-8 grid grid-cols-2 lg:grid-cols-4 gap-8 cinematic-fade-in opacity-0 border-t border-white/10 pt-12 max-w-4xl mx-auto' style={{ animationDelay: '0.8s' }}>
+              <div className='flex flex-col items-center group'>
+                <div className='text-4xl md:text-5xl font-black text-white mb-2 group-hover:scale-110 transition-transform duration-300'>
+                  <CountUp end={3500} duration={2.5} separator="," />+
+                </div>
+                <div className='text-[10px] md:text-xs text-primary-light uppercase tracking-[0.3em] font-black'>
+                  Youth Empowered
+                </div>
+              </div>
+              <div className='flex flex-col items-center group'>
+                <div className='text-4xl md:text-5xl font-black text-white mb-2 group-hover:scale-110 transition-transform duration-300'>
+                  <CountUp end={5} duration={2.5} />+
+                </div>
+                <div className='text-[10px] md:text-xs text-primary-light uppercase tracking-[0.3em] font-black'>
+                  Core Programs
+                </div>
+              </div>
+              <div className='flex flex-col items-center group'>
+                <div className='text-4xl md:text-5xl font-black text-white mb-2 group-hover:scale-110 transition-transform duration-300'>
+                  <CountUp end={10} duration={2.5} />+
+                </div>
+                <div className='text-[10px] md:text-xs text-primary-light uppercase tracking-[0.3em] font-black'>
+                  Key Partners
+                </div>
+              </div>
+              <div className='flex flex-col items-center group'>
+                <div className='text-4xl md:text-5xl font-black text-white mb-2 group-hover:scale-110 transition-transform duration-300'>
+                  <CountUp end={50} duration={2.5} />+
+                </div>
+                <div className='text-[10px] md:text-xs text-primary-light uppercase tracking-[0.3em] font-black'>
+                  Major Events
+                </div>
+              </div>
             </div>
 
             {/* Decorative floating elements */}
@@ -250,240 +273,285 @@ const About = () => {
         <div className='absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[8]' />
       </section>
 
-      {/* Impact Stats - Circular Progress Rings */}
-      <section ref={statsSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
-        <div className='absolute inset-0 opacity-5' style={{
-          backgroundImage: 'radial-gradient(circle at 50% 50%, hsl(327, 73%, 56%) 0%, transparent 50%)'
-        }}></div>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8'>
-            {impactStats.map((stat, index) => (
-              <div
-                key={index}
-                className={`scroll-scale ${statsSection.isVisible ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 100}ms` }}>
-                <CircularStat
-                  number={stat.number}
-                  label={stat.label}
-                  icon={stat.icon}
-                  maxValue={2500}
-                  isVisible={statsSection.isVisible}
-                  delay={index * 200}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* About Content - Enhanced */}
-      <section ref={aboutSection.ref} className='py-24 relative'>
-        <div className='absolute inset-0 bg-gradient-to-b from-transparent via-secondary/20 to-transparent'></div>
+
+      {/* About Content - Creative Redesign */}
+      <section ref={aboutSection.ref} className='py-32 relative overflow-hidden'>
+        {/* Abstract Background Design */}
+        <div className='absolute top-0 right-0 w-1/3 h-full bg-slate-50/50 -z-10 skew-x-12 transform translate-x-20 hidden lg:block' />
+        <div className='absolute -bottom-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10' />
+        
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-16 items-center'>
-            {/* Image Section */}
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-20 items-center'>
+            {/* Image Section - Creative Stack */}
             <div className={`relative scroll-fade-left ${aboutSection.isVisible ? 'visible' : ''}`}>
-              <div className='relative rounded-3xl overflow-hidden h-[500px] shadow-2xl group'>
-                <div
-                  className='absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110'
-                  style={{ backgroundImage: `url(${founderImage})` }}>
-                </div>
-                <div className='absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10'></div>
-              </div>
-
-              {/* Floating quote card */}
-              <Card className='absolute -bottom-6 -right-6 lg:-right-12 max-w-sm border-0 shadow-2xl modern-card'>
-                <CardContent className='p-6'>
-                  <p className='text-sm italic text-muted-foreground mb-4 leading-relaxed'>
-                    "Career Na Mimi is a youth empowerment organization based in
-                    Tanzania, dedicated to bridging the gap between young people
-                    and the opportunities they need to thrive..."
-                  </p>
-                  <div className='flex items-center space-x-3'>
-                    <div className='w-12 h-12 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center shadow-lg'>
-                      <Users className='w-6 h-6 text-white' />
-                    </div>
-                    <div>
-                      <p className='font-bold text-sm'>Rahman Mbahe</p>
-                      <p className='text-xs text-primary font-semibold'>Founder</p>
-                    </div>
+              <div className='relative'>
+                {/* Main Image Frame with Asymmetric Border Radius */}
+                <div className='relative rounded-[2rem] rounded-tr-[8rem] overflow-hidden h-[600px] shadow-2xl group border-[12px] border-white'>
+                  <div
+                    className='absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110'
+                    style={{ backgroundImage: `url(${founderImage})` }}>
                   </div>
-                </CardContent>
-              </Card>
+                  <div className='absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent' />
+                </div>
+                
+                {/* Accent Backdrop Element */}
+                <div className='absolute -top-10 -left-10 w-40 h-40 bg-primary/10 rounded-3xl -z-10 animate-pulse' />
+                
+                {/* Compact Floating info card */}
+                <Card className='absolute -bottom-8 -right-8 lg:-right-4 max-w-[280px] border-0 shadow-2xl bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden group hover:-translate-y-2 transition-transform duration-500'>
+                  <CardContent className='p-0'>
+                    <div className='h-2 w-full bg-gradient-to-r from-primary to-purple-600' />
+                    <div className='p-6'>
+                      <div className='flex items-center space-x-4 mb-4'>
+                        <div className='w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center'>
+                          <Users className='w-6 h-6 text-primary' />
+                        </div>
+                        <div>
+                          <p className='font-black text-sm tracking-tight'>Rahman Mbahe</p>
+                          <p className='text-[10px] text-primary font-bold uppercase tracking-widest'>Founding Visionary</p>
+                        </div>
+                      </div>
+                      <p className='text-xs italic text-muted-foreground leading-relaxed'>
+                        "Bridging the gap between potential and opportunity for every young Tanzanian."
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
 
             {/* Text Section */}
             <div className={`scroll-fade-right ${aboutSection.isVisible ? 'visible' : ''}`}>
-              <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors px-5 py-2'>
-                Our Foundation
-              </Badge>
-
-              <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
-                Building Bridges to Success
+              <h2 className='text-5xl lg:text-6xl font-heading font-black mb-8 leading-[1.1] tracking-tighter text-slate-900'>
+                Revolutionizing <br />
+                <span className='text-primary'>Youth Leadership</span>
               </h2>
 
-              <p className='text-lg text-muted-foreground mb-10 leading-relaxed'>
-                Since our founding, we have been committed to creating pathways
-                for young people to discover their potential, develop their
-                skills, and connect with meaningful opportunities that transform
-                their lives and communities.
+              <p className='text-lg text-slate-600 mb-12 leading-relaxed font-medium'>
+                At Career Na Mimi, we don't just provide guidance; we build architectures of success. Since our inception, we've focused on creating high-impact pathways for the next generation of African leaders.
               </p>
 
-              <div className='space-y-6'>
-                <Card className='modern-card border-2 border-transparent hover:border-blue-500/20 transition-all duration-300'>
-                  <CardContent className='p-6'>
-                    <div className='flex items-start space-x-4'>
-                      <div className='w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg transform hover:scale-110 hover:rotate-6 transition-all duration-300'>
-                        <Target className='w-7 h-7 text-white' />
+              <div className='grid grid-cols-1 gap-6'>
+                <motion.div 
+                  whileHover={{ x: 10 }}
+                  className='group'
+                >
+                  <Card className='border-none shadow-sm bg-slate-50/50 hover:bg-white hover:shadow-xl transition-all duration-500 group'>
+                    <CardContent className='p-8'>
+                      <div className='flex items-center space-x-6'>
+                        <div className='w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:rotate-6 transition-transform'>
+                          <Target className='w-8 h-8 text-white' />
+                        </div>
+                        <div>
+                          <h3 className='text-xl font-black mb-2 text-slate-900'>The Mission</h3>
+                          <p className='text-sm text-slate-500 leading-relaxed font-medium'>
+                            Empowering youth with elite programs and global mentorship to become innovative leaders.
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className='text-xl font-heading font-bold mb-3 text-foreground'>
-                          Our Mission
-                        </h3>
-                        <p className='text-muted-foreground leading-relaxed'>
-                          To empower youth by providing access to quality education,
-                          skill-building programs, mentorship, and career
-                          development opportunities that enable them to become
-                          confident, innovative leaders in their communities.
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </motion.div>
 
-                <Card className='modern-card border-2 border-transparent hover:border-purple-500/20 transition-all duration-300'>
-                  <CardContent className='p-6'>
-                    <div className='flex items-start space-x-4'>
-                      <div className='w-14 h-14 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg transform hover:scale-110 hover:rotate-6 transition-all duration-300'>
-                        <Eye className='w-7 h-7 text-white' />
+                <motion.div 
+                  whileHover={{ x: 10 }}
+                  className='group'
+                >
+                  <Card className='border-none shadow-sm bg-slate-50/50 hover:bg-white hover:shadow-xl transition-all duration-500 group'>
+                    <CardContent className='p-8'>
+                      <div className='flex items-center space-x-6'>
+                        <div className='w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:-rotate-6 transition-transform'>
+                          <Eye className='w-8 h-8 text-white' />
+                        </div>
+                        <div>
+                          <h3 className='text-xl font-black mb-2 text-slate-900'>The Vision</h3>
+                          <p className='text-sm text-slate-500 leading-relaxed font-medium'>
+                            A future where every young professional is equipped to drive sustainable African development.
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className='text-xl font-heading font-bold mb-3 text-foreground'>
-                          Our Vision
-                        </h3>
-                        <p className='text-muted-foreground leading-relaxed'>
-                          A just community with empowered youth: healthy,
-                          well-educated, innovative, and equipped for a better life,
-                          contributing to sustainable development across Africa.
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Core Values - Enhanced */}
-      <section ref={valuesSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
-        <div className='absolute inset-0 opacity-5' style={{
-          backgroundImage: 'radial-gradient(circle at 30% 70%, hsl(327, 73%, 56%) 0%, transparent 50%)'
-        }}></div>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
-          <div className={`text-center mb-16 scroll-fade-up ${valuesSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors px-5 py-2'>
-              Our Values
-            </Badge>
-            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
-              What Drives Us Forward
+      {/* Core Values - Pulse Network Redesign */}
+      <section ref={valuesSection.ref} className='py-32 relative overflow-hidden bg-[#020617]'>
+        {/* Artistic Background Architecture - Network Paths */}
+        <div className='absolute inset-0 opacity-10'>
+          <svg className='w-full h-full' viewBox='0 0 1000 1000' preserveAspectRatio='none'>
+            <path d='M0,500 Q250,450 500,500 T1000,500' fill='none' stroke='white' strokeWidth='1' className='animate-pulse' />
+            <path d='M200,0 Q250,500 200,1000' fill='none' stroke='white' strokeWidth='1' className='animate-pulse' style={{ animationDelay: '1s' }} />
+            <path d='M800,0 Q750,500 800,1000' fill='none' stroke='white' strokeWidth='1' className='animate-pulse' style={{ animationDelay: '2s' }} />
+          </svg>
+        </div>
+
+        {/* Animated Flux Orbs */}
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.1, 0.2, 0.1],
+            x: [-100, 100, -100],
+            y: [-50, 50, -50]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className='absolute top-0 -left-20 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[150px]'
+        />
+
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+          <div className={`text-center mb-24 scroll-fade-up ${valuesSection.isVisible ? 'visible' : ''}`}>
+            <h2 className='text-5xl md:text-7xl font-heading font-black text-white mb-8 leading-[0.9] tracking-tighter'>
+              Our Values: <br />
+              <span className='text-primary drop-shadow-[0_0_15px_rgba(236,72,153,0.3)]'>What Drives Us</span> Forward
             </h2>
-            <p className='text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed'>
-              Our core values shape every program we create, every partnership
-              we build, and every young person we serve. These principles guide
-              our commitment to meaningful, sustainable impact.
+
+            <p className='text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed font-medium border-t border-white/5 pt-8'>
+              Our core values shape every program we create, every partnership we build, and every young person we serve. These principles guide our commitment to meaningful, sustainable impact.
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12'>
             {coreValues.map((value, index) => (
-              <div
+              <motion.div
                 key={index}
-                className={`scroll-scale ${valuesSection.isVisible ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 100}ms` }}>
-                <Card className='modern-card h-full border-2 border-transparent hover:border-primary/20 group'>
-                  <CardContent className='p-8'>
-                    <div className='w-16 h-16 bg-gradient-to-br from-primary to-primary/70 rounded-2xl flex items-center justify-center mb-6 shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300'>
-                      <value.icon className='w-8 h-8 text-white' />
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className='relative'
+              >
+                {index < coreValues.length - 1 && (
+                  <div className='hidden lg:block absolute top-1/2 -right-6 w-12 h-[1px] bg-gradient-to-r from-primary/30 to-transparent z-0' />
+                )}
+                
+                <Card className='h-full border border-white/5 bg-white/[0.03] backdrop-blur-xl hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-700 rounded-[2.5rem] overflow-hidden group shadow-2xl relative z-10'>
+                  <CardContent className='p-10 relative'>
+                    <div className='mb-8 relative'>
+                      <div className='w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 group-hover:bg-primary-dark group-hover:border-primary/40 transition-all duration-500 transform group-hover:rotate-6 shadow-xl'>
+                        <value.icon className='w-8 h-8 text-white' />
+                      </div>
                     </div>
-                    <h3 className='text-xl font-heading font-bold mb-4 text-foreground group-hover:text-primary transition-colors'>
+
+                    <h3 className='text-2xl font-black text-white mb-4 tracking-tight group-hover:text-primary transition-colors'>
                       {value.title}
                     </h3>
-                    <p className='text-muted-foreground leading-relaxed'>
+
+                    <p className='text-slate-400 leading-relaxed font-medium group-hover:text-slate-300 transition-colors'>
                       {value.description}
                     </p>
                   </CardContent>
                 </Card>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Achievements - Enhanced */}
-      <section ref={achievementsSection.ref} className='py-24'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className={`text-center mb-16 scroll-fade-up ${achievementsSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors px-5 py-2'>
-              Our Achievements
-            </Badge>
-            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
-              Recognition and Impact
+      {/* Achievements - Compact Tree of Impact */}
+      <section ref={achievementsSection.ref} className='py-28 relative overflow-hidden bg-slate-50/50'>
+        {/* Organic Tree Structure SVG - Compact */}
+        <div className='absolute inset-0 pointer-events-none z-0'>
+          <svg className='w-full h-full' viewBox='0 0 1000 800' preserveAspectRatio='xMidYMid slice'>
+            <defs>
+              <linearGradient id='trunkGradient' x1='0%' y1='100%' x2='0%' y2='0%'>
+                <stop offset='0%' stopColor='transparent' />
+                <stop offset='20%' stopColor='#1e293b' stopOpacity='0.1' />
+                <stop offset='100%' stopColor='var(--primary)' stopOpacity='0.3' />
+              </linearGradient>
+            </defs>
+            
+            {/* Shorter Trunk */}
+            <motion.path 
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              d='M500,800 C500,600 480,400 500,200' 
+              stroke='url(#trunkGradient)' 
+              strokeWidth='8' 
+              fill='none' 
+              strokeLinecap='round'
+            />
+            
+            {/* Symmetrical Branches for 2x2 Grid */}
+            <motion.path 
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
+              d='M500,500 L250,350 M500,500 L750,350 M500,500 L250,650 M500,500 L750,650' 
+              stroke='var(--primary)' 
+              strokeWidth='1.5' 
+              fill='none' 
+              strokeDasharray='8 4'
+              opacity='0.2'
+            />
+          </svg>
+        </div>
+
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+          <div className={`text-center mb-20 scroll-fade-up ${achievementsSection.isVisible ? 'visible' : ''}`}>
+            <h2 className='text-5xl md:text-7xl font-heading font-black mb-6 leading-tight tracking-tighter text-slate-900'>
+              The <span className='text-primary drop-shadow-[0_0_15px_rgba(236,72,153,0.3)]'>Tree</span> of Impact
             </h2>
-            <p className='text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed'>
-              Our dedication to youth empowerment has earned recognition both
-              locally and internationally, validating our approach and inspiring
-              us to reach even greater heights.
+            <p className='text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium'>
+              Our roots go deep, and our branches reach far. Every achievement is a leaf on this growing testament to youth empowerment.
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
-            {achievements.map((achievement, index) => (
-              <div
-                key={index}
-                className={`scroll-scale ${achievementsSection.isVisible ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 100}ms` }}>
-                <Card className='modern-card h-full text-center border-2 border-transparent hover:border-primary/20 group'>
-                  <CardContent className='p-8'>
-                    <div
-                      className={`w-20 h-20 mx-auto mb-6 bg-gradient-to-r ${achievement.color} rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
-                      <achievement.icon className='w-10 h-10 text-white' />
-                    </div>
-
-                    <h3 className='text-xl font-heading font-bold mb-4 text-foreground group-hover:text-primary transition-colors'>
-                      {achievement.title}
-                    </h3>
-
-                    {achievement.count ? (
-                      <div>
-                        <div className='text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent mb-3'>
-                          {achievement.count}
+          <div className='max-w-6xl mx-auto'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12'>
+              {achievements.map((achievement, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Card className='h-full border-none bg-white/70 backdrop-blur-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.08)] rounded-[2.5rem] overflow-hidden group hover:scale-[1.02] transition-all duration-500'>
+                    <div className={`h-2 w-full bg-gradient-to-r ${achievement.color}`} />
+                    <CardContent className='p-8 lg:p-10'>
+                      <div className='flex items-center justify-between mb-8'>
+                        <div className={`w-14 h-14 bg-gradient-to-br ${achievement.color} rounded-2xl flex items-center justify-center shadow-xl transform group-hover:rotate-12 transition-all duration-500`}>
+                          <achievement.icon className='w-7 h-7 text-white' />
                         </div>
-                        <p className='text-muted-foreground font-medium'>
-                          {achievement.description}
-                        </p>
+                        <div className='text-[10px] font-black text-slate-300 uppercase tracking-widest'>Node 0{index + 1}</div>
                       </div>
-                    ) : achievement.items ? (
-                      <ul className='space-y-3 text-sm'>
-                        {achievement.items.map((item, itemIndex) => (
-                          <li
-                            key={itemIndex}
-                            className='flex items-start text-left'>
-                            <CheckCircle className='w-5 h-5 text-primary mr-2 flex-shrink-0 mt-0.5' />
-                            <span className='text-muted-foreground leading-relaxed'>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className='text-muted-foreground font-medium'>
-                        {achievement.description}
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
+
+                      <h3 className='text-xl lg:text-2xl font-black mb-6 text-slate-900 group-hover:text-primary transition-colors tracking-tight'>
+                        {achievement.title}
+                      </h3>
+
+                      {achievement.count ? (
+                        <div className='flex items-baseline space-x-3'>
+                          <div className='text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter'>
+                            <CountUp end={parseInt(achievement.count)} duration={2.5} separator="," />+
+                          </div>
+                          <p className='text-xs text-primary font-black uppercase tracking-widest'>
+                            {achievement.description.split(' ').pop()}
+                          </p>
+                        </div>
+                      ) : (
+                        <ul className='space-y-3'>
+                          {achievement.items?.map((item, itemIndex) => (
+                            <li key={itemIndex} className='flex items-start'>
+                              <div className='w-1.5 h-6 bg-primary/20 rounded-full mr-3 mt-0.5' />
+                              <span className='text-sm text-slate-600 font-bold leading-tight group-hover:text-slate-900 transition-colors'>
+                                {item}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

@@ -1,33 +1,13 @@
 import { useState, useEffect } from "react";
-import {
-  ArrowDown,
-  Mail,
-  Phone,
-  MessageCircle,
-  Send,
-  MapPin,
-  Clock,
-  Star,
-  Sparkles,
-  Zap,
-  Heart,
-  Target,
-  Award,
-} from "lucide-react";
+import { ArrowDown, Globe, BookOpen, ExternalLink } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 import ContactInfo from "@/components/ContactInfo";
-import heroBackground from "@/assets/events/abstract-bg.jpg";
-import ReCAPTCHA from "react-google-recaptcha";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import heroBackground from "@/assets/gallery/eventG/afro/1.jpg";
 
 const Contact = () => {
   const [scrollY, setScrollY] = useState(0);
-
-  // Scroll animation hooks
-  const contactSection = useScrollAnimation({ threshold: 0.1 });
-  const ctaSection = useScrollAnimation({ threshold: 0.1 });
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -36,187 +16,136 @@ const Contact = () => {
   }, []);
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-secondary/20 via-white to-secondary/30'>
+    <div className='min-h-screen bg-slate-50'>
       <Navigation />
 
-      {/* Hero Section */}
-      <section className='relative h-[70vh] flex items-center justify-center overflow-hidden'>
+      {/* Hero Section - Integrated Hub */}
+      <section className='relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-950 pt-20'>
         {/* Background Image with Parallax */}
         <div
-          className='absolute inset-0 z-0'
+          className='absolute inset-0 z-0 opacity-70'
           style={{
             backgroundImage: `url(${heroBackground})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            transform: `translateY(${scrollY * 0.5}px)`,
+            transform: `translateY(${scrollY * 0.3}px)`,
           }}
         />
 
-        {/* Strong theme overlay for color consistency */}
-        <div className='absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-primary opacity-90 z-10' />
-
-        {/* Scattered Decorative Particles with Contact-themed Icons */}
-        <div className='absolute inset-0 pointer-events-none z-[15]'>
-          {/* Top Left Area - Email */}
-          <div className='absolute top-[15%] left-[8%] animate-float opacity-40'>
-            <Mail className='w-9 h-9 text-blue-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(147, 197, 253, 0.5))' }} />
-          </div>
-
-          {/* Top Right Area - Communication */}
-          <div className='absolute top-[18%] right-[10%] animate-float opacity-50' style={{ animationDelay: '1.5s' }}>
-            <MessageCircle className='w-10 h-10 text-emerald-300/70' style={{ filter: 'drop-shadow(0 0 10px rgba(110, 231, 183, 0.5))' }} />
-          </div>
-
-          {/* Middle Left - Phone */}
-          <div className='absolute top-[40%] left-[5%] animate-float opacity-45' style={{ animationDelay: '1.2s' }}>
-            <Phone className='w-9 h-9 text-purple-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(216, 180, 254, 0.4))' }} />
-          </div>
-
-          {/* Middle Right - Send */}
-          <div className='absolute top-[45%] right-[7%] animate-float opacity-40' style={{ animationDelay: '0.6s' }}>
-            <Send className='w-8 h-8 text-pink-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(244, 114, 182, 0.5))' }} />
-          </div>
-
-          {/* Center Right - Location */}
-          <div className='absolute top-[35%] right-[15%] animate-float opacity-35' style={{ animationDelay: '2s' }}>
-            <MapPin className='w-7 h-7 text-cyan-300/70' style={{ filter: 'drop-shadow(0 0 6px rgba(165, 243, 252, 0.4))' }} />
-          </div>
-
-          {/* Bottom Left - Time */}
-          <div className='absolute bottom-[25%] left-[12%] animate-float opacity-40' style={{ animationDelay: '0.9s' }}>
-            <Clock className='w-9 h-9 text-amber-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(252, 211, 77, 0.5))' }} />
-          </div>
-
-          {/* Bottom Right - Energy */}
-          <div className='absolute bottom-[30%] right-[12%] animate-float opacity-45' style={{ animationDelay: '1.8s' }}>
-            <Zap className='w-8 h-8 text-yellow-300/70' style={{ filter: 'drop-shadow(0 0 7px rgba(253, 224, 71, 0.4))' }} />
-          </div>
-
-          {/* Top Center - Heart */}
-          <div className='absolute top-[25%] left-[45%] animate-float opacity-35' style={{ animationDelay: '2.5s' }}>
-            <Heart className='w-7 h-7 text-rose-300/70' style={{ filter: 'drop-shadow(0 0 6px rgba(253, 164, 175, 0.4))' }} />
-          </div>
-
-          {/* Middle Center - Target */}
-          <div className='absolute top-[50%] left-[20%] animate-float opacity-30' style={{ animationDelay: '1.6s' }}>
-            <Target className='w-7 h-7 text-indigo-300/70' style={{ filter: 'drop-shadow(0 0 6px rgba(165, 180, 252, 0.4))' }} />
-          </div>
-
-          {/* Accent Stars */}
-          <div className='absolute top-[30%] right-[25%] animate-float opacity-30' style={{ animationDelay: '2.2s' }}>
-            <Star className='w-6 h-6 text-yellow-200/60' style={{ filter: 'drop-shadow(0 0 5px rgba(254, 240, 138, 0.3))' }} />
-          </div>
-
-          <div className='absolute bottom-[35%] left-[25%] animate-float opacity-35' style={{ animationDelay: '1.4s' }}>
-            <Sparkles className='w-7 h-7 text-pink-200/60' style={{ filter: 'drop-shadow(0 0 6px rgba(251, 207, 232, 0.3))' }} />
-          </div>
-        </div>
-
-        {/* Animated background elements */}
-        <div className='absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse'></div>
-        <div
-          className='absolute bottom-20 right-10 w-40 h-40 bg-white/10 rounded-full blur-xl animate-pulse'
-          style={{ animationDelay: "1s" }}></div>
+        {/* Elegant Gradient Overlays for Readability */}
+        <div className='absolute inset-0 bg-slate-950/80 sm:bg-transparent sm:bg-gradient-to-r sm:from-slate-950/95 sm:via-slate-950/80 sm:to-black/60 z-10' />
+        <div className='absolute inset-0 bg-gradient-to-t from-slate-50 border-0 h-32 bottom-0 top-auto z-10' />
+        
+        {/* Animated Background Highlights */}
+        <div className='absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-green-500/10 rounded-full blur-[100px] pointer-events-none z-10 animate-pulse' />
+        <div className='absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none z-10' />
 
         {/* Content */}
-        <div className='relative z-20 text-center max-w-5xl mx-auto px-6'>
-          <div className='space-y-8 cinematic-fade-in'>
-            <div className='inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-6'>
-              <MessageCircle className='w-5 h-5 text-white' />
-              <span className='text-sm font-medium text-white'>Let's Connect</span>
-            </div>
+        <div className='relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-20'>
+          <div className='grid lg:grid-cols-2 gap-16 items-center'>
+            
+            {/* Left Column: Traditional Hero */}
+            <div className='text-left'>
+              <div className='animate-in fade-in slide-in-from-bottom duration-700 delay-150'>
+                <h1 className='text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-black mb-6 leading-[1.05] text-white'>
+                  Start The <span className='block text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600 font-black drop-shadow-lg mt-3'>Conversation</span>
+                </h1>
+              </div>
 
-            <h1 className='text-5xl md:text-7xl font-bold text-white drop-shadow-2xl leading-tight'>
-              Get In Touch
-              <br />
-              <span className='text-4xl md:text-6xl'>We'd Love to Hear From You</span>
-            </h1>
-            <p className='text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed'>
-              Have a project in mind? Questions about our services? Drop us a message
-              and we'll respond within 24 hours.
-            </p>
-            <div className='pt-8'>
-              <div className='inline-flex items-center gap-2 text-white/70 animate-bounce'>
-                <ArrowDown className='w-5 h-5' />
-                <span className='text-sm uppercase tracking-wide'>
-                  Scroll to connect
-                </span>
+              <div className='animate-in fade-in slide-in-from-bottom duration-700 delay-300 mb-12'>
+                <div className='h-1 w-16 bg-green-500 mb-6 rounded-full opacity-80'></div>
+                <p className='text-lg md:text-xl text-slate-300 max-w-lg leading-relaxed font-medium text-left'>
+                  We are actively architecting the future. Let us know how we can collaborate, assist, or align with your vision.
+                </p>
+              </div>
+
+              <div className='animate-in fade-in slide-in-from-bottom duration-700 delay-500'>
+                <div onClick={() => window.scrollTo({ top: window.innerHeight * 0.8, behavior: 'smooth' })} className='inline-flex items-center gap-3 text-green-400 hover:text-green-300 transition-colors animate-bounce cursor-pointer bg-green-500/10 border border-green-500/20 px-6 py-3 rounded-full backdrop-blur-md'>
+                  <ArrowDown className='w-5 h-5' />
+                  <span className='text-sm uppercase tracking-widest font-black'>
+                    Send A Message
+                  </span>
+                </div>
               </div>
             </div>
+
+            {/* Right Column: Embedded Ecosystem Platforms */}
+            <div className='animate-in fade-in slide-in-from-right duration-1000 delay-500 w-full max-w-xl mx-auto lg:mx-0'>
+              <div className='mb-6'>
+                 <h3 className='text-2xl font-black text-white mb-2'>Join The Ecosystem</h3>
+                 <p className='text-slate-400 text-sm'>Beyond an email, we are a thriving digital network. Enter our dedicated platforms to access exclusive resources.</p>
+              </div>
+
+              <div className='space-y-4'>
+                {/* CareerHub Platform */}
+                <a href="https://careerhub.careernamimii.org" target="_blank" rel="noopener noreferrer" 
+                   className='group block bg-slate-900/60 backdrop-blur-lg rounded-3xl p-6 border border-slate-700/50 hover:border-green-500/50 hover:bg-slate-800/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_-15px_rgba(34,197,94,0.3)]'>
+                   <div className='flex items-center gap-6'>
+                     <div className='w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-green-600 flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform'>
+                       <Globe className='w-8 h-8 text-white' />
+                     </div>
+                     <div className='flex-grow'>
+                       <div className='flex justify-between items-start'>
+                         <h3 className='text-xl font-bold text-white mb-1'>CareerHub Portal</h3>
+                         <ExternalLink className='w-5 h-5 text-slate-500 group-hover:text-green-400 transition-colors' />
+                       </div>
+                       <p className='text-slate-400 text-sm leading-relaxed'>
+                         The ultimate terminal for career opportunities and member-only industry networks.
+                       </p>
+                     </div>
+                   </div>
+                </a>
+
+                {/* Official Blog */}
+                <a href="#" target="_blank" rel="noopener noreferrer" 
+                   className='group block bg-slate-900/60 backdrop-blur-lg rounded-3xl p-6 border border-slate-700/50 hover:border-indigo-400/50 hover:bg-slate-800/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_-15px_rgba(129,140,248,0.3)]'>
+                   <div className='flex items-center gap-6'>
+                     <div className='w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform'>
+                       <BookOpen className='w-8 h-8 text-white' />
+                     </div>
+                     <div className='flex-grow'>
+                       <div className='flex justify-between items-start'>
+                         <h3 className='text-xl font-bold text-white mb-1'>Industry Blog</h3>
+                         <ExternalLink className='w-5 h-5 text-slate-500 group-hover:text-indigo-400 transition-colors' />
+                       </div>
+                       <p className='text-slate-400 text-sm leading-relaxed'>
+                         Immerse yourself directly into our thought leadership and active career guidance.
+                       </p>
+                     </div>
+                   </div>
+                </a>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section ref={contactSection.ref} className='relative py-24 px-6 bg-white'>
+      {/* Main Contact Grid */}
+      <section className='relative py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 border-t border-slate-200/50'>
         <div className='relative z-10 max-w-7xl mx-auto'>
-          <div className={`text-center mb-16 scroll-fade-up ${contactSection.isVisible ? 'visible' : ''}`}>
-            <div className='inline-flex items-center space-x-2 bg-primary/10 text-primary rounded-full px-4 py-2 mb-6'>
-              <Send className='w-5 h-5' />
-              <span className='text-sm font-medium'>Ready to Connect</span>
-            </div>
-            <h2 className='text-4xl md:text-5xl font-bold text-gray-900 mb-6'>
-              Start the Conversation
+          
+          <div className='text-center mb-16'>
+            <h2 className='text-4xl font-black text-slate-900 mb-4 tracking-tight'>
+              Direct Channels
             </h2>
-            <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Choose your preferred way to reach out. We're here to help bring your vision to life.
+            <div className='h-1 w-16 bg-green-500 mx-auto rounded-full mb-4'></div>
+            <p className='text-lg text-slate-600 max-w-2xl mx-auto'>
+              Choose your preferred method of engagement. Our vanguard is stationed and ready to respond.
             </p>
           </div>
 
-          <div className='grid lg:grid-cols-2 gap-12 xl:gap-20 items-start'>
+          <div className='grid lg:grid-cols-12 gap-12 xl:gap-20 items-start'>
             {/* Contact Form */}
-            <div className={`order-2 lg:order-1 scroll-scale ${contactSection.isVisible ? 'visible' : ''}`} style={{ transitionDelay: '100ms' }}>
-              <ContactForm className='sticky top-8' />
+            <div className='lg:col-span-7 order-2 lg:order-1'>
+              <div className='bg-white shadow-2xl rounded-3xl overflow-hidden border border-slate-100'>
+                <ContactForm />
+              </div>
             </div>
 
-            {/* Contact Info */}
-            <div className={`order-1 lg:order-2 scroll-scale ${contactSection.isVisible ? 'visible' : ''}`} style={{ transitionDelay: '200ms' }}>
-              <ContactInfo />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section ref={ctaSection.ref} className='relative py-24 px-6 bg-gradient-to-r from-primary via-primary/90 to-primary overflow-hidden'>
-        <div className='absolute inset-0 bg-black/10' />
-
-        {/* Animated background elements */}
-        <div className='absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse'></div>
-        <div
-          className='absolute bottom-20 right-10 w-40 h-40 bg-white/10 rounded-full blur-xl animate-pulse'
-          style={{ animationDelay: "1s" }}></div>
-
-        <div className='relative z-10 max-w-4xl mx-auto text-center'>
-          <div className={`scroll-fade-up ${ctaSection.isVisible ? 'visible' : ''}`}>
-            <Sparkles className='w-16 h-16 mx-auto mb-6 text-white' />
-            <h2 className='text-4xl md:text-5xl font-bold text-white mb-6'>
-              Ready to Transform Your Vision?
-            </h2>
-            <p className='text-xl text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed'>
-              Join hundreds of satisfied clients who trust us with their
-              projects. Your success story starts with a simple message.
-            </p>
-
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-8 mt-12'>
-              {[
-                { number: "500+", label: "Projects Completed", icon: Award },
-                { number: "99%", label: "Client Satisfaction", icon: Heart },
-                { number: "24hrs", label: "Average Response", icon: Zap },
-              ].map((stat, index) => (
-                <div
-                  key={index}
-                  className={`text-center scroll-scale ${ctaSection.isVisible ? 'visible' : ''}`}
-                  style={{ transitionDelay: `${index * 100}ms` }}>
-                  <div className='inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full mb-4 hover:bg-white/30 transition-colors duration-300'>
-                    <stat.icon className='w-8 h-8 text-white' />
-                  </div>
-                  <div className='text-4xl md:text-5xl font-bold text-white mb-2'>
-                    {stat.number}
-                  </div>
-                  <div className='text-white/90 font-medium'>{stat.label}</div>
-                </div>
-              ))}
+            {/* Contact Info (Including Social Network) */}
+            <div className='lg:col-span-5 order-1 lg:order-2'>
+              <ContactInfo className='sticky top-24' />
             </div>
           </div>
         </div>

@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import CircularStat from "@/components/CircularStat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import CountUp from "react-countup";
 import {
   BookOpen,
   Heart,
@@ -26,7 +28,7 @@ import {
 } from "lucide-react";
 
 // Import images
-import activitiesHero from "@/assets/hero-career-guidance.jpg";
+import activitiesHero from "@/assets/activities/education.jpg";
 import educationImage from "@/assets/activities/education.jpg";
 import genderImage from "@/assets/activities/gender.jpg";
 import healthImage from "@/assets/abstract-bg.jpg";
@@ -84,27 +86,6 @@ const Activities = () => {
       },
     },
     {
-      id: "health",
-      category: "Healthy Life",
-      title: "Good Health",
-      description:
-        "Clear education and training on the importance of nutrition for future generations",
-      goal: 100,
-      raised: 56,
-      percentage: 54,
-      icon: Sparkles,
-      color: "from-green-500 to-green-600",
-      image: healthImage,
-      detailContent: {
-        title: "Nutrition and Wellness Program",
-        content: [
-          "At Career Na Mimi, we recognize the importance of nutrition as a critical foundation for personal health and well-being. A healthy lifestyle is key to maintaining the energy, focus, and mental clarity needed for both academic and professional success. Unfortunately, poor dietary habits remain a barrier to success for many youth in Tanzania, contributing to a variety of preventable health issues.",
-          "We aim to address these challenges by providing accessible nutrition education and resources. Our programs include interactive workshops and nutritional guidance that emphasize the role of proper nutrition in boosting cognitive function, physical health, and emotional resilience. We collaborate with nutritionists and health experts to provide evidence-based advice, helping youth make informed dietary choices that promote long-term health and wellness.",
-          "Through these initiatives, Career Na Mimi has positively impacted hundreds of individuals by improving their knowledge of healthy eating habits and encouraging healthy lifestyle changes. We are committed to ensuring that young people not only succeed in their careers but also lead healthy, fulfilling lives.",
-        ],
-      },
-    },
-    {
       id: "innovation",
       category: "Innovation",
       title: "Innovation for Youth",
@@ -130,23 +111,23 @@ const Activities = () => {
   const skillAreas = [
     {
       icon: Code,
-      title: "Digital Skills",
-      description: "Coding, web development, and digital literacy",
+      title: "Intelligent Tech",
+      description: "Digital literacy and advanced development, enhanced by AI-driven automation.",
     },
     {
       icon: Briefcase,
-      title: "Entrepreneurship",
-      description: "Business development and startup skills",
+      title: "Strategic Business",
+      description: "Sustainable entrepreneurship merging core business values with AI leverage.",
     },
     {
       icon: Users,
-      title: "Leadership",
-      description: "Team management and communication skills",
+      title: "Adaptive Leadership",
+      description: "High-EQ leadership and team management for the collaborative human-AI era.",
     },
     {
       icon: Palette,
-      title: "Creative Arts",
-      description: "Design, multimedia, and creative expression",
+      title: "Creative Expression",
+      description: "Digital design and multimedia storytelling amplified by human intuition and AI tools.",
     },
   ];
 
@@ -231,219 +212,191 @@ const Activities = () => {
     <div className='min-h-screen'>
       <Navigation />
 
-      {/* Hero Section - Enhanced */}
-      <section className='relative min-h-[85vh] flex items-center justify-center overflow-hidden'>
+      {/* Hero Section - Cinematic Modernization */}
+      <section className='relative min-h-[90vh] flex items-center justify-center overflow-hidden'>
         {/* Background with parallax effect */}
         <div className='absolute inset-0'>
           <div
-            className='absolute inset-0 bg-cover bg-center bg-no-repeat scale-105'
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-transform duration-1000'
             style={{ backgroundImage: `url(${activitiesHero})` }}>
           </div>
-          {/* Gradient overlays */}
-          <div className='absolute inset-0' style={{
-            background: 'linear-gradient(135deg, hsla(327, 73%, 20%, 0.7) 0%, hsla(327, 73%, 30%, 0.6) 50%, hsla(327, 73%, 25%, 0.7) 100%)'
-          }} />
-          <div className='absolute inset-0 bg-slate-900/40' />
-          {/* Animated gradient accent */}
-          <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-primary/10 to-transparent gradient-shift opacity-60' />
+          {/* Gradient overlays - Darker and cleaner */}
+          <div className='absolute inset-0 bg-slate-950/60' />
+          <div className='absolute inset-0 bg-gradient-to-b from-slate-950/20 via-transparent to-slate-950' />
+          {/* Cinematic lighting accent */}
+          <div className='absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--primary)_0%,_transparent_70%)] opacity-10' />
         </div>
 
-        {/* Scattered Decorative Particles with Icons */}
+        {/* Scattered Decorative Particles with Icons - Retained based on user feedback */}
         <div className='absolute inset-0 pointer-events-none z-[5]'>
-          {/* Top Left Area */}
           <div className='absolute top-[15%] left-[8%] animate-float opacity-40'>
-            <BookOpen className='w-8 h-8 text-white/60' style={{ filter: 'drop-shadow(0 0 8px rgba(236, 72, 153, 0.4))' }} />
+            <BookOpen className='w-8 h-8 text-white/60' />
           </div>
-          <div className='absolute top-[12%] left-[15%] w-2 h-2 bg-white/30 rounded-full blur-[1px]' style={{ animationDelay: '0.5s' }}></div>
-          <div className='absolute top-[20%] left-[12%] w-3 h-3 bg-primary/40 rounded-full blur-sm' style={{ animationDelay: '1s' }}></div>
-
-          {/* Top Right Area */}
           <div className='absolute top-[18%] right-[10%] animate-float opacity-50' style={{ animationDelay: '1.5s' }}>
-            <Lightbulb className='w-10 h-10 text-yellow-300/70' style={{ filter: 'drop-shadow(0 0 10px rgba(253, 224, 71, 0.5))' }} />
+            <Lightbulb className='w-10 h-10 text-yellow-300/70' />
           </div>
-          <div className='absolute top-[10%] right-[18%] w-2 h-2 bg-white/40 rounded-full blur-[1px]' style={{ animationDelay: '2s' }}></div>
-          <div className='absolute top-[15%] right-[6%] animate-float opacity-30' style={{ animationDelay: '0.8s' }}>
-            <Star className='w-6 h-6 text-yellow-200/60' />
-          </div>
-
-          {/* Left Side */}
           <div className='absolute top-[40%] left-[5%] animate-float opacity-45' style={{ animationDelay: '1.2s' }}>
-            <Award className='w-9 h-9 text-amber-400/70' style={{ filter: 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.4))' }} />
+            <Award className='w-9 h-9 text-amber-400/70' />
           </div>
-          <div className='absolute top-[48%] left-[10%] w-2.5 h-2.5 bg-blue-300/30 rounded-full blur-sm' style={{ animationDelay: '1.8s' }}></div>
-          <div className='absolute top-[35%] left-[3%] w-1.5 h-1.5 bg-white/40 rounded-full blur-[1px]'></div>
-
-          {/* Right Side */}
           <div className='absolute top-[45%] right-[7%] animate-float opacity-40' style={{ animationDelay: '0.6s' }}>
-            <Heart className='w-8 h-8 text-pink-300/70' style={{ filter: 'drop-shadow(0 0 8px rgba(244, 114, 182, 0.5))' }} />
+            <Heart className='w-8 h-8 text-pink-300/70' />
           </div>
-          <div className='absolute top-[38%] right-[12%] w-2 h-2 bg-white/35 rounded-full blur-[1px]' style={{ animationDelay: '1.4s' }}></div>
-          <div className='absolute top-[52%] right-[5%] animate-float opacity-35' style={{ animationDelay: '2.2s' }}>
-            <Sparkles className='w-7 h-7 text-purple-300/60' />
-          </div>
-
-          {/* Bottom Left Area */}
-          <div className='absolute bottom-[20%] left-[12%] animate-float opacity-35' style={{ animationDelay: '1.6s' }}>
-            <Target className='w-8 h-8 text-red-300/60' style={{ filter: 'drop-shadow(0 0 8px rgba(252, 165, 165, 0.4))' }} />
-          </div>
-          <div className='absolute bottom-[25%] left-[8%] w-2 h-2 bg-white/30 rounded-full blur-[1px]' style={{ animationDelay: '0.9s' }}></div>
-          <div className='absolute bottom-[18%] left-[5%] w-3 h-3 bg-green-300/30 rounded-full blur-sm' style={{ animationDelay: '1.3s' }}></div>
-
-          {/* Bottom Right Area */}
           <div className='absolute bottom-[22%] right-[15%] animate-float opacity-45' style={{ animationDelay: '0.7s' }}>
-            <Users className='w-9 h-9 text-blue-300/70' style={{ filter: 'drop-shadow(0 0 10px rgba(147, 197, 253, 0.5))' }} />
-          </div>
-          <div className='absolute bottom-[15%] right-[10%] w-2.5 h-2.5 bg-primary/40 rounded-full blur-sm' style={{ animationDelay: '2.1s' }}></div>
-          <div className='absolute bottom-[28%] right-[8%] w-1.5 h-1.5 bg-white/40 rounded-full blur-[1px]' style={{ animationDelay: '1.1s' }}></div>
-
-          {/* Center Scattered Particles */}
-          <div className='absolute top-[30%] left-[25%] w-1 h-1 bg-white/50 rounded-full blur-[0.5px]' style={{ animationDelay: '0.4s' }}></div>
-          <div className='absolute top-[60%] left-[20%] w-1.5 h-1.5 bg-primary/30 rounded-full blur-[1px]' style={{ animationDelay: '1.7s' }}></div>
-          <div className='absolute top-[55%] right-[25%] w-1 h-1 bg-white/40 rounded-full blur-[0.5px]' style={{ animationDelay: '0.3s' }}></div>
-          <div className='absolute top-[25%] right-[30%] w-2 h-2 bg-yellow-200/20 rounded-full blur-sm' style={{ animationDelay: '1.9s' }}></div>
-
-          {/* Small accent sparkles */}
-          <div className='absolute top-[22%] left-[20%] animate-float opacity-25' style={{ animationDelay: '2.3s' }}>
-            <Sparkles className='w-5 h-5 text-white/50' />
-          </div>
-          <div className='absolute bottom-[35%] right-[20%] animate-float opacity-30' style={{ animationDelay: '1.5s' }}>
-            <Star className='w-5 h-5 text-yellow-100/50' />
+            <Users className='w-9 h-9 text-blue-300/70' />
           </div>
         </div>
 
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20'>
           <div className='max-w-5xl mx-auto text-center text-white'>
-            {/* Animated Badge */}
-            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.2s' }}>
-              <Badge className='mb-8 bg-white/15 text-white border-white/30 hover:bg-white/25 backdrop-blur-md px-6 py-2.5 text-base font-semibold shadow-lg'>
-                What We Do
-              </Badge>
-            </div>
-
-            {/* Main Heading with staggered animation */}
+            {/* Main Heading with staggered animation - Cleaner without badge */}
             <div className='cinematic-scale-in opacity-0' style={{ animationDelay: '0.4s' }}>
-              <h1 className='text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-8 leading-tight'>
-                Our <span className='block mt-2' style={{
-                  color: 'hsl(327, 73%, 65%)',
-                  textShadow: '0 0 40px hsla(327, 73%, 60%, 0.7), 0 0 20px hsla(327, 73%, 60%, 0.9), 0 4px 12px rgba(0,0,0,0.4)'
-                }}>Activities</span>
+              <h1 className='text-6xl md:text-8xl lg:text-9xl font-heading font-black mb-8 leading-tight tracking-tighter'>
+                Our <span className='text-primary drop-shadow-[0_0_30px_rgba(236,72,153,0.5)]'>Activities</span>
               </h1>
             </div>
 
             {/* Description */}
             <div className='cinematic-fade-in opacity-0 mb-10' style={{ animationDelay: '0.6s' }}>
-              <p className='text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed font-medium'>
+              <p className='text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed font-semibold tracking-tight'>
                 Aligned with the National Youth Development Policy, our
                 comprehensive programs empower young people through education,
-                innovation, and sustainable development initiatives.
+                innovation, and sustainable growth.
               </p>
             </div>
 
             {/* Breadcrumb */}
             <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.8s' }}>
-              <nav className='flex justify-center items-center space-x-2 text-white/80 font-medium'>
+              <nav className='flex justify-center items-center space-x-4 text-white/60 font-bold uppercase tracking-[0.3em] text-xs'>
                 <Link to='/' className='hover:text-white transition-colors'>Home</Link>
-                <ArrowRight className='w-4 h-4' />
-                <span>Pages</span>
-                <ArrowRight className='w-4 h-4' />
+                <div className='w-1 h-1 bg-white/30 rounded-full' />
                 <span className='text-white'>Activities</span>
               </nav>
             </div>
-
-            {/* Decorative floating elements */}
-            <div className='absolute top-1/4 left-10 w-20 h-20 bg-white/5 rounded-full blur-2xl animate-float'></div>
-            <div className='absolute bottom-1/4 right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-float' style={{ animationDelay: '1s' }}></div>
           </div>
         </div>
-
-        {/* Bottom gradient fade */}
-        <div className='absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[8]' />
       </section>
 
-      {/* Main Activities Section - Enhanced */}
-      <section ref={activitiesSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
-        <div className='absolute inset-0 opacity-5' style={{
-          backgroundImage: 'radial-gradient(circle at 50% 50%, hsl(327, 73%, 56%) 0%, transparent 50%)'
-        }}></div>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
-          <div className={`text-center mb-16 scroll-fade-up ${activitiesSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors px-5 py-2'>
-              Our Core Programs
-            </Badge>
-            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
-              Align with National Youth Development Policy
-            </h2>
-            <p className='text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed'>
-              Our activities are strategically designed to address the key areas
-              identified in youth development framework, ensuring maximum impact
-              and sustainable growth.
-            </p>
+      {/* National Youth Policy Section - Redesigned v2: Framework Prism */}
+      <section ref={activitiesSection.ref} className='py-24 bg-slate-900 relative overflow-hidden'>
+        {/* Cinematic Backdrop */}
+        <div className='absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,_rgba(236,72,153,0.1)_0%,_transparent_50%)]' />
+        <div className='absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent' />
+        
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+          <div className={`grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-24 items-center scroll-fade-up ${activitiesSection.isVisible ? 'visible' : ''}`}>
+            {/* Context & Heading */}
+            <div className='space-y-6'>
+              <div className='inline-flex items-center space-x-3'>
+                <div className='w-8 h-px bg-primary' />
+                <span className='text-xs font-black uppercase tracking-[0.4em] text-primary'>STRATEGIC ALIGNMENT</span>
+              </div>
+              <h2 className='text-4xl md:text-5xl lg:text-6xl font-heading font-black leading-tight tracking-tighter text-white'>
+                National Youth<br />
+                <span className='text-slate-400'>Development</span> Policy
+              </h2>
+              <div className='flex gap-2'>
+                {[1, 2, 3].map((i) => (
+                  <motion.div 
+                    key={i}
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 2, delay: i * 0.3, repeat: Infinity }}
+                    className='w-2 h-2 rounded-full bg-primary/40' 
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Content Prism */}
+            <div className='relative group'>
+              {/* Decorative Glow Layer */}
+              <div className='absolute -inset-4 bg-gradient-to-br from-primary/20 to-purple-500/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700' />
+              
+              <div className='relative bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl overflow-hidden'>
+                {/* Inner Accent Line */}
+                <div className='absolute top-0 left-0 w-2 h-full bg-primary/40' />
+                
+                <div className='space-y-8'>
+                  <p className='text-xl md:text-2xl text-slate-300 leading-relaxed font-medium'>
+                    Our activities are strategically designed to address the key areas
+                    identified in Tanzania's youth development framework. 
+                  </p>
+                  
+                  <div className='grid grid-cols-2 gap-6 pt-4 border-t border-white/5'>
+                    <div className='space-y-2'>
+                      <span className='text-[10px] font-black uppercase tracking-widest text-slate-500'>FOCUS RADIUS</span>
+                      <p className='text-white font-bold tracking-tight'>Strategic Pillars</p>
+                    </div>
+                    <div className='space-y-2 text-right'>
+                      <span className='text-[10px] font-black uppercase tracking-widest text-slate-500'>IMPACT RATIO</span>
+                      <p className='text-primary font-bold tracking-tight'>Maximum Growth</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Decorative "Pillar" Indicator */}
+              <div className='hidden lg:block absolute -right-6 top-1/2 -translate-y-1/2 vertical-text text-[10px] font-black text-white/20 uppercase tracking-[1em] whitespace-nowrap rotate-180'>
+                PROTOCOL // YOUTH FRAMEWORK
+              </div>
+            </div>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-10'>
             {activities.map((activity, index) => (
               <div
                 key={activity.id}
                 className={`scroll-scale ${activitiesSection.isVisible ? 'visible' : ''}`}
                 style={{ transitionDelay: `${index * 150}ms` }}>
-                <Card className='modern-card h-full overflow-hidden border-2 border-transparent hover:border-primary/20 group'>
-                  <div className='relative'>
-                    <div
-                      className='h-72 bg-cover bg-center transition-transform duration-700 group-hover:scale-110'
-                      style={{ backgroundImage: `url(${activity.image})` }}>
-                      <div className='absolute inset-0 bg-gradient-to-br from-primary/85 to-primary/70 flex items-center justify-center transition-all duration-500'>
-                        <div className='text-center text-white'>
-                          <div
-                            className={`w-20 h-20 mx-auto mb-4 bg-gradient-to-r ${activity.color} rounded-2xl flex items-center justify-center shadow-xl transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500`}>
-                            <activity.icon className='w-10 h-10 text-white' />
-                          </div>
-                          <Badge className='bg-white/20 text-white border-white/30 backdrop-blur-sm px-4 py-1.5 font-semibold'>
-                            {activity.category}
-                          </Badge>
-                        </div>
-                      </div>
-                    </div>
+                <Card className=' modern-card h-full overflow-hidden border-none bg-white shadow-[0_20px_50px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_100px_rgba(0,0,0,0.1)] group transition-all duration-700 rounded-[2.5rem] flex flex-col'>
+                  <div className='relative overflow-hidden h-64'>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.8 }}
+                      className='h-full bg-cover bg-center'
+                      style={{ backgroundImage: `url(${activity.image})` }}
+                    />
+                    {/* Minimal Gradient Overlay for Bottom Text (if any) - Top is clear */}
+                    <div className='absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
                   </div>
 
-                  <CardContent className='p-8'>
-                    <h3 className='text-2xl font-heading font-bold mb-4 text-foreground group-hover:text-primary transition-colors'>
+                  <CardContent className='p-8 flex-1 flex flex-col'>
+                    <div className='flex items-center gap-4 mb-6'>
+                      <div className={`w-12 h-12 bg-gradient-to-br ${activity.color} rounded-xl flex items-center justify-center shadow-lg transform group-hover:rotate-6 transition-all duration-500`}>
+                        <activity.icon className='w-6 h-6 text-white' />
+                      </div>
+                      <span className='text-[10px] font-black uppercase tracking-[0.2em] text-slate-400'>{activity.category}</span>
+                    </div>
+
+                    <h3 className='text-2xl font-heading font-black mb-4 text-slate-900 group-hover:text-primary transition-colors leading-tight'>
                       {activity.title}
                     </h3>
-                    <p className='text-muted-foreground mb-6 leading-relaxed'>
+                    <p className='text-slate-600 mb-8 leading-relaxed font-medium line-clamp-2'>
                       {activity.description}
                     </p>
 
-                    {/* Progress Section */}
-                    <div className='space-y-3 mb-6'>
-                      <div className='flex justify-between text-sm font-semibold'>
-                        <span>Goal: {activity.goal}</span>
-                        <span className='text-muted-foreground'>
-                          Achieved: {activity.raised}
-                        </span>
+                    <div className='mt-auto space-y-6'>
+                      <div className='flex items-center justify-between'>
+                        <span className='text-xs font-black text-slate-400 tracking-widest'>IMPACT REACH</span>
+                        <span className='text-2xl font-black text-slate-900'>{activity.percentage}%</span>
+                      </div>
+                      
+                      <div className='w-full bg-slate-50 rounded-full h-2 overflow-hidden'>
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${activity.percentage}%` }}
+                          transition={{ duration: 1.5, delay: 0.5 }}
+                          className={`h-full rounded-full bg-gradient-to-r ${activity.color}`}
+                        />
                       </div>
 
-                      <div className='w-full bg-secondary/30 rounded-full h-3 overflow-hidden shadow-inner'>
-                        <div
-                          className={`h-3 rounded-full bg-gradient-to-r ${activity.color} relative overflow-hidden transition-all duration-1000`}
-                          style={{ width: `${activity.percentage}%` }}>
-                          <div className='absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer'></div>
-                        </div>
-                      </div>
-
-                      <div className='text-right'>
-                        <span className='text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent'>
-                          {activity.percentage}%
-                        </span>
-                      </div>
+                      <Button
+                        variant='hero'
+                        size='sm'
+                        onClick={() => setSelectedActivity(activity)}
+                        className='w-full shadow-lg group-hover:shadow-primary/20 transition-all rounded-2xl h-14'>
+                        View Blueprint <ArrowRight className='ml-2 w-4 h-4' />
+                      </Button>
                     </div>
-
-                    <Button
-                      variant='hero'
-                      size='sm'
-                      onClick={() => setSelectedActivity(activity)}
-                      className='w-full shadow-lg hover:shadow-xl transition-all'>
-                      Learn More <ArrowRight className='ml-2 w-4 h-4' />
-                    </Button>
                   </CardContent>
                 </Card>
               </div>
@@ -452,81 +405,52 @@ const Activities = () => {
         </div>
       </section>
 
-      {/* Skills Development Areas - Enhanced */}
-      <section ref={skillsSection.ref} className='py-24'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className={`text-center mb-16 scroll-fade-up ${skillsSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors px-5 py-2'>
-              Skill Development
-            </Badge>
-            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
-              Key Areas of Focus
+      {/* Key Areas of Focus - Redesigned As Neural AI Grid */}
+      <section ref={skillsSection.ref} className='py-32 bg-slate-50 relative overflow-hidden'>
+        {/* Background Neural Network (Static SVG Paths) */}
+        <div className='absolute inset-0 opacity-[0.03] pointer-events-none hidden lg:block'>
+          <svg className='w-full h-full' viewBox='0 0 1000 1000' fill='none'>
+            <path d='M100,100 L900,900 M900,100 L100,900' stroke='black' strokeWidth='1' />
+            <path d='M500,0 L500,1000 M0,500 L1000,500' stroke='black' strokeWidth='1' />
+          </svg>
+        </div>
+
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+          <div className={`text-center mb-24 scroll-fade-up ${skillsSection.isVisible ? 'visible' : ''}`}>
+            <h2 className='text-4xl md:text-5xl lg:text-6xl font-heading font-black mb-6 leading-tight tracking-tighter text-slate-900'>
+              Key Areas of <span className='text-primary'>Focus</span>
             </h2>
-            <p className='text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed'>
+            <p className='text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium'>
               We concentrate our efforts on developing essential skills that
-              align with current market demands and future opportunities.
+              blend core competencies with modern AI-driven opportunities.
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-7xl mx-auto pb-16'>
             {skillAreas.map((skill, index) => (
               <div
                 key={index}
-                className={`scroll-scale ${skillsSection.isVisible ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 100}ms` }}>
-                <Card className='modern-card h-full text-center border-2 border-transparent hover:border-primary/20 group'>
-                  <CardContent className='p-8'>
-                    <div className='w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-primary to-primary/70 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300'>
-                      <skill.icon className='w-10 h-10 text-white' />
-                    </div>
-                    <h3 className='text-xl font-heading font-bold mb-4 text-foreground group-hover:text-primary transition-colors'>
+                className={`scroll-scale ${skillsSection.isVisible ? 'visible' : ''} ${
+                  index === 1 ? 'md:translate-y-6' : index === 2 ? 'md:translate-y-12' : index === 3 ? 'md:translate-y-18' : ''
+                }`}
+                style={{ transitionDelay: `${index * 150}ms` }}>
+                <Card className='border-none bg-white hover:bg-slate-900 hover:text-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(236,72,153,0.3)] transition-all duration-700 rounded-3xl overflow-hidden group p-6 flex flex-col items-center text-center relative h-full'>
+                  {/* Glowing Aura Effect */}
+                  <div className='absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none' />
+                  
+                  <div className='w-16 h-16 shrink-0 bg-slate-100 rounded-2xl flex items-center justify-center group-hover:bg-primary group-hover:rotate-[15deg] transition-all duration-500 relative z-10 mb-6'>
+                    <skill.icon className='w-8 h-8 text-slate-900 group-hover:text-white transition-colors' />
+                  </div>
+                  
+                  <div className='relative z-10 w-full'>
+                    <h3 className='text-xl font-heading font-black mb-3 text-slate-900 group-hover:text-white transition-colors'>
                       {skill.title}
                     </h3>
-                    <p className='text-muted-foreground leading-relaxed'>
+                    <p className='text-sm text-slate-600 group-hover:text-slate-300 font-medium leading-relaxed transition-colors'>
                       {skill.description}
                     </p>
-                  </CardContent>
+                  </div>
                 </Card>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Impact Statistics - Circular Progress Rings */}
-      <section ref={statsSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
-        <div className='absolute inset-0 opacity-5' style={{
-          backgroundImage: 'radial-gradient(circle at 30% 70%, hsl(327, 73%, 56%) 0%, transparent 50%)'
-        }}></div>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
-          <div className={`text-center mb-16 scroll-fade-up ${statsSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors px-5 py-2'>
-              Our Impact
-            </Badge>
-            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
-              Measuring Success Through Numbers
-            </h2>
-          </div>
-
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8'>
-            {[
-              { number: '2010+', label: 'Youth Empowered', icon: Users, maxValue: 2500 },
-              { number: '50+', label: 'Workshops', icon: BookOpen, maxValue: 100 },
-              { number: '1200+', label: 'Career Connections', icon: Briefcase, maxValue: 1500 },
-              { number: '25+', label: 'Awards & Recognition', icon: Award, maxValue: 50 }
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className={`scroll-scale ${statsSection.isVisible ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 150}ms` }}>
-                <CircularStat
-                  number={stat.number}
-                  label={stat.label}
-                  icon={stat.icon}
-                  maxValue={stat.maxValue}
-                  isVisible={statsSection.isVisible}
-                  delay={index * 200}
-                />
               </div>
             ))}
           </div>
@@ -536,9 +460,9 @@ const Activities = () => {
       {/* Call to Action - Enhanced */}
       <section ref={ctaSection.ref} className='py-28 relative overflow-hidden'>
         <div
-          className='absolute inset-0 bg-cover bg-center scale-105'
-          style={{ backgroundImage: `url(${activitiesHero})` }}>
-          <div className='absolute inset-0 bg-gradient-to-br from-primary/95 to-primary/85'></div>
+          className='absolute inset-0 bg-cover bg-center scale-105 transition-transform duration-1000'
+          style={{ backgroundImage: `url(${genderImage})` }}>
+          <div className='absolute inset-0 bg-gradient-to-br from-primary/95 to-primary/80'></div>
         </div>
 
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>

@@ -417,14 +417,7 @@ const Gallery = () => {
         </div>
 
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20'>
-          <div className='max-w-5xl mx-auto text-center text-white'>
-            {/* Animated Badge */}
-            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.2s' }}>
-              <Badge className='mb-8 bg-white/15 text-white border-white/30 hover:bg-white/25 backdrop-blur-md px-6 py-2.5 text-base font-semibold shadow-lg'>
-                Gallery
-              </Badge>
-            </div>
-
+          <div className='max-w-5xl mx-auto text-center text-white mt-10'>
             {/* Main Heading with staggered animation */}
             <div className='cinematic-scale-in opacity-0' style={{ animationDelay: '0.4s' }}>
               <h1 className='text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-8 leading-tight'>
@@ -453,39 +446,10 @@ const Gallery = () => {
         <div className='absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[8]' />
       </section>
 
-      {/* Stats Section - Circular Progress Rings */}
-      <section ref={statsSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
-        <div className='absolute inset-0 opacity-5' style={{
-          backgroundImage: 'radial-gradient(circle at 50% 50%, hsl(327, 73%, 56%) 0%, transparent 50%)'
-        }}></div>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8'>
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className={`scroll-scale ${statsSection.isVisible ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 100}ms` }}>
-                <CircularStat
-                  number={stat.number}
-                  label={stat.label}
-                  icon={stat.icon}
-                  maxValue={2500}
-                  isVisible={statsSection.isVisible}
-                  delay={index * 200}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Featured Event Showcase - Enhanced */}
       <section ref={showcaseSection.ref} className='py-24'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
           <div className={`text-center mb-16 scroll-fade-up ${showcaseSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 border-primary/20 px-5 py-2' style={{ color: 'hsl(327, 73%, 56%)' }}>
-              Featured Events
-            </Badge>
             <h2 className='text-3xl md:text-4xl font-heading font-bold mb-6 text-foreground'>
               Our <span style={{ color: 'hsl(327, 73%, 56%)' }}>Events & Occasions</span>
             </h2>
@@ -499,17 +463,6 @@ const Gallery = () => {
           <div className={`relative modern-card rounded-3xl p-10 shadow-2xl overflow-hidden scroll-scale ${showcaseSection.isVisible ? 'visible' : ''}`} style={{ transitionDelay: '200ms' }}>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 items-center'>
               <div className='space-y-6'>
-                <div className='flex items-center space-x-2'>
-                  <Badge className='bg-primary/10 text-primary border-primary/20'>
-                    {featuredEvents[currentEventIndex]?.category.toUpperCase()}
-                  </Badge>
-                  {featuredEvents[currentEventIndex]?.featured && (
-                    <Badge className='bg-accent/10 text-accent border-accent/20'>
-                      ⭐ Featured
-                    </Badge>
-                  )}
-                </div>
-
                 <h3 className='text-2xl md:text-3xl font-heading font-bold text-foreground'>
                   {featuredEvents[currentEventIndex]?.title}
                 </h3>
@@ -537,23 +490,13 @@ const Gallery = () => {
                   </div>
                 )}
 
-                {featuredEvents[currentEventIndex]?.highlights && (
-                  <div className='space-y-2'>
-                    <h4 className='font-semibold text-foreground'>
+                  <div className='space-y-1'>
+                    <h4 className='font-semibold text-foreground text-sm'>
                       Event Highlights:
                     </h4>
-                    <div className='flex flex-wrap gap-2'>
-                      {featuredEvents[currentEventIndex]?.highlights.map(
-                        (highlight, index) => (
-                          <Badge
-                            key={index}
-                            variant='outline'
-                            className='text-xs'>
-                            {highlight}
-                          </Badge>
-                        )
-                      )}
-                    </div>
+                    <p className='text-sm text-muted-foreground'>
+                      {featuredEvents[currentEventIndex]?.highlights.join(" • ")}
+                    </p>
                   </div>
                 )}
 
@@ -677,13 +620,6 @@ const Gallery = () => {
                   onClick={() => setSelectedImage(event)}>
                   <div className='absolute inset-0 bg-gradient-to-t from-black/60 to-transparent group-hover:from-black/80 transition-all duration-300'></div>
 
-                  <div className='absolute top-4 left-4'>
-                    <Badge className='bg-white/90 text-foreground font-medium'>
-                      {event.category.charAt(0).toUpperCase() +
-                        event.category.slice(1)}
-                    </Badge>
-                  </div>
-
                   <div className='absolute bottom-4 left-4 right-4 text-white'>
                     <h3 className='font-heading font-bold text-lg mb-1 group-hover:text-primary-light transition-colors'>
                       {event.title}
@@ -716,16 +652,9 @@ const Gallery = () => {
                     </div>
                   )}
 
-                  <div className='flex flex-wrap gap-1 mb-4'>
-                    {event.tags.slice(0, 3).map((tag, tagIndex) => (
-                      <Badge
-                        key={tagIndex}
-                        variant='secondary'
-                        className='text-xs'>
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
+                  <p className='text-sm font-medium text-muted-foreground mb-4'>
+                    {event.tags.slice(0, 3).join(", ")}
+                  </p>
 
                   <div className='flex items-center justify-between'>
                     <Button

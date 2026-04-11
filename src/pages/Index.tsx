@@ -40,6 +40,7 @@ import eventImage from "@/assets/career-event.jpg";
 import eventImage2 from "@/assets/tailks.jpg";
 import abstractBg from "@/assets/abstract-bg.jpg";
 import careerHubImage from "@/assets/career-hub-platform.png";
+import hero3 from "@/assets/hero3.jpeg";
 
 //partiners images
 import partner1 from "@/assets/partiners/koics-01.png";
@@ -59,13 +60,13 @@ const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<number | null>(null);
-  
+
   // Event Countdown Logic
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     const targetDate = new Date("May 02, 2026 00:00:00").getTime();
-    
+
     const interval = setInterval(() => {
       const now = new Date().getTime();
       const difference = targetDate - now;
@@ -560,49 +561,49 @@ const Index = () => {
       {/* Event Strategic Dispatch (Active Ad-Style) */}
       <section ref={donationSection.ref} className='py-16 relative overflow-hidden bg-[#020617]'>
         {/* Background Visual (Atmospheric & Dynamic) */}
-        <div 
+        <div
           className='absolute inset-0 bg-cover bg-center blur-md opacity-25 pointer-events-none'
           style={{ backgroundImage: `url(${eventImage})` }}
         />
-        
+
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
           <div className='max-w-6xl mx-auto'>
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.01, y: -5 }}
               transition={{ duration: 0.5 }}
               className='bg-white/[0.04] backdrop-blur-3xl border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-[0_50px_100px_rgba(0,0,0,0.6)] relative overflow-hidden group cursor-pointer'
             >
-              
+
               {/* Dynamic Energy Sweep Animation */}
-              <motion.div 
+              <motion.div
                 animate={{ x: ['-200%', '300%'] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
                 className='absolute top-0 bottom-0 w-48 bg-gradient-to-r from-transparent via-primary/10 to-transparent skew-x-12 pointer-events-none'
               />
 
               <div className='flex flex-col md:flex-row items-center justify-between gap-10 md:gap-14'>
-                
+
                 {/* Countdown Node (More Alive) */}
                 <div className='flex items-center gap-8'>
                   <div className='relative'>
                     {/* Pulsing Outer Glow */}
-                    <motion.div 
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className='absolute inset-0 bg-primary/20 rounded-3xl blur-xl'
+                    <motion.div
+                      animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className='absolute inset-0 bg-primary/20 rounded-3xl blur-xl'
                     />
                     <div className='relative w-24 h-24 md:w-28 md:h-28 bg-white/[0.05] border border-white/10 rounded-3xl flex flex-col items-center justify-center shadow-2xl backdrop-blur-md'>
                       <span className='text-4xl md:text-5xl font-black text-white lining-nums tabular-nums drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]'>{timeLeft.days}</span>
                       <span className='text-[9px] font-black uppercase tracking-[0.3em] text-primary-light'>Days To Go</span>
                     </div>
                   </div>
-                  
+
                   <div className='hidden lg:block h-16 w-[2px] bg-gradient-to-b from-transparent via-white/20 to-transparent'></div>
-                  
+
                   <div className='text-left hidden lg:block'>
                     <div className='flex items-center gap-2 mb-2'>
-                        <span className='w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(236,72,153,0.8)]'></span>
-                        <span className='text-[10px] font-black uppercase tracking-[0.4em] text-white/60'>Status: Active</span>
+                      <span className='w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(236,72,153,0.8)]'></span>
+                      <span className='text-[10px] font-black uppercase tracking-[0.4em] text-white/60'>Status: Active</span>
                     </div>
                     <p className='text-[11px] font-black text-primary-light uppercase tracking-[0.5em]'>Dispatch Protocol</p>
                   </div>
@@ -616,16 +617,16 @@ const Index = () => {
                   <h2 className='text-3xl md:text-4xl font-black text-white leading-tight tracking-tighter'>
                     CAREER CONNECT: <br />
                     <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary-light via-white to-primary-light bg-[length:200%_auto] animate-shimmer'>
-                        THE INDUSTRY TAKEOVER
+                      THE INDUSTRY TAKEOVER
                     </span>
                   </h2>
                 </div>
 
                 {/* High-Impact Refined Action */}
                 <div className='w-full md:w-auto'>
-                  <Button 
-                    variant='hero' 
-                    size='lg' 
+                  <Button
+                    variant='hero'
+                    size='lg'
                     asChild
                     className='h-20 px-14 text-xl rounded-[2rem] shadow-[0_20px_50px_rgba(236,72,153,0.4)] hover:shadow-primary/60 transition-all hover:scale-105 active:scale-95 flex items-center justify-center bg-primary text-white border-none font-black tracking-widest'
                   >
@@ -647,8 +648,8 @@ const Index = () => {
         {/* Creative Background Architecture: Dynamic Mesh & Aura */}
         <div className='absolute inset-0 pointer-events-none'>
           {/* Animated Aura Glows */}
-          <motion.div 
-            animate={{ 
+          <motion.div
+            animate={{
               scale: [1, 1.2, 1],
               opacity: [0.1, 0.2, 0.1],
               x: [0, 50, 0],
@@ -657,8 +658,8 @@ const Index = () => {
             transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
             className='absolute -top-40 -left-40 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px]'
           />
-          <motion.div 
-            animate={{ 
+          <motion.div
+            animate={{
               scale: [1.2, 1, 1.2],
               opacity: [0.05, 0.15, 0.05],
               x: [0, -40, 0],
@@ -667,11 +668,11 @@ const Index = () => {
             transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
             className='absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px]'
           />
-          
+
           {/* Glassmorphic Patterns */}
           <div className='absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0)_0%,rgba(255,255,255,1)_100%)]' />
         </div>
-        
+
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
           <div className='max-w-4xl mx-auto'>
             <div className={`text-center mb-12 scroll-fade-up ${testimonialsSection.isVisible ? 'visible' : ''}`}>
@@ -695,15 +696,15 @@ const Index = () => {
                     {[...Array(8)].map((_, i) => (
                       <motion.div
                         key={i}
-                        animate={{ 
+                        animate={{
                           height: [6, Math.random() * 16 + 8, 6],
                           opacity: [0.3, 0.8, 0.3]
                         }}
-                        transition={{ 
-                          duration: 2, 
-                          repeat: Infinity, 
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
                           delay: i * 0.2,
-                          ease: "easeInOut" 
+                          ease: "easeInOut"
                         }}
                         className='w-1 bg-primary/40 rounded-full'
                       />
@@ -736,11 +737,10 @@ const Index = () => {
                     className='group p-2 focus:outline-none'
                     aria-label={`Protocol Node ${index + 1}`}
                   >
-                    <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentTestimonial 
-                        ? 'bg-primary scale-125 shadow-[0_0_10px_rgba(236,72,153,0.5)]' 
+                    <div className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentTestimonial
+                        ? 'bg-primary scale-125 shadow-[0_0_10px_rgba(236,72,153,0.5)]'
                         : 'bg-slate-200 group-hover:bg-slate-300'
-                    }`} />
+                      }`} />
                   </button>
                 ))}
               </div>
