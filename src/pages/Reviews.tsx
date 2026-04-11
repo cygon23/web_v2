@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, Send, ShieldCheck, MessageSquare, Quote, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { Star, Send, ShieldCheck, MessageSquare, Quote, Loader2, CheckCircle, AlertCircle, Camera, Image as ImageIcon, X, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,8 +9,14 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
 import { Turnstile } from "@marsidev/react-turnstile";
+import confetti from "canvas-confetti";
 import { cn } from "@/lib/utils";
 import tourismHero from "@/assets/events/tourism.jpg";
+
+// Generate 20 premium illustrative avatars using DiceBear
+const PRESET_AVATARS = Array.from({ length: 20 }, (_, i) => 
+  `https://api.dicebear.com/7.x/avataaars/svg?seed=${i + 125}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`
+);
 
 interface Testimonial {
   id: string;
@@ -18,6 +24,7 @@ interface Testimonial {
   role: string | null;
   content: string;
   rating: number;
+  avatar_url: string | null;
   created_at: string;
 }
 
@@ -25,6 +32,7 @@ const Reviews = () => {
   const [reviews, setReviews] = useState<Testimonial[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -33,6 +41,7 @@ const Reviews = () => {
     role: "",
     content: "",
     rating: 5,
+    avatar_url: PRESET_AVATARS[0], // Default to first preset
   });
 
   useEffect(() => {
@@ -79,11 +88,30 @@ const Reviews = () => {
       if (functionError) throw functionError;
 
       if (result.success) {
+        // Trigger high-end confetti celebration
+        const duration = 5 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
+
+        const interval: any = setInterval(function() {
+          const timeLeft = animationEnd - Date.now();
+
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
+          }
+
+          const particleCount = 50 * (timeLeft / duration);
+          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+        }, 250);
+
         toast({
           title: "Review Submitted!",
           description: "Thank you for sharing your experience with us.",
         });
-        setFormData({ name: "", role: "", content: "", rating: 5 });
+        setFormData({ name: "", role: "", content: "", rating: 5, avatar_url: PRESET_AVATARS[0] });
         setCaptchaToken(null);
         fetchReviews(); // Refresh list
       } else {
@@ -97,6 +125,45 @@ const Reviews = () => {
       });
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Strict validation
+    if (!file.type.startsWith('image/')) {
+      toast({ title: "Invalid file", description: "Please upload an image.", variant: "destructive" });
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) { // 2MB limit
+      toast({ title: "File too large", description: "Image must be under 2MB.", variant: "destructive" });
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('testimonial-avatars')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('testimonial-avatars')
+        .getPublicUrl(filePath);
+
+      setFormData({ ...formData, avatar_url: publicUrl });
+      toast({ title: "Photo Uploaded", description: "Your avatar has been updated!" });
+    } catch (err: any) {
+      toast({ title: "Upload Failed", description: err.message, variant: "destructive" });
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -164,6 +231,49 @@ const Reviews = () => {
                     placeholder='Graduate Student'
                     className='rounded-xl border-slate-200'
                   />
+                </div>
+
+                <div className='space-y-4'>
+                  <label className='text-sm font-bold text-slate-700'>Account Avatar</label>
+                  
+                  {/* Avatar Picker UI */}
+                  <div className='bg-slate-50 p-6 rounded-2xl border border-slate-100'>
+                    <div className='flex flex-wrap gap-3 mb-6'>
+                      {PRESET_AVATARS.map((url, i) => (
+                        <button
+                          key={i}
+                          type='button'
+                          onClick={() => setFormData({ ...formData, avatar_url: url })}
+                          className={cn(
+                            "w-12 h-12 rounded-full overflow-hidden border-2 transition-all p-0.5",
+                            formData.avatar_url === url ? "border-primary scale-110 shadow-lg" : "border-transparent opacity-60 hover:opacity-100"
+                          )}
+                        >
+                          <img src={url} alt={`Avatar ${i}`} className='w-full h-full object-cover rounded-full' />
+                        </button>
+                      ))}
+                      
+                      {/* Upload Box */}
+                      <label className='relative cursor-pointer w-12 h-12 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center hover:border-primary hover:bg-white transition-all group overflow-hidden'>
+                        <input type='file' className='hidden' onChange={handleFileUpload} accept='image/*' disabled={isUploading} />
+                        {isUploading ? (
+                          <Loader2 className='w-5 h-5 animate-spin text-primary' />
+                        ) : (
+                          <Camera className='w-5 h-5 text-slate-400 group-hover:text-primary transition-colors' />
+                        )}
+                      </label>
+                    </div>
+
+                    <div className='flex items-center gap-4 p-4 bg-white rounded-xl border border-slate-100'>
+                      <div className='w-16 h-16 rounded-full border-2 border-primary/20 p-1'>
+                        <img src={formData.avatar_url || ''} alt="Selected" className='w-full h-full object-cover rounded-full shadow-inner' />
+                      </div>
+                      <div className='flex-1'>
+                        <p className='text-xs font-bold text-primary uppercase tracking-widest mb-1'>Selected Appearance</p>
+                        <p className='text-sm text-slate-500'>Custom image or preset illustrative style</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className='space-y-2'>
@@ -248,8 +358,12 @@ const Reviews = () => {
                       </p>
 
                       <div className='flex items-center gap-4'>
-                        <div className='w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xl'>
-                          {review.name.charAt(0)}
+                        <div className='w-14 h-14 rounded-full border-2 border-primary/10 overflow-hidden bg-slate-50 shadow-inner flex items-center justify-center'>
+                          {review.avatar_url ? (
+                            <img src={review.avatar_url} alt={review.name} className='w-full h-full object-cover' />
+                          ) : (
+                            <User className='w-6 h-6 text-slate-300' />
+                          )}
                         </div>
                         <div>
                           <h4 className='font-black text-slate-900 uppercase tracking-tight'>{review.name}</h4>

@@ -29,7 +29,8 @@ import {
   X,
   CheckCircle,
   Ticket,
-  Briefcase
+  Briefcase,
+  User
 } from "lucide-react";
 import CountUp from "react-countup";
 
@@ -709,6 +710,21 @@ const Index = () => {
                   </blockquote>
 
                   <div className='pt-6'>
+                    <div className='flex items-center justify-center gap-4 mb-4'>
+                      <div className='w-14 h-14 rounded-full border-2 border-primary/20 p-1 overflow-hidden bg-white shadow-inner'>
+                        {testimonials[currentTestimonial].avatar_url ? (
+                          <img 
+                            src={testimonials[currentTestimonial].avatar_url} 
+                            alt={testimonials[currentTestimonial].name} 
+                            className='w-full h-full object-cover rounded-full'
+                          />
+                        ) : (
+                          <div className='w-full h-full bg-primary/10 rounded-full flex items-center justify-center text-primary'>
+                            <User className='w-6 h-6' />
+                          </div>
+                        )}
+                      </div>
+                    </div>
                     <div className='space-y-1'>
                       <h4 className='text-sm font-black text-slate-900 uppercase tracking-widest'>
                         {testimonials[currentTestimonial].name}

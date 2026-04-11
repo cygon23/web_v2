@@ -72,7 +72,7 @@ serve(async (req) => {
     );
 
     const body = await req.json();
-    const { name, role, content, rating, captchaToken } = body;
+    const { name, role, content, rating, captchaToken, avatar_url } = body;
 
     if (!name || !content || !rating || !captchaToken) {
       throw new Error("Missing required fields");
@@ -97,6 +97,7 @@ serve(async (req) => {
           role, 
           content, 
           rating, 
+          avatar_url,
           approved: true // Live immediately per user request
         }
       ]);
