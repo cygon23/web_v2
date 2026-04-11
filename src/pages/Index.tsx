@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import { cn } from "@/lib/utils";
 import Footer from "@/components/Footer";
+import ImpactHub from "@/components/ImpactHub";
 import {
   ArrowRight,
   Play,
@@ -38,6 +39,7 @@ import teamImage from "@/assets/team-collaboration.jpg";
 import eventImage from "@/assets/career-event.jpg";
 import eventImage2 from "@/assets/tailks.jpg";
 import abstractBg from "@/assets/abstract-bg.jpg";
+import careerHubImage from "@/assets/career-hub-platform.png";
 
 //partiners images
 import partner1 from "@/assets/partiners/koics-01.png";
@@ -57,6 +59,32 @@ const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<number | null>(null);
+  
+  // Event Countdown Logic
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const targetDate = new Date("May 02, 2026 00:00:00").getTime();
+    
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        clearInterval(interval);
+      } else {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const partnerLogos = [partner1, partner2, partner3, partner4, partner5];
 
   // Scroll animations for each section
@@ -74,21 +102,56 @@ const Index = () => {
       name: "Mark Kane",
       role: "IT Specialist",
       content:
-        "The training sessions exceeded my expectations. The instructors were knowledgeable and approachable, and the content was perfectly tailored to my needs. I now feel confident using the new tools in my daily workflow.",
-      rating: 4,
+        "The training sessions exceeded my expectations. The instructors were knowledgeable and approachable, and the content was perfectly tailored.",
+      rating: 5,
     },
     {
       name: "Sarah T.",
       role: "University Graduate",
       content:
-        "Attending the career talks was a game-changer for me. The speakers offered invaluable advice and shared real-world experiences that opened my eyes to new career paths. I left feeling motivated and ready to take on new challenges.",
+        "Attending the career talks was a game-changer. The real-world experiences shared opened my eyes to new career paths. I left feeling motivated.",
       rating: 5,
     },
     {
       name: "Jane Musonda",
       role: "Program Manager",
       content:
-        "The workshops were incredibly engaging and hands-on. I walked away with practical skills I could apply immediately in my projects. The collaborative atmosphere made learning enjoyable and effective.",
+        "The workshops were incredibly engaging and hands-on. I walked away with practical skills I could apply immediately in my projects.",
+      rating: 5,
+    },
+    {
+      name: "David Lema",
+      role: "Software Engineer",
+      content:
+        "The Intelligence Hub guided me to my first developer role with precision. The AI-driven trajectory mapping is truly groundbreaking.",
+      rating: 5,
+    },
+    {
+      name: "Anna Massawe",
+      role: "Community Leader",
+      content:
+        "We've seen a massive shift in youth engagement since Career Na Mimi started. The impact on community development is undeniable.",
+      rating: 5,
+    },
+    {
+      name: "Kelvin Chuwa",
+      role: "Digital Entrepreneur",
+      content:
+        "The Execution Labs taught me how to scale my startup idea into a real business. The mentorship here is world-class.",
+      rating: 5,
+    },
+    {
+      name: "Grace Mushi",
+      role: "Human Resources",
+      content:
+        "The quality of talent emerging from these programs is exceptional. They are truly bridge-building for the job market.",
+      rating: 5,
+    },
+    {
+      name: "Brian Kimaro",
+      role: "Graphic Designer",
+      content:
+        "From technical skills to soft skills, this platform provided the institutional protocol I needed to succeed in a competitive industry.",
       rating: 5,
     },
   ];
@@ -132,68 +195,80 @@ const Index = () => {
     },
   ];
 
+
   const services = [
     {
-      title: "Trainings",
-      description:
-        "Gain practical knowledge you can apply immediately in your field.",
+      title: "Technical Synthesis",
+      description: "Mastering high-impact professional protocols and strategic mastery.",
       icon: TrendingUp,
       image: teamImage,
+      tag: "Institutional Training",
       detailedContent: {
-        overview: "Our comprehensive training programs are designed to equip youth with practical skills and knowledge that can be immediately applied in their chosen fields.",
+        overview: "Our technical synthesis programs are designed to equip youth with high-impact professional protocols and practical skills that can be immediately applied in their chosen fields.",
         features: [
-          "Hands-on learning experiences with real-world applications",
-          "Expert instructors with industry experience",
-          "Customized training modules for different skill levels",
-          "Certificate of completion for all participants",
-          "Post-training support and resources"
+          "Hands-on mastery modules with real-world applications",
+          "Expert instructors with institutional experience",
+          "Customized protocol synthesis for different skill levels",
+          "Professional certification of excellence",
+          "Post-synthesis scaling and specialized resources"
         ],
-        impact: "Over 500 young people have successfully completed our training programs, with 85% reporting improved career prospects and skill confidence."
+        impact: "Over 500 young people have successfully mastered our institutional protocols, with 85% reporting significant career trajectory improvement."
       }
     },
     {
-      title: "Workshops",
-      description:
-        "Experience real-world problem-solving in a collaborative environment.",
+      title: "Execution Labs",
+      description: "Collaborative problem-solving in high-stakes professional environments.",
       icon: Users,
       image: eventImage,
+      tag: "Practical Execution",
       detailedContent: {
-        overview: "Our interactive workshops provide a collaborative environment where participants tackle real-world challenges and develop essential professional skills.",
+        overview: "Execution Labs provide a high-fidelity environment where participants tackle real-world challenges through strategic collaboration.",
         features: [
-          "Interactive group activities and team projects",
-          "Problem-solving exercises based on actual industry scenarios",
-          "Networking opportunities with peers and professionals",
-          "Skill-building in communication, leadership, and teamwork",
-          "Access to mentors and industry experts"
+          "Strategic group dynamics and execution projects",
+          "Scenario-based problem-solving exercises",
+          "Institutional networking with high-tier professionals",
+          "Leadership synthesis and operational mastery",
+          "Direct access to industry architects and mentors"
         ],
-        impact: "We've conducted over 50 workshops, creating spaces where youth learn to collaborate, innovate, and build lasting professional relationships."
+        impact: "We've conducted over 50 execution labs, creating authoritative spaces where youth learn to lead, innovate, and execute at scale."
       }
     },
     {
-      title: "Career Talks",
-      description:
-        "Our career talks will inspire and guide you on your journey to success.",
+      title: "Insight Sessions",
+      description: "Strategic mentorship and guidance from industry-shaping professionals.",
       icon: Lightbulb,
       image: eventImage2,
+      tag: "Strategic Mentorship",
       detailedContent: {
-        overview: "Career Talks feature successful professionals sharing their journeys, insights, and practical advice to inspire and guide young people toward their career goals.",
+        overview: "Insight Sessions feature world-class professionals sharing their journeys, insights, and practical advice to shape elite career paths.",
         features: [
-          "Guest speakers from diverse industries and backgrounds",
-          "Interactive Q&A sessions with professionals",
-          "Career pathway exploration and planning guidance",
-          "Inspiration from real success stories",
-          "Networking opportunities with industry leaders"
+          "Guest architects from diverse global industries",
+          "Pro-tier Q&A sessions with industry leaders",
+          "Institutional pathing and strategic exploration",
+          "Case-study intelligence and success protocols",
+          "High-value networking with career architects"
         ],
-        impact: "With 25+ career talks delivered, we've connected hundreds of youth with role models and mentors who provide invaluable guidance and inspiration."
+        impact: "With 25+ insight sessions delivered, we've bridged the gap for hundreds of emerging specialists through world-class mentorship."
       }
     },
     {
-      title: "Career Guidance Platform",
-      description:
-        "Discover our AI-driven career guidance tool designed to help students make informed decisions.",
+      title: "Intelligence Hub",
+      description: "Powered by AI, Driven by Purpose. Architecture for high-precision career pathways with an 89% success rate.",
       icon: Zap,
-      image: abstractBg,
-      link: "https://caeerhub-platform.vercel.app/",
+      image: careerHubImage,
+      tag: "89% Success Rate",
+      link: "https://careerhub.careernamimii.org/",
+      detailedContent: {
+        overview: "Powered by AI, and driven by purpose, our intelligent platform combines cutting-edge AI with local expertise to create personalized career pathways for every young Tanzanian.",
+        features: [
+          "AI-driven career trajectory mapping",
+          "89% success rate in career placement",
+          "Connected to 500+ educational institutions",
+          "Personalized guidance for students and parents",
+          "Global industry alignment engine"
+        ],
+        impact: "With a proven 89% achievement rate, the Intelligence Hub is the definitive protocol for students seeking high-impact professional success."
+      }
     },
   ];
 
@@ -205,7 +280,7 @@ const Index = () => {
   }, [testimonials.length]);
 
   return (
-    <div className='min-h-screen'>
+    <div className="min-h-screen">
       <Navigation />
       <Hero />
 
@@ -250,391 +325,425 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Right Column: Creative Achievement Grid */}
-            <div className={`grid grid-cols-2 gap-4 md:gap-6 scroll-fade-right ${aboutSection.isVisible ? 'visible' : ''}`}>
-              {[
-                {
-                  number: 500,
-                  suffix: "+",
-                  label: "Youth Empowered",
-                  icon: Users,
-                  color: "bg-blue-500",
-                  delay: 0.1
-                },
-                {
-                  number: 50,
-                  suffix: "+",
-                  label: "Workshops",
-                  icon: BookOpen,
-                  color: "bg-primary",
-                  delay: 0.2
-                },
-                {
-                  number: 25,
-                  suffix: "+",
-                  label: "Career Talks",
-                  icon: Sparkles,
-                  color: "bg-amber-500",
-                  delay: 0.3
-                },
-                {
-                  number: 100,
-                  suffix: "+",
-                  label: "Success Stories",
-                  icon: Award,
-                  color: "bg-emerald-500",
-                  delay: 0.4
-                }
-              ].map((stat, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: stat.delay }}
-                  viewport={{ once: true }}
-                  className='group relative'
-                >
-                  <div className='absolute inset-0 bg-white rounded-[2rem] shadow-xl group-hover:shadow-2xl transition-all duration-500 -rotate-2 group-hover:rotate-0' />
-                  <Card className='relative h-full border-none shadow-none bg-white rounded-[2rem] overflow-hidden p-6 md:p-8 flex flex-col items-center text-center group-hover:-translate-y-2 transition-transform duration-500'>
-                    <div className={cn(
-                      "w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg transform rotate-3 group-hover:rotate-12 transition-transform duration-500",
-                      stat.color
-                    )}>
-                      <stat.icon className='w-6 h-6 md:w-8 md:h-8' />
-                    </div>
-
-                    <div className='space-y-1'>
-                      <h3 className='text-3xl md:text-4xl font-black text-slate-900'>
-                        <CountUp end={stat.number} duration={2.5} enableScrollSpy scrollSpyOnce />
-                        <span className='text-primary'>{stat.suffix}</span>
-                      </h3>
-                      <p className='text-sm md:text-base font-bold text-slate-500 tracking-tight leading-tight uppercase'>
-                        {stat.label}
-                      </p>
-                    </div>
-
-                    {/* Decorative element */}
-                    <div className='absolute top-2 right-2 w-16 h-16 bg-slate-50 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-150 duration-700' />
-                  </Card>
-                </motion.div>
-              ))}
+            {/* Right Column: Cinematic Impact Hub */}
+            <div className={`scroll-fade-right ${aboutSection.isVisible ? 'visible' : ''}`}>
+              <ImpactHub />
             </div>
 
           </div>
         </div>
       </section>
 
-      {/* Strategic Objectives */}
-      <section ref={objectivesSection.ref} className='py-32 relative overflow-hidden bg-white'>
-        <div className='absolute inset-0 opacity-[0.03] pointer-events-none' style={{ backgroundImage: 'radial-gradient(#0056b3 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
-        
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
+      {/* Strategic Protocol (Zenith Protocol) */}
+      <section ref={objectivesSection.ref} className='py-24 relative overflow-hidden bg-[#020617] text-white'>
+        {/* Obsidian Flux Background */}
+        <div className='absolute inset-0 opacity-20' style={{
+          backgroundImage: `linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }}></div>
+        <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#020617] via-transparent to-[#020617] z-10'></div>
+
+        {/* Aura Glows */}
+        <div className='absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-[120px] animate-pulse'></div>
+        <div className='absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] animate-pulse delay-700'></div>
+
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-20'>
           <div className={cn(
-            "text-center mb-20 scroll-fade-up",
+            "text-center mb-16 scroll-fade-up",
             objectivesSection.isVisible && "visible"
           )}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 px-6 py-2 rounded-full uppercase tracking-widest text-[10px] font-black'>
-              Institutional Protocol
-            </Badge>
-            <h2 className='text-4xl md:text-6xl font-heading font-black mb-6 leading-[1.1] tracking-tight text-slate-900'>
-              Building a <br /> Transformative Movement
+            <h2 className='text-5xl md:text-7xl font-heading font-black mb-8 leading-[1] tracking-tighter text-white'>
+              Building a <br /> <span className='text-primary drop-shadow-[0_0_15px_rgba(236,72,153,0.3)]'>Transformative</span> Movement
             </h2>
-            <p className='text-lg md:text-xl text-slate-500 max-w-4xl mx-auto leading-relaxed font-medium'>
-              We are leading a movement to empower youth across Africa. Each objective reflects our commitment to creating inclusive, sustainable, and innovation-driven development.
+            <p className='text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed font-medium'>
+              Leading the movement to empower youth across Africa through inclusive, innovation-driven development.
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-10'>
+          <div className='space-y-24'>
             {objectives.map((objective, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.15 }}
+                transition={{ duration: 1, delay: 0.2 }}
                 viewport={{ once: true }}
-                className='group'
+                className={cn(
+                  "flex flex-col md:flex-row items-center gap-12 md:gap-24 relative",
+                  index % 2 === 1 ? "md:flex-row-reverse text-right" : "text-left"
+                )}
               >
-                <Card className='relative h-full overflow-hidden border border-slate-100 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.08)] transition-all duration-700 rounded-[2.5rem] group-hover:-translate-y-3'>
-                  {/* Card Background Decoration */}
+                {/* Ghost Typography Number */}
+                <div className={cn(
+                  "absolute top-1/2 -translate-y-1/2 font-black text-[12rem] md:text-[25rem] text-white/[0.02] select-none pointer-events-none z-0",
+                  index % 2 === 1 ? "left-0" : "right-0"
+                )}>
+                  {objective.id}
+                </div>
+
+                {/* Content Side */}
+                <div className='w-full md:w-1/2 relative z-10 space-y-6'>
                   <div className={cn(
-                    "absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-5 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-10",
-                    objective.color.split(' ')[0]
-                  )} />
-                  
-                  <CardContent className='p-10 flex flex-col h-full'>
-                    <div className='mb-8 relative'>
-                      <div className={cn(
-                        "w-20 h-20 rounded-[1.75rem] flex items-center justify-center relative overflow-hidden shadow-2xl transition-all duration-700 group-hover:rotate-6",
-                        "bg-gradient-to-br", objective.color
-                      )}>
-                        {/* Glassmorphic nested container */}
-                        <div className='absolute inset-1 rounded-[1.5rem] bg-white/10 backdrop-blur-sm border border-white/20' />
-                        <objective.icon className='w-10 h-10 text-white relative z-10 drop-shadow-lg' />
-                      </div>
-                      
-                      {/* Pulse effect */}
-                      <div className={cn(
-                        "absolute -inset-2 rounded-[2rem] opacity-0 group-hover:opacity-20 blur-xl transition-all duration-1000 bg-gradient-to-br",
-                        objective.color
-                      )} />
-                    </div>
+                    "flex items-center gap-4 mb-4",
+                    index % 2 === 1 ? "justify-end" : "justify-start"
+                  )}>
+                    <div className='w-12 h-[1px] bg-white/20'></div>
+                    <span className='text-[10px] font-black uppercase tracking-[0.4em] text-primary'>{objective.tag}</span>
+                  </div>
 
-                    <h3 className='text-2xl md:text-3xl font-black mb-4 tracking-tight text-slate-900'>
-                      {objective.title}
-                    </h3>
-                    <p className='text-slate-500 mb-10 leading-relaxed font-medium text-lg flex-grow'>
-                      {objective.description}
-                    </p>
+                  <h3 className='text-4xl md:text-6xl font-black text-white tracking-tighter'>
+                    {objective.title}
+                  </h3>
 
-                    <div className='mt-auto space-y-6'>
-                      <div className='flex justify-between items-end'>
-                        <div className='space-y-1'>
-                          <p className='text-[10px] font-black uppercase tracking-[0.2em] text-slate-400'>Implementation Protocol</p>
-                          <p className='text-xl font-black text-slate-900 tracking-tight'>
-                            {objective.raised.toLocaleString()} <span className='text-slate-300 mx-1'>/</span> {objective.goal.toLocaleString()}
-                          </p>
-                        </div>
-                        <div className='text-right'>
-                          <span className={cn(
-                            "text-3xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-br",
-                            objective.color
-                          )}>
-                            {objective.percentage}%
-                          </span>
+                  <p className='text-lg md:text-xl text-slate-400 font-medium max-w-md leading-relaxed ml-0 mr-auto md:mx-0'>
+                    {objective.description}
+                  </p>
+
+                  <div className={cn(
+                    "pt-6 flex items-center gap-8",
+                    index % 2 === 1 ? "justify-end" : "justify-start"
+                  )}>
+                    <div className='flex flex-col gap-2'>
+                      <span className='text-[10px] font-black uppercase tracking-widest text-slate-500'>Strategy Impact</span>
+                      <div className='flex items-center gap-3'>
+                        <div className='text-3xl font-black text-white'>{objective.percentage}%</div>
+                        <div className='w-24 h-1.5 bg-white/5 rounded-full overflow-hidden'>
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${objective.percentage}%` }}
+                            transition={{ duration: 2, delay: 0.5 }}
+                            className='h-full bg-primary'
+                            style={{ backgroundColor: objective.color }}
+                          />
                         </div>
                       </div>
-
-                      <div className='relative w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-50'>
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${objective.percentage}%` }}
-                          transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                          className={cn(
-                            "h-full rounded-full transition-all relative overflow-hidden bg-gradient-to-r",
-                            objective.color
-                          )}>
-                          <div className='absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer scale-x-150'></div>
-                        </motion.div>
-                      </div>
-                      
-                      <div className='pt-2 flex items-center gap-3'>
-                         <div className={cn("w-2 h-2 rounded-full animate-pulse", objective.color.split(' ')[0])} />
-                         <span className='text-[10px] font-black uppercase tracking-widest text-slate-400'>Active Strategy in Progress</span>
-                      </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
+
+                {/* Visual Node Side */}
+                <div className='w-full md:w-1/2 relative flex justify-center'>
+                  <div className='relative group'>
+                    {/* Pulsing Energy Ring */}
+                    <div className='absolute inset-0 bg-white/5 rounded-full scale-150 animate-pulse'></div>
+                    <div className='absolute inset-0 bg-white/5 rounded-full scale-125 animate-pulse delay-300'></div>
+
+                    <div className='relative w-48 h-48 md:w-64 md:h-64 rounded-full border border-white/10 flex items-center justify-center bg-white/[0.02] backdrop-blur-xl group-hover:border-primary/30 transition-colors duration-700 shadow-2xl'>
+                      <objective.icon className='w-16 h-16 md:w-24 md:h-24 text-white group-hover:text-primary transition-all duration-700 group-hover:scale-110' style={{ color: index % 2 === 0 ? objective.color : 'white' }} />
+
+                      {/* Active Status Ring (Rotating) */}
+                      <svg className='absolute inset-0 w-full h-full -rotate-90 opacity-20 group-hover:opacity-100 transition-opacity duration-700'>
+                        <circle
+                          cx='50%'
+                          cy='50%'
+                          r='48%'
+                          fill='transparent'
+                          stroke={objective.color}
+                          strokeWidth='2'
+                          strokeDasharray='10 20'
+                          className='animate-[spin_20s_linear_infinite]'
+                        />
+                      </svg>
+                    </div>
+
+                    {/* Scanning Line (Decoration) */}
+                    <div className='absolute -left-10 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-primary/20 to-transparent'></div>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section ref={servicesSection.ref} className='py-24 bg-gradient-to-br from-secondary/40 to-transparent relative overflow-hidden'>
-        <div className='absolute inset-0 opacity-5' style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, hsl(327, 73%, 56%) 0%, transparent 50%)' }}></div>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative'>
-          <div className={`text-center mb-16 scroll-fade-up ${servicesSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
-              What We Do
-            </Badge>
-            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
-              Learn More What We Do And Get Involved
-            </h2>
-          </div>
-
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className={`scroll-fade-up ${servicesSection.isVisible ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 100}ms` }}>
-                <Card className='modern-card h-full overflow-hidden group'>
-                  <div
-                    className='h-56 bg-cover bg-center relative overflow-hidden'
-                    style={{ backgroundImage: `url(${service.image})` }}>
-                    {/* First 3 images clear and visible, 4th (AI) has overlay */}
-                    {index < 3 ? (
-                      <div className='absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-300'></div>
-                    ) : (
-                      <div className='absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 flex items-center justify-center transition-all duration-300 group-hover:scale-110'>
-                        <div className='transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300'>
-                          <service.icon className='w-16 h-16 text-white drop-shadow-lg' />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <CardContent className='p-6'>
-                    <h3 className='text-xl font-heading font-bold mb-3 group-hover:text-primary transition-colors'>
-                      {service.title}
-                    </h3>
-                    <p className='text-muted-foreground mb-6 leading-relaxed'>
-                      {service.description}
-                    </p>
-
-                    {service.link ? (
-                      <Button variant='hero' size='sm' asChild className='w-full shadow-md hover:shadow-lg transition-all'>
-                        <a
-                          href={service.link}
-                          target='_blank'
-                          rel='noopener noreferrer'>
-                          Try Now
-                        </a>
-                      </Button>
-                    ) : (
-                      <Button
-                        variant='outline'
-                        size='sm'
-                        className='w-full hover:bg-primary/5'
-                        onClick={() => setSelectedService(index)}>
-                        Learn More
-                      </Button>
-                    )}
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-
-
-      {/* Event Spotlight Section */}
-      <section ref={donationSection.ref} className='py-32 relative overflow-hidden group'>
-        <div
-          className='absolute inset-0 bg-cover bg-center transition-transform duration-[10s] group-hover:scale-110'
-          style={{ backgroundImage: `url(${eventImage})` }}>
-          <div className='absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/80 to-primary/20'></div>
-        </div>
+      {/* The Execution Suite (Services) */}
+      <section ref={servicesSection.ref} className='py-24 relative overflow-hidden bg-slate-50'>
+        {/* Cinematic background elements */}
+        <div className='absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none'></div>
 
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className={cn(
-            "max-w-5xl mx-auto text-center text-white scroll-scale",
-            donationSection.isVisible && "visible"
-          )}>
-            <Badge className='mb-10 bg-white/10 text-white border-white/20 backdrop-blur-md px-8 py-3 text-xs font-black uppercase tracking-[0.3em] rounded-full'>
-              Exclusive Industry Protocol
-            </Badge>
-            
-            <h2 className='text-4xl md:text-6xl lg:text-7xl font-heading font-black mb-10 leading-[1.05] tracking-tighter'>
-              CAREER CONNECT <br />
-              <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary-light to-white opacity-90'>
-                THE INDUSTRY EXPERIENCE TABLE WORKSHOP
-              </span>
-            </h2>
-            
-            <p className='text-lg md:text-xl mb-16 text-slate-300 leading-relaxed max-w-4xl mx-auto font-medium'>
-              Join elite industry leaders for a transformative high-table workshop. Master the metrics of professional success and bridge the gap between education and high-impact industry experience.
+          <div className={`flex flex-col md:flex-row items-end justify-between mb-20 gap-8 scroll-fade-up ${servicesSection.isVisible ? 'visible' : ''}`}>
+            <div className='max-w-3xl'>
+              <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors px-6 py-2 rounded-full uppercase tracking-widest text-[10px] font-black'>
+                The Execution Suite
+              </Badge>
+              <h2 className='text-5xl md:text-7xl font-heading font-black leading-[0.9] tracking-tighter text-slate-950'>
+                Engineering the <br /> <span className='text-primary'>Future</span> of Potential
+              </h2>
+            </div>
+            <p className='text-lg md:text-xl text-slate-500 font-medium max-w-sm border-l-2 border-primary/20 pl-6 h-fit'>
+              A suite of institutional programs designed to scale skills and impact across the continent.
             </p>
+          </div>
 
-            <div className='flex justify-center'>
-              <Button 
-                variant='hero' 
-                size='lg' 
-                asChild
-                className='h-20 lg:h-24 px-16 text-xl lg:text-2xl rounded-full shadow-[0_20px_50px_rgba(0,102,255,0.3)] hover:shadow-primary/50 transition-all hover:scale-105 active:scale-95 group/btn'
-              >
-                <a href='https://app.careernamimii.org/events' target='_blank' rel='noopener noreferrer'>
-                  <Ticket className='w-8 h-8 mr-4 group-hover/btn:rotate-12 transition-transform' />
-                  Secure Your Seating
-                </a>
-              </Button>
+          <div className='relative'>
+            {/* Horizontal Scroll / Carousel Container */}
+            <div className='flex overflow-x-auto gap-8 pb-12 snap-x snap-mandatory scrollbar-hide no-scrollbar -mx-4 px-4'>
+              {services.map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className='min-w-[85vw] md:min-w-[500px] snap-center'
+                >
+                  <Card
+                    className='group relative h-[500px] border-none overflow-hidden rounded-[3rem] shadow-2xl hover:shadow-primary/20 transition-all duration-700 cursor-pointer'
+                    onClick={() => {
+                      if (service.link) {
+                        window.open(service.link, '_blank', 'noopener,noreferrer');
+                      } else {
+                        setSelectedService(index);
+                      }
+                    }}
+                  >
+                    {/* Background Visual with Ken Burns effect */}
+                    <div className='absolute inset-0 z-0 overflow-hidden'>
+                      <div
+                        className='w-full h-full bg-cover bg-center transition-transform duration-[10s] group-hover:scale-110'
+                        style={{ backgroundImage: `url(${service.image})` }}
+                      />
+                      <div className='absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent' />
+                    </div>
+
+                    {/* Service Tag & Icon */}
+                    <div className='absolute top-8 left-8 z-10 flex items-center gap-4'>
+                      <div className='w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white group-hover:bg-primary group-hover:border-primary transition-all duration-500'>
+                        <service.icon className='w-6 h-6' />
+                      </div>
+                      <span className='text-[10px] font-black uppercase tracking-[0.3em] text-white/60'>{service.tag}</span>
+                    </div>
+
+                    {/* Detailed Reveal Layer (Hover) */}
+                    <div className='absolute inset-0 bg-primary/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-center justify-center p-12 text-center'>
+                      <div className='space-y-6 translate-y-8 group-hover:translate-y-0 transition-transform duration-700'>
+                        <p className='text-white/90 text-lg font-medium leading-relaxed max-w-xs'>
+                          {service.detailedContent?.overview || service.description}
+                        </p>
+                        <Button variant='hero' className='bg-white text-primary hover:bg-slate-50 rounded-full px-8'>
+                          {service.link ? "Launch Platform" : "Explore Protocol"}
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Base Content Panel */}
+                    <div className='absolute bottom-0 left-0 right-0 p-10 z-10 transition-transform duration-700 group-hover:translate-y-10 group-hover:opacity-0'>
+                      <h3 className='text-3xl md:text-4xl font-black text-white mb-4 tracking-tighter'>
+                        {service.title}
+                      </h3>
+                      <p className='text-white/60 font-medium leading-relaxed flex items-center gap-2'>
+                        Learn more about our {service.title.toLowerCase()} process
+                        <ArrowRight className='w-4 h-4' />
+                      </p>
+                    </div>
+
+                    {/* Institutional Accent */}
+                    <div className='absolute bottom-2 left-1/2 -translate-x-1/2 w-20 h-1 bg-white/20 rounded-full' />
+                  </Card>
+                </motion.div>
+              ))}
             </div>
 
-            {/* Event Meta Info */}
-            <div className='mt-16 flex flex-wrap justify-center gap-12 opacity-80'>
-              <div className='flex items-center gap-4 group'>
-                <div className='w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-primary transition-colors'>
-                  <Calendar className='w-5 h-5 text-white' />
-                </div>
-                <div className='text-left'>
-                  <p className='text-[10px] font-black uppercase tracking-widest text-slate-400'>Event Date</p>
-                  <span className='text-sm font-black text-white'>May 02, 2026</span>
-                </div>
-              </div>
-              <div className='flex items-center gap-4 group'>
-                <div className='w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-primary transition-colors'>
-                  <MapPin className='w-5 h-5 text-white' />
-                </div>
-                <div className='text-left max-w-[300px]'>
-                  <p className='text-[10px] font-black uppercase tracking-widest text-slate-400'>Institutional Venue</p>
-                  <span className='text-sm font-black text-white leading-tight'>CRDB Headquarters, Upanga, Dar es Salaam</span>
-                </div>
-              </div>
+            {/* Scroll Indicator */}
+            <div className='flex justify-center gap-2 mt-8 md:hidden'>
+              {services.map((_, i) => (
+                <div key={i} className='w-1.5 h-1.5 rounded-full bg-slate-300' />
+              ))}
             </div>
           </div>
         </div>
-
-        {/* Cinematic Decorative Orbs */}
-        <div className='absolute top-1/4 -left-20 w-80 h-80 bg-primary/20 rounded-full blur-[100px] animate-pulse pointer-events-none'></div>
-        <div className='absolute bottom-1/4 -right-20 w-80 h-80 bg-accent/20 rounded-full blur-[100px] animate-pulse delay-1000 pointer-events-none'></div>
       </section>
 
 
-      {/* Testimonials */}
-      <section ref={testimonialsSection.ref} className='py-24 bg-gradient-to-br from-secondary/30 to-transparent'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className={`text-center mb-16 scroll-fade-up ${testimonialsSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
-              Testimonials
-            </Badge>
-            <h2 className='text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight'>
-              Empowering Communities with Trust
-            </h2>
-          </div>
 
-          <div className={`max-w-5xl mx-auto scroll-scale ${testimonialsSection.isVisible ? 'visible' : ''}`}>
-            <div className='relative'>
-              <div className='absolute -inset-6 bg-gradient-to-r from-primary/20 to-accent/20 rounded-3xl blur-2xl opacity-30'></div>
-              <Card className='modern-card border-2 border-primary/10 relative'>
-                <CardContent className='p-10 md:p-12 text-center'>
-                  <div className='flex justify-center mb-8'>
-                    {[...Array(testimonials[currentTestimonial].rating)].map(
-                      (_, i) => (
-                        <Star
-                          key={i}
-                          className='w-7 h-7 text-yellow-400 fill-current mx-1 drop-shadow-md'
-                        />
-                      )
-                    )}
+      {/* Event Strategic Dispatch (Active Ad-Style) */}
+      <section ref={donationSection.ref} className='py-16 relative overflow-hidden bg-[#020617]'>
+        {/* Background Visual (Atmospheric & Dynamic) */}
+        <div 
+          className='absolute inset-0 bg-cover bg-center blur-md opacity-25 pointer-events-none'
+          style={{ backgroundImage: `url(${eventImage})` }}
+        />
+        
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+          <div className='max-w-6xl mx-auto'>
+            <motion.div 
+              whileHover={{ scale: 1.01, y: -5 }}
+              transition={{ duration: 0.5 }}
+              className='bg-white/[0.04] backdrop-blur-3xl border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-[0_50px_100px_rgba(0,0,0,0.6)] relative overflow-hidden group cursor-pointer'
+            >
+              
+              {/* Dynamic Energy Sweep Animation */}
+              <motion.div 
+                animate={{ x: ['-200%', '300%'] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                className='absolute top-0 bottom-0 w-48 bg-gradient-to-r from-transparent via-primary/10 to-transparent skew-x-12 pointer-events-none'
+              />
+
+              <div className='flex flex-col md:flex-row items-center justify-between gap-10 md:gap-14'>
+                
+                {/* Countdown Node (More Alive) */}
+                <div className='flex items-center gap-8'>
+                  <div className='relative'>
+                    {/* Pulsing Outer Glow */}
+                    <motion.div 
+                        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className='absolute inset-0 bg-primary/20 rounded-3xl blur-xl'
+                    />
+                    <div className='relative w-24 h-24 md:w-28 md:h-28 bg-white/[0.05] border border-white/10 rounded-3xl flex flex-col items-center justify-center shadow-2xl backdrop-blur-md'>
+                      <span className='text-4xl md:text-5xl font-black text-white lining-nums tabular-nums drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]'>{timeLeft.days}</span>
+                      <span className='text-[9px] font-black uppercase tracking-[0.3em] text-primary-light'>Days To Go</span>
+                    </div>
+                  </div>
+                  
+                  <div className='hidden lg:block h-16 w-[2px] bg-gradient-to-b from-transparent via-white/20 to-transparent'></div>
+                  
+                  <div className='text-left hidden lg:block'>
+                    <div className='flex items-center gap-2 mb-2'>
+                        <span className='w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(236,72,153,0.8)]'></span>
+                        <span className='text-[10px] font-black uppercase tracking-[0.4em] text-white/60'>Status: Active</span>
+                    </div>
+                    <p className='text-[11px] font-black text-primary-light uppercase tracking-[0.5em]'>Dispatch Protocol</p>
+                  </div>
+                </div>
+
+                {/* Minified Content with Shimmer Text */}
+                <div className='flex-1 text-center md:text-left space-y-3'>
+                  <Badge className='bg-primary/20 text-primary-light border-primary/30 px-4 py-1 text-[9px] font-black uppercase tracking-widest rounded-full mb-2'>
+                    Limited Event Window
+                  </Badge>
+                  <h2 className='text-3xl md:text-4xl font-black text-white leading-tight tracking-tighter'>
+                    CAREER CONNECT: <br />
+                    <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary-light via-white to-primary-light bg-[length:200%_auto] animate-shimmer'>
+                        THE INDUSTRY TAKEOVER
+                    </span>
+                  </h2>
+                </div>
+
+                {/* High-Impact Refined Action */}
+                <div className='w-full md:w-auto'>
+                  <Button 
+                    variant='hero' 
+                    size='lg' 
+                    asChild
+                    className='h-20 px-14 text-xl rounded-[2rem] shadow-[0_20px_50px_rgba(236,72,153,0.4)] hover:shadow-primary/60 transition-all hover:scale-105 active:scale-95 flex items-center justify-center bg-primary text-white border-none font-black tracking-widest'
+                  >
+                    <a href='https://app.careernamimii.org/events' target='_blank' rel='noopener noreferrer'>
+                      SECURE SPOT
+                    </a>
+                  </Button>
+                </div>
+
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* The Unified Trust Stage (Creative Minified Testimonials) */}
+      <section ref={testimonialsSection.ref} className='py-16 relative overflow-hidden bg-white'>
+        {/* Creative Background Architecture: Dynamic Mesh & Aura */}
+        <div className='absolute inset-0 pointer-events-none'>
+          {/* Animated Aura Glows */}
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.2, 0.1],
+              x: [0, 50, 0],
+              y: [0, -30, 0]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+            className='absolute -top-40 -left-40 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px]'
+          />
+          <motion.div 
+            animate={{ 
+              scale: [1.2, 1, 1.2],
+              opacity: [0.05, 0.15, 0.05],
+              x: [0, -40, 0],
+              y: [0, 60, 0]
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+            className='absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px]'
+          />
+          
+          {/* Glassmorphic Patterns */}
+          <div className='absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0)_0%,rgba(255,255,255,1)_100%)]' />
+        </div>
+        
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+          <div className='max-w-4xl mx-auto'>
+            <div className={`text-center mb-12 scroll-fade-up ${testimonialsSection.isVisible ? 'visible' : ''}`}>
+              <h2 className='text-3xl md:text-4xl font-heading font-black text-slate-950 leading-tight tracking-tighter'>
+                Empowering <span className='text-primary'>Communities</span>
+              </h2>
+            </div>
+
+            <div className='relative min-h-[300px] flex flex-col items-center justify-center'>
+              <AnimatePresence mode='wait'>
+                <motion.div
+                  key={currentTestimonial}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.02 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className='text-center space-y-8'
+                >
+                  {/* Minified Voice Wave */}
+                  <div className='flex justify-center items-center gap-1 h-6 mb-4'>
+                    {[...Array(8)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ 
+                          height: [6, Math.random() * 16 + 8, 6],
+                          opacity: [0.3, 0.8, 0.3]
+                        }}
+                        transition={{ 
+                          duration: 2, 
+                          repeat: Infinity, 
+                          delay: i * 0.2,
+                          ease: "easeInOut" 
+                        }}
+                        className='w-1 bg-primary/40 rounded-full'
+                      />
+                    ))}
                   </div>
 
-                  <blockquote className='text-xl md:text-2xl italic mb-10 leading-relaxed text-foreground font-medium'>
+                  <blockquote className='text-xl md:text-2xl font-bold text-slate-800 leading-relaxed max-w-3xl mx-auto italic'>
                     "{testimonials[currentTestimonial].content}"
                   </blockquote>
 
-                  <div className='flex items-center justify-center space-x-5'>
-                    <div className='w-16 h-16 bg-gradient-to-br from-primary to-primary/60 rounded-full flex items-center justify-center shadow-lg'>
-                      <Users className='w-8 h-8 text-white' />
-                    </div>
-                    <div className='text-left'>
-                      <h4 className='text-lg font-bold text-foreground'>
+                  <div className='pt-6'>
+                    <div className='space-y-1'>
+                      <h4 className='text-sm font-black text-slate-900 uppercase tracking-widest'>
                         {testimonials[currentTestimonial].name}
                       </h4>
-                      <p className='text-muted-foreground font-medium'>
+                      <p className='text-primary font-black uppercase tracking-[0.2em] text-[8px]'>
                         {testimonials[currentTestimonial].role}
                       </p>
                     </div>
                   </div>
+                </motion.div>
+              </AnimatePresence>
 
-                  <div className='flex justify-center mt-10 space-x-3'>
-                    {testimonials.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentTestimonial(index)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial
-                            ? "bg-primary w-8 shadow-lg"
-                            : "bg-muted hover:bg-muted-foreground"
-                          }`}
-                        aria-label={`Go to testimonial ${index + 1}`}
-                      />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              {/* Dotted Navigation Protocol */}
+              <div className='flex justify-center mt-12 gap-3'>
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentTestimonial(index)}
+                    className='group p-2 focus:outline-none'
+                    aria-label={`Protocol Node ${index + 1}`}
+                  >
+                    <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentTestimonial 
+                        ? 'bg-primary scale-125 shadow-[0_0_10px_rgba(236,72,153,0.5)]' 
+                        : 'bg-slate-200 group-hover:bg-slate-300'
+                    }`} />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -742,10 +851,7 @@ const Index = () => {
       {/* Partners Section */}
       <section ref={partnersSection.ref} className='py-20 bg-gradient-to-b from-transparent to-secondary/20'>
         <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className={`text-center mb-12 scroll-fade-up ${partnersSection.isVisible ? 'visible' : ''}`}>
-            <Badge className='mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 transition-colors'>
-              Trusted Partnerships
-            </Badge>
+          <div className={`text-center mb-16 scroll-fade-up ${partnersSection.isVisible ? 'visible' : ''}`}>
             <h2 className='text-3xl md:text-4xl font-heading font-bold mb-4'>
               Our Partners
             </h2>
@@ -779,6 +885,5 @@ const Index = () => {
     </div>
   );
 };
-
 
 export default Index;

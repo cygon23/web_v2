@@ -41,12 +41,11 @@ const Hero = () => {
 
   return (
     <section className='relative min-h-[100vh] flex items-center justify-center overflow-hidden bg-slate-950'>
-      <AnimatePresence mode='wait'>
+      <AnimatePresence>
         <motion.div
           key={current}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
           transition={{ duration: 1.5, ease: "easeInOut" }}
           className='absolute inset-0'
         >
