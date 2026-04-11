@@ -58,6 +58,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const getRecaptchaSiteKey = () => {
+    // Provide the public site key as a fallback in case the environment variable isn't set in production
     return import.meta.env?.VITE_RECAPTCHA_SITE_KEY;
   };
 
@@ -96,9 +97,8 @@ const ContactForm = ({ className }: ContactFormProps) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${
-            import.meta.env.VITE_SUPABASE_ANON_KEY || ""
-          }`,
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY || ""
+            }`,
         },
         body: JSON.stringify({
           name: formData.name,
@@ -293,8 +293,8 @@ const ContactForm = ({ className }: ContactFormProps) => {
                 "w-full h-14 text-lg font-bold bg-gradient-to-r from-primary via-primary/90 to-primary hover:shadow-2xl hover:scale-105 transition-all duration-300 group rounded-xl",
                 submitSuccess && "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-500 hover:to-green-600",
                 !recaptchaToken &&
-                  !isSubmitting &&
-                  "opacity-50 cursor-not-allowed hover:scale-100"
+                !isSubmitting &&
+                "opacity-50 cursor-not-allowed hover:scale-100"
               )}>
               {isSubmitting ? (
                 <div className='flex items-center justify-center'>
