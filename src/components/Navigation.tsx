@@ -4,11 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
+import { useToast } from "@/hooks/use-toast";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { toast } = useToast();
+
+  const handleJoinClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    toast({
+      title: "Coming Soon!",
+      description: "Stay tuned on our community and our social media for this.",
+    });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,10 +86,10 @@ const Navigation = () => {
             <Button 
               variant='hero' 
               size='sm' 
-              asChild
+              onClick={handleJoinClick}
               className="shadow-glow hover:shadow-primary/40 rounded-full px-8 h-12"
             >
-              <Link to='/contact'>Get Started</Link>
+              Become a Member
             </Button>
           </div>
 
@@ -115,10 +126,12 @@ const Navigation = () => {
               ))}
 
               <div className='pt-6'>
-                <Button variant='hero' className='w-full h-14 rounded-2xl text-lg font-black shadow-glow' asChild>
-                  <Link to='/contact' onClick={() => setIsMenuOpen(false)}>
-                    Join Now
-                  </Link>
+                <Button 
+                  variant='hero' 
+                  className='w-full h-14 rounded-2xl text-lg font-black shadow-glow' 
+                  onClick={handleJoinClick}
+                >
+                  Become a Member
                 </Button>
               </div>
             </div>

@@ -9,7 +9,6 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import { cn } from "@/lib/utils";
 import Footer from "@/components/Footer";
-import ImpactHub from "@/components/ImpactHub";
 import {
   ArrowRight,
   Play,
@@ -41,6 +40,7 @@ import eventImage2 from "@/assets/tailks.jpg";
 import abstractBg from "@/assets/abstract-bg.jpg";
 import careerHubImage from "@/assets/career-hub-platform.png";
 import hero3 from "@/assets/hero3.jpeg";
+import communityImg from "@/assets/community.jpg";
 
 //partiners images
 import partner1 from "@/assets/partiners/koics-01.png";
@@ -326,9 +326,12 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Right Column: Cinematic Impact Hub */}
+            {/* Right Column: Community Image */}
             <div className={`scroll-fade-right ${aboutSection.isVisible ? 'visible' : ''}`}>
-              <ImpactHub />
+              <div className='relative w-full aspect-square md:aspect-[4/3] lg:aspect-square rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white/50'>
+                <img src={communityImg} alt="Our Community" className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+              </div>
             </div>
 
           </div>
