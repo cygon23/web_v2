@@ -144,22 +144,36 @@ const Reviews = () => {
 
     setIsUploading(true);
     try {
+      // Convert file to base64
+      const reader = new FileReader();
+      const base64Promise = new Promise<string>((resolve) => {
+        reader.onload = () => {
+          const base64 = (reader.result as string).split(',')[1];
+          resolve(base64);
+        };
+      });
+      reader.readAsDataURL(file);
+      const fileBase64 = await base64Promise;
+
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
-      const filePath = `${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from('testimonial-avatars')
-        .upload(filePath, file);
+      const { data: result, error: uploadError } = await supabase.functions.invoke('upload-avatar', {
+        body: {
+          fileBase64,
+          fileName,
+          fileType: file.type
+        }
+      });
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('testimonial-avatars')
-        .getPublicUrl(filePath);
-
-      setFormData({ ...formData, avatar_url: publicUrl });
-      toast({ title: "Photo Uploaded", description: "Your avatar has been updated!" });
+      if (result.success) {
+        setFormData({ ...formData, avatar_url: result.publicUrl });
+        toast({ title: "Photo Uploaded", description: "Your avatar has been updated!" });
+      } else {
+        throw new Error(result.error);
+      }
     } catch (err: any) {
       toast({ title: "Upload Failed", description: err.message, variant: "destructive" });
     } finally {
