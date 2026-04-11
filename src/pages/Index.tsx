@@ -48,6 +48,7 @@ import partner2 from "@/assets/partiners/nembo.png";
 import partner3 from "@/assets/partiners/ibiscus.png";
 import partner4 from "@/assets/partiners/iaa.png";
 import partner5 from "@/assets/partiners/e3logo.jpg";
+import partner6 from "@/assets/partiners/ja.jpg";
 
 //team
 import rahmanImg from "@/assets/team/rahman.jpeg";
@@ -55,11 +56,14 @@ import abdulImg from "@/assets/team/02.jpg";
 import karenImg from "@/assets/team/KAREEN.jpg";
 import godfreyImg from "@/assets/team/godfrey.jpg";
 import ChatBot from "@/components/ChatBot";
+import { supabase } from "@/lib/supabase";
 
 const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<number | null>(null);
+  const [dynamicTestimonials, setDynamicTestimonials] = useState<any[]>([]);
+  const [isLoadingReviews, setIsLoadingReviews] = useState(true);
 
   // Event Countdown Logic
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -86,7 +90,26 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const partnerLogos = [partner1, partner2, partner3, partner4, partner5];
+  useEffect(() => {
+    const fetchTopReviews = async () => {
+      try {
+        const { data: result, error } = await supabase.functions.invoke("get-testimonials");
+
+        if (error) throw error;
+        if (result?.success && result.data && result.data.length > 0) {
+          setDynamicTestimonials(result.data.slice(0, 10));
+        }
+      } catch (err) {
+        console.error("Error fetching testimonials:", err);
+      } finally {
+        setIsLoadingReviews(false);
+      }
+    };
+
+    fetchTopReviews();
+  }, []);
+
+  const partnerLogos = [partner1, partner2, partner3, partner4, partner5, partner6];
 
   // Scroll animations for each section
   const aiSection = useScrollAnimation();
@@ -98,7 +121,7 @@ const Index = () => {
   const testimonialsSection = useScrollAnimation();
   const partnersSection = useScrollAnimation();
 
-  const testimonials = [
+  const staticTestimonials = [
     {
       name: "Mark Kane",
       role: "IT Specialist",
@@ -120,42 +143,9 @@ const Index = () => {
         "The workshops were incredibly engaging and hands-on. I walked away with practical skills I could apply immediately in my projects.",
       rating: 5,
     },
-    {
-      name: "David Lema",
-      role: "Software Engineer",
-      content:
-        "The Intelligence Hub guided me to my first developer role with precision. The AI-driven trajectory mapping is truly groundbreaking.",
-      rating: 5,
-    },
-    {
-      name: "Anna Massawe",
-      role: "Community Leader",
-      content:
-        "We've seen a massive shift in youth engagement since Career Na Mimi started. The impact on community development is undeniable.",
-      rating: 5,
-    },
-    {
-      name: "Kelvin Chuwa",
-      role: "Digital Entrepreneur",
-      content:
-        "The Execution Labs taught me how to scale my startup idea into a real business. The mentorship here is world-class.",
-      rating: 5,
-    },
-    {
-      name: "Grace Mushi",
-      role: "Human Resources",
-      content:
-        "The quality of talent emerging from these programs is exceptional. They are truly bridge-building for the job market.",
-      rating: 5,
-    },
-    {
-      name: "Brian Kimaro",
-      role: "Graphic Designer",
-      content:
-        "From technical skills to soft skills, this platform provided the institutional protocol I needed to succeed in a competitive industry.",
-      rating: 5,
-    },
   ];
+
+  const testimonials = dynamicTestimonials.length > 0 ? dynamicTestimonials : staticTestimonials;
 
   const stats = [
     { number: "500+", label: "Youth Empowered", icon: Users },
@@ -731,21 +721,37 @@ const Index = () => {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Dotted Navigation Protocol */}
-              <div className='flex justify-center mt-12 gap-3'>
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentTestimonial(index)}
-                    className='group p-2 focus:outline-none'
-                    aria-label={`Protocol Node ${index + 1}`}
-                  >
-                    <div className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentTestimonial
-                        ? 'bg-primary scale-125 shadow-[0_0_10px_rgba(236,72,153,0.5)]'
-                        : 'bg-slate-200 group-hover:bg-slate-300'
-                      }`} />
-                  </button>
-                ))}
+              <div className='flex justify-center mt-12 gap-8'>
+                <div className='flex gap-3'>
+                  {testimonials.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentTestimonial(index)}
+                      className='group p-2 focus:outline-none'
+                      aria-label={`Protocol Node ${index + 1}`}
+                    >
+                      <div className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentTestimonial
+                          ? 'bg-primary scale-125 shadow-[0_0_10px_rgba(236,72,153,0.5)]'
+                          : 'bg-slate-200 group-hover:bg-slate-300'
+                        }`} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* View All Button */}
+              <div className='mt-12 text-center'>
+                <Button
+                  variant='hero'
+                  size='lg'
+                  asChild
+                  className='rounded-full px-12 group transition-all hover:shadow-[0_0_20px_rgba(236,72,153,0.3)]'
+                >
+                  <Link to='/reviews' className='flex items-center gap-2'>
+                    <span>View All Stories</span>
+                    <ArrowRight className='w-4 h-4 group-hover:translate-x-1 transition-transform' />
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

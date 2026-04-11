@@ -11,6 +11,7 @@ import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
 import Team from "./pages/Team";
 import Contact from "./pages/Contact";
+import Reviews from "./pages/Reviews";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
@@ -45,6 +46,7 @@ const App = () => {
             <Route path='/gallery' element={<Gallery />} />
             <Route path='/team' element={<Team />} />
             <Route path='/contact' element={<Contact />} />
+            <Route path='/reviews' element={<Reviews />} />
             <Route path='/privacy-policy' element={<PrivacyPolicy />} />
 
             {/* Catch-all 404 route */}

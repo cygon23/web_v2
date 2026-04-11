@@ -33,11 +33,9 @@ function getCorsHeaders(origin: string) {
     origin.includes("127.0.0.1");
 
   return {
-    "Access-Control-Allow-Origin": isAllowed
-      ? origin
-      : CONFIG.allowedOrigins[0],
+    "Access-Control-Allow-Origin": isAllowed ? origin : CONFIG.allowedOrigins[0],
     "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization, x-client-info, apikey",
     "Content-Type": "application/json",
   };
 }
