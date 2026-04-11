@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import ReCAPTCHA from "react-google-recaptcha";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 interface ContactFormData {
   name: string;
@@ -52,14 +52,13 @@ const ContactForm = ({ className }: ContactFormProps) => {
   >({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const { toast } = useToast();
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
-  const getRecaptchaSiteKey = () => {
-    // Provide the public site key as a fallback in case the environment variable isn't set in production
-    return import.meta.env?.VITE_RECAPTCHA_SITE_KEY;
+  const getTurnstileSiteKey = () => {
+    return import.meta.env?.VITE_TURNSTILE_SITE_KEY;
   };
 
   const handleInputChange = (field: keyof ContactFormData, value: string) => {
@@ -77,11 +76,11 @@ const ContactForm = ({ className }: ContactFormProps) => {
       return;
     }
 
-    // Check reCAPTCHA
-    if (!recaptchaToken) {
+    // Check Captcha
+    if (!captchaToken) {
       toast({
-        title: "reCAPTCHA required",
-        description: "Please confirm you're not a robot.",
+        title: "Security check required",
+        description: "Please complete the security check.",
         variant: "destructive",
       });
 
@@ -105,7 +104,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
           email: formData.email,
           subject: formData.subject,
           message: `Subject: ${formData.subject}\n\n${formData.message}`,
-          recaptchaToken,
+          captchaToken,
         }),
       });
 
@@ -123,8 +122,8 @@ const ContactForm = ({ className }: ContactFormProps) => {
         setSubmitSuccess(true);
         setFormData({ name: "", email: "", subject: "", message: "" });
         setErrors({});
-        setRecaptchaToken(null);
-        recaptchaRef.current?.reset();
+        setCaptchaToken(null);
+        turnstileRef.current?.reset();
 
         toast({
           title: "Message sent successfully!",
@@ -148,13 +147,13 @@ const ContactForm = ({ className }: ContactFormProps) => {
     }
   };
 
-  const handleRecaptchaChange = (token: string | null) => {
-    setRecaptchaToken(token);
+  const handleCaptchaSuccess = (token: string) => {
+    setCaptchaToken(token);
   };
 
-  const handleRecaptchaError = () => {
+  const handleCaptchaError = () => {
     toast({
-      title: "reCAPTCHA Error",
+      title: "Security Check Error",
       description: "Please try refreshing the page and try again.",
       variant: "destructive",
     });
@@ -272,15 +271,15 @@ const ContactForm = ({ className }: ContactFormProps) => {
               )}
             </div>
 
-            {/* reCAPTCHA */}
+            {/* Cloudflare Turnstile */}
             <div className='flex justify-center py-4'>
               <div className='transform hover:scale-105 transition-transform duration-300'>
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  sitekey={getRecaptchaSiteKey()}
-                  onChange={handleRecaptchaChange}
-                  onError={handleRecaptchaError}
-                  onExpired={() => setRecaptchaToken(null)}
+                <Turnstile
+                  ref={turnstileRef}
+                  siteKey={getTurnstileSiteKey()}
+                  onSuccess={handleCaptchaSuccess}
+                  onError={handleCaptchaError}
+                  onExpire={() => setCaptchaToken(null)}
                 />
               </div>
             </div>
@@ -288,11 +287,11 @@ const ContactForm = ({ className }: ContactFormProps) => {
             {/* Submit */}
             <Button
               type='submit'
-              disabled={isSubmitting || submitSuccess || !recaptchaToken}
+              disabled={isSubmitting || submitSuccess || !captchaToken}
               className={cn(
                 "w-full h-14 text-lg font-bold bg-gradient-to-r from-primary via-primary/90 to-primary hover:shadow-2xl hover:scale-105 transition-all duration-300 group rounded-xl",
                 submitSuccess && "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-500 hover:to-green-600",
-                !recaptchaToken &&
+                !captchaToken &&
                 !isSubmitting &&
                 "opacity-50 cursor-not-allowed hover:scale-100"
               )}>

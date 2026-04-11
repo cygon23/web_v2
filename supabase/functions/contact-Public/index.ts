@@ -17,9 +17,9 @@ const CONFIG = {
     subjectMaxLength: 200,
     messageMaxLength: 2000,
   },
-  recaptcha: {
-    secretKey: Deno.env.get("RECAPTCHA_SECRET_KEY"),
-    verifyUrl: "https://www.google.com/recaptcha/api/siteverify",
+  turnstile: {
+    secretKey: Deno.env.get("TURNSTILE_SECRET_KEY"),
+    verifyUrl: "https://challenges.cloudflare.com/turnstile/v0/siteverify",
   },
 };
 
@@ -43,33 +43,27 @@ function getCorsHeaders(origin: string) {
 }
 
 // ============================================================================
-// RECAPTCHA VALIDATION WITH DETAILED DEBUGGING
+// TURNSTILE VALIDATION
 // ============================================================================
-async function validateRecaptcha(token: string, remoteip?: string) {
-  if (!CONFIG.recaptcha.secretKey) {
-    console.warn("RECAPTCHA_SECRET_KEY not configured, skipping validation");
+async function validateTurnstile(token: string, remoteip?: string) {
+  if (!CONFIG.turnstile.secretKey) {
+    console.warn("TURNSTILE_SECRET_KEY not configured, skipping validation");
     return true; // Skip validation if not configured
   }
 
   if (!token) {
-    console.error("No reCAPTCHA token provided");
+    console.error("No Turnstile token provided");
     return false;
   }
 
   try {
     const formData = new URLSearchParams({
-      secret: CONFIG.recaptcha.secretKey,
+      secret: CONFIG.turnstile.secretKey,
       response: token,
       ...(remoteip && { remoteip }),
     });
 
-    // console.log(
-    //   "Making reCAPTCHA verification request to:",
-    //   CONFIG.recaptcha.verifyUrl
-    // );
-    // console.log("Form data:", Object.fromEntries(formData.entries()));
-
-    const response = await fetch(CONFIG.recaptcha.verifyUrl, {
+    const response = await fetch(CONFIG.turnstile.verifyUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -77,75 +71,19 @@ async function validateRecaptcha(token: string, remoteip?: string) {
       body: formData,
     });
 
-    // console.log("Google response status:", response.status);
-    // console.log(
-    //   "Google response headers:",
-    //   Object.fromEntries(response.headers.entries())
-    // );
-
-    const responseText = await response.text();
-    // console.log("Google raw response:", responseText);
-
-    let result;
-    try {
-      result = JSON.parse(responseText);
-    } catch (parseError) {
-      console.error("Failed to parse Google response:", parseError);
-      return false;
-    }
-
-    // console.log("reCAPTCHA validation result:", {
-    //   success: result.success,
-    //   score: result.score,
-    //   action: result.action,
-    //   hostname: result.hostname,
-    //   challengeTimestamp: result.challenge_ts,
-    //   errorCodes: result["error-codes"],
-    //   raw: result,
-    // });
+    const result = await response.json();
 
     if (!result.success) {
       console.error(
-        "reCAPTCHA validation failed with errors:",
+        "Turnstile validation failed with errors:",
         result["error-codes"]
       );
-
-      // Detailed error explanations
-      const errorMappings = {
-        "missing-input-secret": "The secret parameter is missing",
-        "invalid-input-secret": "The secret parameter is invalid or malformed",
-        "missing-input-response": "The response parameter is missing",
-        "invalid-input-response":
-          "The response parameter is invalid or malformed",
-        "bad-request": "The request is invalid or malformed",
-        "timeout-or-duplicate":
-          "The response is no longer valid: either is too old or has been used previously",
-      };
-
-      if (result["error-codes"]) {
-        result["error-codes"].forEach((code: string) => {
-          console.error(
-            `Error ${code}: ${errorMappings[code] || "Unknown error"}`
-          );
-        });
-      }
-
       return false;
     }
 
-    // For v2, just check success
-    if (result.score !== undefined) {
-      // This is v3 - check score
-      // console.log("reCAPTCHA v3 detected, score:", result.score);
-      const isValid = result.success && result.score >= 0.5;
-      // console.log("v3 validation result:", isValid);
-      return isValid;
-    } else {
-      return result.success;
-    }
+    return true;
   } catch (error) {
-    console.error("reCAPTCHA validation error:", error);
-    console.error("Error stack:", error.stack);
+    console.error("Turnstile validation error:", error);
     return false;
   }
 }
@@ -296,8 +234,8 @@ serve(async (req: Request) => {
       body = await req.json();
       console.log("Request body received:", {
         ...body,
-        recaptchaToken: body.recaptchaToken
-          ? `TOKEN_LENGTH_${body.recaptchaToken.length}`
+        captchaToken: body.captchaToken
+          ? `TOKEN_LENGTH_${body.captchaToken.length}`
           : undefined,
       });
     } catch (error) {
@@ -312,22 +250,22 @@ serve(async (req: Request) => {
     // Validate input
     validateInput(body);
 
-    // Validate reCAPTCHA if token provided
-    if (body.recaptchaToken) {
-      const isRecaptchaValid = await validateRecaptcha(
-        body.recaptchaToken,
+    // Validate Turnstile if token provided
+    if (body.captchaToken) {
+      const isTurnstileValid = await validateTurnstile(
+        body.captchaToken,
         clientIP
       );
-      if (!isRecaptchaValid) {
+      if (!isTurnstileValid) {
         return createResponse(
-          { success: false, error: "reCAPTCHA validation failed" },
+          { success: false, error: "Security check validation failed" },
           400,
           corsHeaders
         );
       }
-      console.log("reCAPTCHA validation passed");
+      console.log("Turnstile validation passed");
     } else {
-      console.warn("No reCAPTCHA token provided");
+      console.warn("No Turnstile token provided");
     }
 
     // Send email
