@@ -15,6 +15,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
 import LoadingScreen from "@/components/Loading";
+import ChatBot from "@/components/ChatBot";
 
 const queryClient = new QueryClient();
 
@@ -33,8 +34,9 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <BrowserRouter>
-          {/* Cookie consent shown on all pages */}
+          {/* Cookie consent and ChatBot shown on all pages */}
           <CookieConsent />
+          <ChatBot />
           <Routes>
             <Route path='/' element={<Index />} />
             <Route path='/about' element={<About />} />

@@ -1,349 +1,186 @@
-import { config } from "https://deno.land/std@0.168.0/dotenv/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const env = await config({ path: "../../.env" });
-const SUPABASE_URL = env.SUPABASE_URL ?? Deno.env.get("SUPABASE_URL");
-const SUPABASE_SERVICE_ROLE_KEY =
-  env.SUPABASE_SERVICE_ROLE_KEY ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-const HF_API_KEY = env.HF_API_KEY ?? Deno.env.get("HF_API_KEY");
+// ─── Secrets (set via: supabase secrets set GROQ_API_KEY=... ) ────────────────
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const GROQ_API_KEY = Deno.env.get("GROQ_API_KEY")!;
 
-console.log("Loaded SUPABASE_URL:", Boolean(SUPABASE_URL));
-console.log(
-  "Loaded SUPABASE_SERVICE_ROLE_KEY:",
-  Boolean(SUPABASE_SERVICE_ROLE_KEY)
-);
-console.log("Loaded HF_API_KEY:", Boolean(HF_API_KEY));
-
+// ─── CORS ─────────────────────────────────────────────────────────────────────
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
+// ─── System Prompt ────────────────────────────────────────────────────────────
+const SYSTEM_PROMPT = `You are the CareerNamimi Intelligence — an elite AI career counselor and professional growth architect powered by Career Na Mimi, Tanzania's leading youth empowerment organization.
+
+YOUR MISSION: Deliver deeply strategic, richly detailed, and actionable career guidance that genuinely transforms people's professional journeys.
+
+FORMATTING — THIS IS CRITICAL AND NON-NEGOTIABLE:
+- NEVER use markdown. This means absolutely NO asterisks (*), NO double asterisks (**), NO pound signs (#), NO backticks, NO underscores for emphasis, NO hyphens as list markers, NO brackets.
+- Write in plain, clean prose only. Use numbered lists like "1. 2. 3." when listing items.
+- Use section labels like "Contact Information:" followed by a new line — no symbols before or after.
+- If you ever feel the urge to bold something with **, write it in plain text instead.
+
+RESPONSE STYLE RULES:
+1. Always give real-world examples. If discussing resumes, show actual rewrites. If discussing interviews, include sample questions and model answers.
+2. Always include references where appropriate: LinkedIn, Coursera, industry bodies, statistics, named frameworks (e.g., STAR method, OKR, SMART goals).
+3. Be thorough, not generic. A user asking "how to improve my resume?" should get a complete breakdown.
+4. Maintain full context of the conversation. Reference earlier messages when relevant.
+5. Focus exclusively on career topics: job searching, interviews, CVs, salary negotiation, career transitions, professional skills, networking, entrepreneurship, freelancing, and higher education planning.
+6. If the question is off-topic, graciously redirect: "That is outside my career expertise, but let me connect it to your professional journey..."
+7. Speak with confidence and warmth. You are both expert coach and supportive mentor.
+8. End responses with a concrete next step or question to keep the conversation productive.`;
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 interface ChatRequest {
   message: string;
   sessionId: string;
   userId?: string;
+  conversationHistory?: Array<{ role: "user" | "assistant"; content: string }>;
 }
 
-// Fallback function for when embedding API fails
-async function getContextWithoutEmbedding(
-  supabase: any,
-  message: string
-): Promise<string> {
-  try {
-    // Try text search on document_chunks table
-    const { data: docs, error } = await supabase
-      .from("document_chunks")
-      .select("content")
-      .textSearch("content", message, { type: "websearch" })
-      .limit(3);
-
-    if (error) {
-      console.log("Text search failed, using keywords:", error.message);
-      // If text search fails, try simple LIKE query
-      const keywords = message
-        .toLowerCase()
-        .split(" ")
-        .filter((word) => word.length > 3);
-      if (keywords.length > 0) {
-        const { data: keywordDocs } = await supabase
-          .from("document_chunks")
-          .select("content")
-          .ilike("content", `%${keywords[0]}%`)
-          .limit(3);
-
-        return keywordDocs?.map((doc: any) => doc.content).join("\n\n") || "";
-      }
-      return "";
-    }
-
-    return docs?.map((doc: any) => doc.content).join("\n\n") || "";
-  } catch (error) {
-    console.error("Context retrieval error:", error);
-    return "";
-  }
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function jsonResponse(data: unknown, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
 }
 
-// Simple response generator for when AI models fail
-function generateSimpleResponse(message: string, context: string): string {
-  const lowerMessage = message.toLowerCase();
-
-  if (lowerMessage.includes("resume") || lowerMessage.includes("cv")) {
-    return `Here are some key tips for improving your resume:
-
-🎯 **Structure & Format**
-- Use a clean, professional layout with consistent formatting
-- Keep it to 1-2 pages maximum
-- Use bullet points for easy scanning
-
-📊 **Content Strategy**
-- Include quantifiable achievements (e.g., "Increased sales by 25%")
-- Use action verbs to start each bullet point
-- Tailor your resume for each specific job application
-- Include relevant keywords from the job posting
-
-💼 **Key Sections**
-- Professional summary (2-3 lines at the top)
-- Skills section aligned with job requirements
-- Work experience with specific accomplishments
-- Education and relevant certifications
-
-${
-  context
-    ? `\n📚 **Additional insights from our knowledge base:**\n${context.substring(
-        0,
-        200
-      )}...`
-    : ""
-}`;
-  }
-
-  if (lowerMessage.includes("interview")) {
-    return `Here's your comprehensive interview preparation guide:
-
-🔍 **Research Phase**
-- Study the company's mission, values, and recent news
-- Understand the role requirements thoroughly
-- Research your interviewer(s) on LinkedIn if possible
-
-🗣️ **Practice & Preparation**
-- Use the STAR method (Situation, Task, Action, Result) for behavioral questions
-- Prepare 3-5 specific examples of your achievements
-- Practice common questions out loud
-- Prepare thoughtful questions about the role and company
-
-👔 **Day of Interview**
-- Dress appropriately for the company culture
-- Arrive 10-15 minutes early
-- Bring extra copies of your resume
-- Follow up with a thank-you email within 24 hours
-
-${
-  context
-    ? `\n📚 **From our knowledge base:**\n${context.substring(0, 200)}...`
-    : ""
-}`;
-  }
-
-  if (
-    lowerMessage.includes("career") ||
-    lowerMessage.includes("job") ||
-    lowerMessage.includes("growth")
-  ) {
-    return `Here's your career development roadmap:
-
-🎯 **Goal Setting**
-- Define clear short-term (1 year) and long-term (3-5 year) career goals
-- Identify the skills needed for your target roles
-- Create a timeline with specific milestones
-
-📈 **Skill Development**
-- Stay updated with industry trends and technologies
-- Take relevant courses or certifications
-- Seek opportunities for stretch assignments
-- Find a mentor in your field
-
-🤝 **Networking**
-- Attend industry events and conferences
-- Join professional associations
-- Engage on professional social media platforms
-- Maintain relationships with former colleagues
-
-${
-  context ? `\n📚 **Relevant insights:**\n${context.substring(0, 200)}...` : ""
-}`;
-  }
-
-  // Default response for general queries
-  return `Hello! I'm CareerNamimi's AI assistant, here to help with your career development needs.
-
-I can assist you with:
-• **Resume & CV writing** - Structure, content, and optimization
-• **Interview preparation** - Practice questions and strategies  
-• **Career planning** - Goal setting and skill development
-• **Job search strategies** - Finding opportunities and applications
-• **Professional networking** - Building meaningful connections
-
-${
-  context
-    ? `Here's some relevant information from our knowledge base:\n${context.substring(
-        0,
-        250
-      )}...`
-    : "Please let me know what specific aspect of your career you'd like help with, and I'll provide detailed guidance!"
-}
-
-What would you like to focus on today?`;
-}
-
+// ─── Main handler ─────────────────────────────────────────────────────────────
 serve(async (req) => {
+  // Handle CORS preflight
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
+
+  if (req.method !== "POST") {
+    return new Response("Method Not Allowed", { status: 405, headers: corsHeaders });
+  }
+
   try {
-    const url = new URL(req.url);
+    // ── Parse request ────────────────────────────────────────────────────────
+    const {
+      message,
+      sessionId,
+      userId,
+      conversationHistory = [],
+    }: ChatRequest = await req.json();
 
-    if (!url.pathname.endsWith("/api/v1/chatbot")) {
-      return new Response("Not Found", { status: 404 });
+    if (!message?.trim() || !sessionId) {
+      return jsonResponse({ success: false, error: "Missing message or sessionId" }, 400);
     }
 
-    if (req.method === "OPTIONS") {
-      return new Response("ok", { headers: corsHeaders });
+    // ── Validate secrets ─────────────────────────────────────────────────────
+    if (!GROQ_API_KEY) {
+      console.error("GROQ_API_KEY secret is not set.");
+      return jsonResponse({ success: false, error: "Server configuration error" }, 500);
     }
 
-    if (req.method !== "POST") {
-      return new Response("Method Not Allowed", { status: 405 });
-    }
+    // ── Build Groq payload ───────────────────────────────────────────────────
+    const groqMessages = [
+      { role: "system", content: SYSTEM_PROMPT },
+      // Include the last 8 turns of conversation history for context
+      ...conversationHistory.slice(-8),
+      { role: "user", content: message.trim() },
+    ];
 
-    const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
+    const groqPayload = {
+      model: "llama-3.3-70b-versatile",
+      messages: groqMessages,
+      temperature: 0.65,
+      max_tokens: 2048,
+      top_p: 0.92,
+      stream: false,
+    };
 
-    const { message, sessionId, userId }: ChatRequest = await req.json();
-    if (!message || !sessionId) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: "Missing message or sessionId",
-        }),
-        {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-          status: 400,
-        }
-      );
-    }
+    // ── Call Groq API ────────────────────────────────────────────────────────
+    console.log(`Calling Groq for session: ${sessionId}`);
 
-    let context = "";
-    let botResponse = "";
-
-    // Try to get context with embeddings, fallback to text search
-    try {
-      const embeddingRes = await fetch(
-        "https://api-inference.huggingface.co/embed/sentence-transformers/all-MiniLM-L6-v2",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${HF_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ inputs: message }),
-        }
-      );
-
-      if (embeddingRes.ok) {
-        const embeddingData = await embeddingRes.json();
-        const queryEmbedding = embeddingData?.embedding;
-
-        if (queryEmbedding) {
-          const { data: similarChunks, error: searchError } =
-            await supabase.rpc("match_documents_ollama", {
-              query_embedding: queryEmbedding,
-              match_threshold: 0.7,
-              match_count: 5,
-            });
-
-          if (!searchError) {
-            context =
-              similarChunks?.map((c: any) => c.content).join("\n\n") || "";
-          }
-        }
-      } else {
-        console.log("Embedding API failed, using fallback context retrieval");
-        context = await getContextWithoutEmbedding(supabase, message);
-      }
-    } catch (error) {
-      console.log("Embedding failed, using fallback:", error.message);
-      context = await getContextWithoutEmbedding(supabase, message);
-    }
-
-    // Try HF generation, fallback to simple response
-    try {
-      const systemPrompt = `You are CareerNamimi's AI assistant. Answer concisely and professionally (max 300 words):
-Context: ${context}
-Question: ${message}
-Answer:`;
-
-      const hfRes = await fetch(
-        "https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${HF_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            inputs: systemPrompt,
-            parameters: { max_new_tokens: 300, temperature: 0.7 },
-          }),
-        }
-      );
-
-      if (hfRes.ok) {
-        const hfData = await hfRes.json();
-        const generatedText = hfData[0]?.generated_text;
-        if (generatedText) {
-          botResponse = generatedText;
-        }
-      }
-    } catch (error) {
-      console.log(
-        "HF generation failed, using simple response:",
-        error.message
-      );
-    }
-
-    // Use simple response if AI generation failed
-    if (!botResponse) {
-      console.log("Using fallback response generator");
-      botResponse = generateSimpleResponse(message, context);
-    }
-
-    // Store conversation in Supabase
-    let conversationId: string;
-
-    const { data: existingConv } = await supabase
-      .from("chat_conversations")
-      .select("id")
-      .eq("session_id", sessionId)
-      .single();
-
-    if (existingConv) {
-      conversationId = existingConv.id;
-    } else {
-      const { data: newConv, error: convError } = await supabase
-        .from("chat_conversations")
-        .insert({ session_id: sessionId, user_id: userId })
-        .select("id")
-        .single();
-      if (convError) throw convError;
-      conversationId = newConv.id;
-    }
-
-    await supabase.from("chat_messages").insert([
-      { conversation_id: conversationId, message, is_user_message: true },
-      {
-        conversation_id: conversationId,
-        message: botResponse,
-        is_user_message: false,
+    const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${GROQ_API_KEY}`,
+        "Content-Type": "application/json",
       },
-    ]);
+      body: JSON.stringify(groqPayload),
+    });
 
-    return new Response(
-      JSON.stringify({ response: botResponse, success: true }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+    if (!groqRes.ok) {
+      const errText = await groqRes.text();
+      console.error(`Groq API error ${groqRes.status}:`, errText);
+      throw new Error(`Groq API error: ${groqRes.status}`);
+    }
+
+    const groqData = await groqRes.json();
+    const botResponse: string = groqData?.choices?.[0]?.message?.content?.trim();
+
+    if (!botResponse) {
+      throw new Error("Empty or invalid response from Groq");
+    }
+
+    // ── Persist conversation to Supabase ────────────────────────────────────
+    try {
+      const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
+      // Get or create conversation record
+      let conversationId: string;
+
+      const { data: existingConv } = await supabase
+        .from("chat_conversations")
+        .select("id")
+        .eq("session_id", sessionId)
+        .single();
+
+      if (existingConv) {
+        conversationId = existingConv.id;
+      } else {
+        const { data: newConv, error: convError } = await supabase
+          .from("chat_conversations")
+          .insert({ session_id: sessionId, user_id: userId ?? null })
+          .select("id")
+          .single();
+
+        if (convError) throw convError;
+        conversationId = newConv.id;
       }
-    );
+
+      // Insert user message + bot response
+      await supabase.from("chat_messages").insert([
+        {
+          conversation_id: conversationId,
+          message: message.trim(),
+          is_user_message: true,
+        },
+        {
+          conversation_id: conversationId,
+          message: botResponse,
+          is_user_message: false,
+        },
+      ]);
+
+      console.log(`Saved messages for conversation: ${conversationId}`);
+    } catch (dbError) {
+      // DB errors should not block the response — log and continue
+      console.warn("DB persistence failed (non-fatal):", dbError);
+    }
+
+    // ── Return response ──────────────────────────────────────────────────────
+    return jsonResponse({ success: true, response: botResponse });
   } catch (err) {
-    console.error("Chatbot error:", err);
-    return new Response(
-      JSON.stringify({
-        response:
-          "I'm experiencing technical difficulties right now. Please try again later.",
-        success: false,
-        error: "fallback_response",
-      }),
+    console.error("Chatbot edge function error:", err);
+    return jsonResponse(
       {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 500,
-      }
+        success: false,
+        response:
+          "I'm experiencing a technical issue right now. Please try again in a moment — your career questions deserve the best answers!",
+        error: "internal_error",
+      },
+      500
     );
   }
 });

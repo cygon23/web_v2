@@ -880,7 +880,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-      <ChatBot />
       <Footer />
     </div>
   );

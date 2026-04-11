@@ -490,6 +490,7 @@ const Gallery = () => {
                   </div>
                 )}
 
+                {featuredEvents[currentEventIndex]?.highlights && (
                   <div className='space-y-1'>
                     <h4 className='font-semibold text-foreground text-sm'>
                       Event Highlights:
