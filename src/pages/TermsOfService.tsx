@@ -1,40 +1,40 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Lock, Eye, FileText, ChevronRight } from "lucide-react";
+import { Scale, Globe, UserCheck, Zap, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
 
-const PrivacyPolicy = () => {
+const TermsOfService = () => {
   const sections = [
     {
-      icon: Shield,
-      title: "Data Protection",
-      content: "Career Na Mimi Organization is committed to protecting your privacy. We process all personal data in accordance with the Tanzania Data Protection Act and international best practices (GDPR). Our systems are designed to minimize data collection and maximize security."
+      icon: Globe,
+      title: "Global Usage",
+      content: "By accessing Career Na Mimi, you agree to comply with all local and international laws. Our platform is designed for youth empowerment and professional development across Africa and the globe."
     },
     {
-      icon: Lock,
-      title: "How We Collect Data",
-      content: "We collect information when you register for programs, contact us via forms, or interact with our community portal. This includes identifiers like name, email, and optionally, professional details for membership levels."
+      icon: UserCheck,
+      title: "User Conduct",
+      content: "Users must provide accurate information when registering for membership or submitting reviews. Any form of harassment, hate speech, or malicious behavior will result in immediate termination of access."
     },
     {
-      icon: Eye,
-      title: "Information Usage",
-      content: "Your data is used solely to facilitate youth empowerment programs, provide mentorship connections, and improve our AI-driven career tools. We do not sell or trade your personal information to third parties."
+      icon: Zap,
+      title: "Membership Portal",
+      content: "Access to the 'Become a Member' portal is subject to specific registration criteria. Career Na Mimi reserves the right to manage membership status based on adherence to our organization's values."
     },
     {
-      icon: FileText,
-      title: "Your Rights",
-      content: "You have the right to access, rectify, or request the erasure of your personal data. At any time, you can reach out to our data privacy officer to manage your preferences or withdraw consent."
+      icon: Scale,
+      title: "Intellectual Property",
+      content: "All content, including AI career tools, program materials, and creative assets, is the property of Career Na Mimi Organization and protected by intellectual property laws."
     }
   ];
 
   return (
     <div className="min-h-screen bg-slate-50">
       <SEO 
-        title="Privacy Policy" 
-        description="Learn how Career Na Mimi protects your data and ensures privacy across our youth empowerment platform."
-        canonical="/privacy-policy"
+        title="Terms of Service" 
+        description="Review the terms and conditions for using the Career Na Mimi platform and participating in our youth empowerment programs."
+        canonical="/terms"
       />
       <Navigation />
       
@@ -48,10 +48,10 @@ const PrivacyPolicy = () => {
               className="text-center mb-20"
             >
               <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 px-4 py-1">
-                Transparency Protocol
+                Legal Framework
               </Badge>
               <h1 className="text-4xl md:text-6xl font-heading font-black mb-6 text-slate-900 tracking-tight">
-                Privacy <span className="text-primary">Policy</span>
+                Terms of <span className="text-primary">Service</span>
               </h1>
               <p className="text-lg text-slate-500 font-medium">
                 Last updated: April 12, 2026
@@ -89,30 +89,30 @@ const PrivacyPolicy = () => {
             {/* Detailed Content */}
             <div className="bg-white rounded-[2.5rem] p-10 md:p-16 shadow-xl border border-slate-100">
               <div className="prose prose-slate max-w-none">
-                <h2 className="text-3xl font-black mb-6 text-slate-900">1. Security Infrastructure</h2>
+                <h2 className="text-3xl font-black mb-6 text-slate-900">1. Acceptance of Terms</h2>
                 <p className="text-slate-600 mb-8 leading-relaxed font-medium">
-                  We implement industry-standard security protocols including 256-bit encryption for data at rest and in transit. All review submissions are protected by Cloudflare Turnstile to ensure human-only interaction and prevent automated attacks.
+                  By using this website, you signify your acceptance of these terms. If you do not agree, please refrain from using our services. Your continued use of the site following changes to these terms will be deemed your acceptance of those changes.
                 </p>
 
-                <h2 className="text-3xl font-black mb-6 text-slate-900">2. Third-Party Services</h2>
+                <h2 className="text-3xl font-black mb-6 text-slate-900">2. External Links</h2>
                 <p className="text-slate-600 mb-8 leading-relaxed font-medium">
-                  We utilize secure infrastructure partners including Supabase for database management and storage. These partners are strictly vetted and are contractually obligated to maintain high levels of data privacy.
+                  Our platform includes links to external portals (e.g., app.careernamimii.org). While we strive for excellence, we represent that these external portals are governed by their own specific terms and conditions.
                 </p>
 
-                <h2 className="text-3xl font-black mb-6 text-slate-900">3. Cookies & Analytics</h2>
+                <h2 className="text-3xl font-black mb-6 text-slate-900">3. Limitation of Liability</h2>
                 <p className="text-slate-600 mb-8 leading-relaxed font-medium">
-                  We use cookies to enhance your experience, remember your preferences, and analyze site traffic anonymously. You can manage your cookie preferences at any time via the consent banner.
+                  Career Na Mimi Organization shall not be held liable for any damages that arise out of the use or inability to use the materials on our platform, even if we have been notified of the possibility of such damage.
                 </p>
 
                 <div className="mt-12 p-8 bg-slate-50 rounded-2xl border border-slate-200">
                   <h4 className="text-xl font-bold mb-4 flex items-center gap-2">
-                    <ChevronRight className="text-primary" /> Questions?
+                    <ChevronRight className="text-primary" /> Authority
                   </h4>
                   <p className="text-slate-600 mb-4">
-                    If you have any questions about our privacy practices, please contact our Data Privacy Officer:
+                    Any disputes arising from these terms will be governed by the laws of the United Republic of Tanzania.
                   </p>
-                  <a href="mailto:info@careernamimii.org" className="text-primary font-bold hover:underline">
-                    info@careernamimii.org
+                  <a href="mailto:legal@careernamimii.org" className="text-primary font-bold hover:underline">
+                    legal@careernamimii.org
                   </a>
                 </div>
               </div>
@@ -126,4 +126,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default TermsOfService;

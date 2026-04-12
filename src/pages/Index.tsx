@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import SEO from "@/components/SEO";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -273,6 +274,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Empowering Youth Success" 
+        description="Career Na Mimi empowers youth with professional skills, mentorship, and career opportunities in Tanzania and Africa. Join our ecosystem today."
+        canonical="/"
+      />
       <Navigation />
       <Hero />
 

@@ -26,6 +26,7 @@ import {
   Briefcase,
   Star,
 } from "lucide-react";
+import SEO from "@/components/SEO";
 
 // Import images
 import activitiesHero from "@/assets/activities/education.jpg";
@@ -210,6 +211,11 @@ const Activities = () => {
 
   return (
     <div className='min-h-screen'>
+      <SEO 
+        title="Our Activities" 
+        description="Explore our strategic pillars in education, gender balance, and innovation aligned with the National Youth Development Policy."
+        canonical="/activities"
+      />
       <Navigation />
 
       {/* Hero Section - Cinematic Modernization */}

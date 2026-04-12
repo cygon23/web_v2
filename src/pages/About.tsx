@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
+import SEO from "@/components/SEO";
 
 // Import images (you'll need to add these to your assets)
 import aboutHeroImage from "@/assets/gallery/eventG/lnks/lady2.jpg";
@@ -118,6 +119,11 @@ const About = () => {
 
   return (
     <div className='min-h-screen'>
+      <SEO 
+        title="About Us" 
+        description="Discover the mission, vision, and core values of Career Na Mimi as we revolutionize youth leadership across Tanzania."
+        canonical="/about"
+      />
       <Navigation />
 
       {/* Hero Section - Enhanced with Animations */}

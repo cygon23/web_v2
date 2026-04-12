@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -329,6 +331,11 @@ const Gallery = () => {
 
   return (
     <div className='min-h-screen'>
+      <SEO 
+        title="Impact Gallery" 
+        description="A visual journey of our events, programs, and the amazing youth community we are building at Career Na Mimi."
+        canonical="/gallery"
+      />
       <Navigation />
 
       {/* Hero Section - Enhanced */}

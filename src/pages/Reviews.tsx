@@ -4,6 +4,7 @@ import { Star, Send, ShieldCheck, MessageSquare, Quote, Loader2, CheckCircle, Al
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import SEO from "@/components/SEO";
 import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -182,7 +183,12 @@ const Reviews = () => {
   };
 
   return (
-    <div className='min-h-screen bg-slate-50'>
+    <div className='min-h-screen bg-slate-50/50'>
+      <SEO 
+        title="Community Reviews" 
+        description="Read success stories and testimonials from thousands of young professionals empowered by Career Na Mimi."
+        canonical="/reviews"
+      />
       <Navigation />
 
       {/* Hero Section */}

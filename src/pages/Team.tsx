@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CircularStat from "@/components/CircularStat";
+import SEO from "@/components/SEO";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import {
   X,
@@ -198,6 +199,11 @@ const Team = () => {
 
   return (
     <div className='min-h-screen bg-gray-50'>
+      <SEO 
+        title="Our Elite Team" 
+        description="Meet the visionaries, mentors, and innovators dedicated to bridging the career gap for Tanzanian youth."
+        canonical="/team"
+      />
       <Navigation />
 
       {/* Hero Section - Minimalist & Creative */}

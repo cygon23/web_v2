@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import CircularStat from "@/components/CircularStat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import {
@@ -264,6 +265,11 @@ const Events = () => {
 
   return (
     <div className='min-h-screen'>
+      <SEO 
+        title="Upcoming Events" 
+        description="Stay updated with our latest youth empowerment workshops, innovation weeks, and career forums across Tanzania."
+        canonical="/events"
+      />
       <Navigation />
 
       {/* Hero Section - Minimalist & Creative */}

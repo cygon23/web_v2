@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ArrowDown, Globe, BookOpen, ExternalLink } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import ContactForm from "@/components/ContactForm";
 import ContactInfo from "@/components/ContactInfo";
 import heroBackground from "@/assets/gallery/eventG/afro/1.jpg";
@@ -16,7 +17,12 @@ const Contact = () => {
   }, []);
 
   return (
-    <div className='min-h-screen bg-slate-50'>
+    <div className='min-h-screen'>
+      <SEO 
+        title="Contact Us" 
+        description="Get in touch with Career Na Mimi for partnerships, mentorship inquiries, or program support. We are here to help you grow."
+        canonical="/contact"
+      />
       <Navigation />
 
       {/* Hero Section - Integrated Hub */}
