@@ -197,9 +197,9 @@ const Activities = () => {
             {/* CTA */}
             <div className='mt-8 text-center'>
               <Button variant='hero' size='lg' asChild className='shadow-lg hover:shadow-xl transition-all'>
-                <Link to='/contact'>
-                  Get Involved <ArrowRight className='ml-2 w-5 h-5' />
-                </Link>
+                <a href="https://app.careernamimii.org/membership" target="_blank" rel="noopener noreferrer">
+                  Become a Member
+                </a>
               </Button>
             </div>
           </div>
@@ -283,7 +283,7 @@ const Activities = () => {
         <div className='absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent' />
         
         <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className={`grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-24 items-center scroll-fade-up ${activitiesSection.isVisible ? 'visible' : ''}`}>
+          <div className={`grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-24 items-center mb-24 scroll-fade-up ${activitiesSection.isVisible ? 'visible' : ''}`}>
             {/* Context & Heading */}
             <div className='space-y-6'>
               <div className='inline-flex items-center space-x-3'>
@@ -332,11 +332,6 @@ const Activities = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Decorative "Pillar" Indicator */}
-              <div className='hidden lg:block absolute -right-6 top-1/2 -translate-y-1/2 vertical-text text-[10px] font-black text-white/20 uppercase tracking-[1em] whitespace-nowrap rotate-180'>
-                PROTOCOL // YOUTH FRAMEWORK
               </div>
             </div>
           </div>
@@ -478,9 +473,9 @@ const Activities = () => {
 
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <Button variant='hero' size='lg' asChild className='bg-white text-primary hover:bg-white/90 shadow-xl hover:scale-105 transition-all'>
-                <Link to='/contact'>
-                  Get Involved <ArrowRight className='ml-2 w-5 h-5' />
-                </Link>
+                <a href="https://app.careernamimii.org/membership" target="_blank" rel="noopener noreferrer">
+                  Become a Member
+                </a>
               </Button>
               <Button
                 variant='outline'

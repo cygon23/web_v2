@@ -207,7 +207,7 @@ const About = () => {
           <div className='max-w-5xl mx-auto text-center text-white'>
             {/* Main Heading with staggered animation */}
             <div className='cinematic-scale-in opacity-0' style={{ animationDelay: '0.4s' }}>
-              <h1 className='text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-8 leading-tight'>
+              <h1 className='text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-8 leading-tight'>
                 Empowering Youth and{" "}
                 <span className='block mt-2' style={{
                   color: 'hsl(327, 73%, 65%)',
@@ -219,7 +219,7 @@ const About = () => {
             </div>
 
             {/* Description */}
-            <div className='cinematic-fade-in opacity-0' style={{ animationDelay: '0.6s' }}>
+            <div className='cinematic-fade-in opacity-0 hidden md:block' style={{ animationDelay: '0.6s' }}>
               <p className='text-lg md:text-xl mb-12 text-white/90 max-w-3xl mx-auto leading-relaxed font-medium'>
                 Career Na Mimi is a youth empowerment organization based in
                 Tanzania, dedicated to bridging the gap between young people and
@@ -577,9 +577,9 @@ const About = () => {
 
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <Button variant='hero' size='lg' asChild className='bg-white text-primary hover:bg-white/90 shadow-xl hover:scale-105 transition-all'>
-                <Link to='/contact'>
-                  Get Involved <ArrowRight className='ml-2 w-5 h-5' />
-                </Link>
+                <a href="https://app.careernamimii.org/membership" target="_blank" rel="noopener noreferrer">
+                  Become a Member
+                </a>
               </Button>
               <Button
                 variant='outline'

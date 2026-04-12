@@ -42,6 +42,14 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.dataset.menuOpen = "true";
+    } else {
+      delete document.body.dataset.menuOpen;
+    }
+  }, [isMenuOpen]);
+
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },

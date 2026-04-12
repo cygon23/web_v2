@@ -264,7 +264,12 @@ const ChatBot = () => {
 
   // ─── Render ───────────────────────────────────────────────────────────────
   return (
-    <>
+    <div className="chatbot-root md:block group-data-[menu-open=true]:hidden">
+      <style>{`
+        body[data-menu-open="true"] .chatbot-root {
+          display: none !important;
+        }
+      `}</style>
       {/* ── Floating Trigger ───────────────────────────────────────────────── */}
       <AnimatePresence>
         {!isOpen && (
@@ -699,7 +704,7 @@ const ChatBot = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 

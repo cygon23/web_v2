@@ -76,13 +76,24 @@ const Footer = () => {
                 { name: "Gallery", path: "/gallery" },
                 { name: "Our Team", path: "/team" },
                 { name: "Reviews", path: "/reviews" },
+                { name: "Become a Member", path: "https://app.careernamimii.org/membership", external: true },
               ].map((link) => (
                 <li key={link.name}>
-                  <Link
-                    to={link.path}
-                    className='text-background/80 hover:text-primary-light transition-colors duration-300 text-sm'>
-                    {link.name}
-                  </Link>
+                  {link.external ? (
+                    <a
+                      href={link.path}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-background/80 hover:text-primary-light transition-colors duration-300 text-sm'>
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.path}
+                      className='text-background/80 hover:text-primary-light transition-colors duration-300 text-sm'>
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
