@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
+import { motion, AnimatePresence, useSpring, useTransform, useMotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
 import { useToast } from "@/hooks/use-toast";
@@ -12,13 +13,24 @@ const Navigation = () => {
   const location = useLocation();
   const { toast } = useToast();
 
-  const handleJoinClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsMenuOpen(false);
-    toast({
-      title: "Coming Soon!",
-      description: "Stay tuned on our community and our social media for this.",
-    });
+  // Magnetic Button Logic
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springConfig = { damping: 15, stiffness: 150 };
+  const translateX = useSpring(mouseX, springConfig);
+  const translateY = useSpring(mouseY, springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    mouseX.set((e.clientX - centerX) * 0.4);
+    mouseY.set((e.clientY - centerY) * 0.4);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
   };
 
   useEffect(() => {
@@ -42,6 +54,33 @@ const Navigation = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const MembershipButton = ({ className, mobile = false }: { className?: string, mobile?: boolean }) => (
+    <motion.div
+      style={{ x: mobile ? 0 : translateX, y: mobile ? 0 : translateY }}
+      onMouseMove={mobile ? undefined : handleMouseMove}
+      onMouseLeave={mobile ? undefined : handleMouseLeave}
+      className={cn("relative group", className)}
+    >
+      <a 
+        href="https://app.careernamimii.org/membership" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className={cn(
+          "relative flex items-center justify-center gap-2 overflow-hidden transition-all duration-300",
+          mobile 
+            ? "w-full h-14 rounded-2xl text-lg font-black bg-primary text-white shadow-glow" 
+            : "px-8 h-12 rounded-full text-sm font-bold bg-primary text-white shadow-glow hover:shadow-primary/40"
+        )}
+      >
+        {/* Shimmer Effect */}
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[150%] group-hover:animate-[shimmer_2s_infinite] pointer-events-none" />
+        
+        <Sparkles className={cn(mobile ? "w-5 h-5" : "w-4 h-4", "animate-pulse")} />
+        <span>Become a Member</span>
+      </a>
+    </motion.div>
+  );
+
   return (
     <nav
       className={cn(
@@ -51,6 +90,13 @@ const Navigation = () => {
           : "bg-transparent py-4"
       )}
     >
+      <style>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-150%); }
+          50% { transform: translateX(-60%); }
+          100% { transform: translateX(150%); }
+        }
+      `}</style>
       <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex items-center justify-between h-16 lg:h-20'>
           {/* Logo */}
@@ -83,14 +129,7 @@ const Navigation = () => {
 
           {/* CTA Buttons */}
           <div className='hidden lg:flex items-center space-x-4'>
-            <Button 
-              variant='hero' 
-              size='sm' 
-              onClick={handleJoinClick}
-              className="shadow-glow hover:shadow-primary/40 rounded-full px-8 h-12"
-            >
-              Become a Member
-            </Button>
+            <MembershipButton />
           </div>
 
           {/* Mobile Menu Button */}
@@ -107,36 +146,49 @@ const Navigation = () => {
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className='lg:hidden absolute top-full left-4 right-4 mt-4 bg-slate-900/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-[2rem] overflow-hidden cinematic-fade-in'>
-            <div className='px-6 py-8 space-y-3'>
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={cn(
-                    "flex items-center justify-center px-6 py-4 text-lg font-black rounded-2xl transition-all duration-300",
-                    isActive(item.path)
-                      ? "text-white bg-primary shadow-lg scale-[1.02]"
-                      : "text-white/70 hover:bg-white/5 hover:text-white"
-                  )}>
-                  {item.name}
-                </Link>
-              ))}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <>
+              {/* Backdrop Overlay */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMenuOpen(false)}
+                className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm lg:hidden z-[-1]"
+              />
+              
+              <motion.div 
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className='lg:hidden absolute top-full left-4 right-4 mt-4 bg-slate-900/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-[2rem] overflow-hidden'
+              >
+                <div className='px-6 py-8 space-y-3'>
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={cn(
+                        "flex items-center justify-center px-6 py-4 text-lg font-black rounded-2xl transition-all duration-300",
+                        isActive(item.path)
+                          ? "text-white bg-primary shadow-lg scale-[1.02]"
+                          : "text-white/70 hover:bg-white/5 hover:text-white"
+                      )}>
+                      {item.name}
+                    </Link>
+                  ))}
 
-              <div className='pt-6'>
-                <Button 
-                  variant='hero' 
-                  className='w-full h-14 rounded-2xl text-lg font-black shadow-glow' 
-                  onClick={handleJoinClick}
-                >
-                  Become a Member
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
+                  <div className='pt-6'>
+                    <MembershipButton mobile />
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );
